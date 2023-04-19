@@ -4,14 +4,15 @@ import LogoImg from "../../img/homecooked_logo.png";
 const StyledLogo = styled.div`
   display: flex;
   align-items: center;
+  gap: 0.5em;
 
   img {
-    margin: 0 0.5em;
     width: 4.2em;
   }
 
   p {
-    font-size: 1.2rem;
+    white-space: nowrap;
+    font-size: 1.5rem;
     font-weight: 900;
     color: var(--color-accent-green);
   }
