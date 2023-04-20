@@ -5,12 +5,12 @@ const StyledHero = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 3.125em 0;
-  padding-left: 5em;
-  max-width: 1264px;
+  margin: 3.125em 0 2.5em 0;
   border-radius: 30px;
+  max-width: var(--width-max);
   width: 95%;
   height: 22.2em;
+  padding-left: 5em;
   background-image: linear-gradient(
       90deg,
       #252525 -16.65%,

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Logo from "./header/Logo";
 import SearchBar from "./header/SearchBar";
-import Nav from "./header/Nav";
+import HeaderNav from "./header/HeaderNav";
 
 const StyledHeader = styled.div`
   position: sticky;
@@ -10,9 +10,9 @@ const StyledHeader = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 1em;
   width: 100%;
   height: 5em;
+  padding: 0 1em;
   background-color: var(--color-white);
 `;
 
@@ -21,7 +21,7 @@ const Header = () => {
     <StyledHeader>
       <Logo />
       <SearchBar />
-      <Nav />
+      <HeaderNav />
     </StyledHeader>
   );
 };

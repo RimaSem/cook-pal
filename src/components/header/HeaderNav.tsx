@@ -18,7 +18,7 @@ const LogIn = styled(StyledLink)`
   white-space: nowrap;
 `;
 
-const Nav = () => {
+const HeaderNav = () => {
   return (
     <StyledNav>
       <StyledLink>Home</StyledLink>
@@ -28,4 +28,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default HeaderNav;

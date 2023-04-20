@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Header from "../components/Header";
 import Hero from "../components/Hero";
+import Nav from "../components/Nav";
 
 const HomeWrapper = styled.div`
   position: relative;
@@ -19,6 +20,7 @@ const Home = () => {
     <HomeWrapper>
       <Header />
       <Hero />
+      <Nav />
     </HomeWrapper>
   );
 };
