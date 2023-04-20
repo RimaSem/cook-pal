@@ -12,6 +12,7 @@ const GlobalStyle = createGlobalStyle`
         --color-accent-green: #509E2F;
         --color-accent-orange: #DC582A;
         --color-text-dark: #253D4E;
+        --color-text-grey: #A1A1A1;
         --color-nav-btn-1: #f6784c;
         --color-nav-btn-2: #C4D600;
         --color-nav-btn-3: #EAAA00;
