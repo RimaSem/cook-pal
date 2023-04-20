@@ -4,6 +4,7 @@ import { mdiMagnify } from "@mdi/js";
 
 const StyledSearchBar = styled.div`
   display: flex;
+  margin: 0 2em;
   max-width: 31em;
   width: 100%;
   height: 2.625em;

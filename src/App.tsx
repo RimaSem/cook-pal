@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
   /**** COLORS ****/
   --color-white: #FFFFFF;
   --color-accent-green: #509E2F;
+  --color-text-dark: #253D4E;
 
   /**** BORDERS ****/
 
