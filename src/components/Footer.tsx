@@ -2,6 +2,7 @@ import styled from "styled-components";
 import FooterNav from "./footer/FooterNav";
 import Info from "./footer/Info";
 import Subscription from "./footer/Subscription";
+import SocialLinks from "./footer/SocialLinks";
 
 const StyledFooter = styled.footer`
   display: flex;
@@ -22,13 +23,16 @@ const ContentWrapper = styled.div`
 
 const Footer = () => {
   return (
-    <StyledFooter>
-      <ContentWrapper>
-        <Info />
-        <FooterNav />
-        <Subscription />
-      </ContentWrapper>
-    </StyledFooter>
+    <>
+      <StyledFooter>
+        <ContentWrapper>
+          <Info />
+          <FooterNav />
+          <Subscription />
+        </ContentWrapper>
+      </StyledFooter>
+      <SocialLinks />
+    </>
   );
 };
 
