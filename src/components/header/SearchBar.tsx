@@ -8,6 +8,10 @@ const StyledSearchBar = styled.div`
   max-width: 31em;
   width: 100%;
   height: 2.625em;
+
+  @media (max-width: 865px) {
+    display: none;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -15,7 +19,7 @@ const StyledInput = styled.input`
   border: none;
   border-radius: 2px 0px 0px 2px;
   padding-left: 0.75em;
-  background-color: #f3f3f3;
+  background-color: var(--color-input-light);
   font-size: 0.875em;
   font-weight: 400;
   font-family: inherit;
@@ -37,7 +41,7 @@ const StyledIcon = styled.div`
 
   .search-bar-icon {
     height: 2em;
-    color: white;
+    color: var(--color-white);
   }
 `;
 

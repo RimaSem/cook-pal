@@ -20,6 +20,18 @@ const StyledHero = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
+
+  @media (max-width: 865px) {
+    margin: 0 auto;
+    border-radius: 0;
+    width: 100%;
+  }
+
+  @media (max-width: 580px) {
+    align-items: center;
+    padding-left: 0;
+    text-align: center;
+  }
 `;
 
 const Label = styled.p`
@@ -27,20 +39,32 @@ const Label = styled.p`
   font-size: 1.5em;
   font-weight: 500;
   color: var(--color-accent-orange);
+
+  @media (max-width: 500px) {
+    font-size: 6vw;
+  }
 `;
 
 const Title = styled.h1`
   margin: 0;
   font-size: 2.5em;
   line-height: 127%;
-  color: var(--color-white);
+  color: var(--color-text-light);
+
+  @media (max-width: 500px) {
+    font-size: 8vw;
+  }
 `;
 
 const Author = styled.p`
   margin: 0.625em 0 0 0;
   font-size: 1.25em;
   font-weight: 500;
-  color: var(--color-white);
+  color: var(--color-text-light);
+
+  @media (max-width: 500px) {
+    font-size: 5vw;
+  }
 `;
 
 const Hero = () => {

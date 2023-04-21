@@ -11,9 +11,8 @@ const NavContainer = styled.div`
   max-width: var(--width-max);
   width: 95%;
 
-  @media (max-width: 675px) {
-    flex-direction: column;
-    gap: 0.25em;
+  @media (max-width: 865px) {
+    display: none;
   }
 `;
 

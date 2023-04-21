@@ -6,14 +6,13 @@ import CardSampleImg from "../img/card_sample_img.jpg";
 
 const CardContainer = styled.div`
   position: relative;
-  margin: 2em 0;
-  box-shadow: 0px 0px 1px rgba(12, 26, 75, 0.24),
-    0px 3px 8px -1px rgba(50, 50, 71, 0.05);
+  margin: 0.7em 0;
+  box-shadow: var(--shadow-card);
   border-radius: 16px;
   width: 19em;
   height: 19.68em;
   background-color: var(--color-white);
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-secondary);
 
   .CardSaveIcon {
     position: absolute;
@@ -22,6 +21,10 @@ const CardContainer = styled.div`
     width: 1.6em;
     cursor: pointer;
     color: var(--color-text-dark);
+  }
+
+  @media (max-width: 865px) {
+    margin: 0;
   }
 `;
 

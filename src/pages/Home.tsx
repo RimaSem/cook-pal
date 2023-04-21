@@ -5,13 +5,11 @@ import Nav from "../components/Nav";
 import Main from "../components/home/Main";
 
 const HomeWrapper = styled.div`
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 0 auto;
   max-width: 1700px;
-  width: 100%;
   font-family: var(--font-primary);
   color: var(--color-text-dark);
 `;

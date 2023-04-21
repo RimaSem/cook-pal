@@ -16,6 +16,16 @@ const StyledLogo = styled.div`
     font-weight: 900;
     color: var(--color-accent-green);
   }
+
+  @media (max-width: 865px) {
+    img {
+      width: 3.2em;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
 `;
 
 const Logo = () => {
