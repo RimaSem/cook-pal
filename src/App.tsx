@@ -4,6 +4,7 @@ import GlobalStyle from "./global";
 
 const StyledApp = styled.div`
   min-width: 100%;
+  min-height: inherit;
 `;
 
 const App = () => {

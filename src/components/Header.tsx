@@ -12,7 +12,7 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   align-items: center;
   max-width: 1600px;
-  width: 100vw;
+  width: 100%;
   height: 5em;
   padding: 0 1em;
   background-color: var(--color-white);

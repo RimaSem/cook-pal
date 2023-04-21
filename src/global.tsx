@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
         --color-nav-btn-3: #EAAA00;
         --color-nav-btn-4: #ED8B00;
         --color-nav-btn-5: #84BD00;
+        --color-footer-link: rgba(0, 0, 0, 0.6);
 
         /**** SHADOWS ****/
         --shadow-card: 0px 0px 1px rgba(12, 26, 75, 0.24),
@@ -40,7 +41,7 @@ const GlobalStyle = createGlobalStyle`
 
         #root {
             min-width: 100%;
-            min-height: 100%;
+            min-height: inherit;
         }
     }
 
