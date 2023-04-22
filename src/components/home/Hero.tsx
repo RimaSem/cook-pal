@@ -7,7 +7,7 @@ const StyledHero = styled.div`
   justify-content: center;
   margin: 3.125em 0 2.5em 0;
   border-radius: 30px;
-  max-width: var(--width-max);
+  /* max-width: var(--width-max); */
   width: 95%;
   height: 22.2em;
   padding-left: 5em;

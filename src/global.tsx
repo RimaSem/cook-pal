@@ -44,7 +44,6 @@ const GlobalStyle = createGlobalStyle`
             min-height: inherit;
         }
     }
-
  `;
 
 export default GlobalStyle;
