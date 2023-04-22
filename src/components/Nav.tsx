@@ -18,6 +18,7 @@ const NavContainer = styled.div`
 
 const StyledLink = styled.a<NavProps>`
   flex: 1;
+  transition: opacity 0.3s;
   border-radius: 10px;
   padding: 1.95em 0.3em;
   background-color: ${({ btnColor }) =>
@@ -27,6 +28,10 @@ const StyledLink = styled.a<NavProps>`
   color: var(--color-white);
   text-decoration: none;
   text-align: center;
+
+  &:hover {
+    opacity: 0.85;
+  }
 
   @media (max-width: 675px) {
     padding: 0.95em 0.3em;

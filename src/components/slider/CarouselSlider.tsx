@@ -4,6 +4,11 @@ import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import { DotButton, PrevButton, NextButton } from "./CarouselArrowsDotsButtons";
 import Autoplay from "embla-carousel-autoplay";
 import Hero from "../home/Hero";
+import Slide1 from "../../img/hero_sample_img.jpg";
+import Slide2 from "../../img/hero_chicken_wings.jpg";
+import Slide3 from "../../img/hero_salad.jpg";
+import Slide4 from "../../img/hero_seafood_delicacy.jpg";
+import Slide5 from "../../img/hero_fried_chicken.jpg";
 
 type PropType = {
   slides: number[];
@@ -53,11 +58,41 @@ const CarouselSlider: React.FC<PropType> = (props) => {
       <div className="embla">
         <div className="embla_viewport" ref={emblaRef}>
           <div className="embla_container">
-            {slides.map((index) => (
-              <div className="embla_slide" key={index}>
-                <Hero />
-              </div>
-            ))}
+            <div className="embla_slide">
+              <Hero
+                title="Mike's famous salad with cheese"
+                author="By John Mike"
+                img={Slide1}
+              />
+            </div>
+            <div className="embla_slide">
+              <Hero
+                title="Jessica's cheesy chicken wings"
+                author="By Jessica Day"
+                img={Slide2}
+              />
+            </div>
+            <div className="embla_slide">
+              <Hero
+                title="Zane's healthy vegetarian salad"
+                author="By Zane Johnson"
+                img={Slide3}
+              />
+            </div>
+            <div className="embla_slide">
+              <Hero
+                title="Deborah's spicy seafood delicacy"
+                author="By Deborah Li"
+                img={Slide4}
+              />
+            </div>
+            <div className="embla_slide">
+              <Hero
+                title="Linda's fried chicken with pomegranates"
+                author="By Linda Smith"
+                img={Slide5}
+              />
+            </div>
           </div>
         </div>
         <div className="button_container">

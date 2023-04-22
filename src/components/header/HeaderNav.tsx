@@ -18,6 +18,11 @@ const StyledLink = styled.a`
   cursor: pointer;
   font-weight: 500;
   text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--color-accent-green);
+  }
 
   @media (max-width: 865px) {
     display: none;

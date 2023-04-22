@@ -20,6 +20,7 @@ const AllCards = styled.div`
 `;
 
 const LoadMoreBtn = styled.button`
+  transition: opacity 0.3s;
   margin-top: 2em;
   border: none;
   border-radius: 10px;
@@ -32,6 +33,10 @@ const LoadMoreBtn = styled.button`
   font-family: var(--font-primary);
   font-weight: 500;
   color: var(--color-white);
+
+  &:hover {
+    opacity: 0.85;
+  }
 
   @media (max-width: 865px) {
     margin-top: 0.3em;

@@ -1,13 +1,18 @@
 import styled from "styled-components";
-import HeroImg from "../../img/hero_sample_img.jpg";
 
-const StyledHero = styled.div`
+interface HeroProps {
+  title?: string;
+  author?: string;
+  img: string;
+}
+
+const StyledHero = styled.div<HeroProps>`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 3.125em 0 2.5em 0;
   border-radius: 30px;
-  /* max-width: var(--width-max); */
+  max-width: var(--width-max);
   width: 95%;
   height: 22.2em;
   padding-left: 5em;
@@ -16,7 +21,7 @@ const StyledHero = styled.div`
       #252525 -16.65%,
       rgba(0, 0, 0, 0) 100%
     ),
-    url(${HeroImg});
+    url(${({ img }) => img});
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -47,6 +52,7 @@ const Label = styled.p`
 
 const Title = styled.h1`
   margin: 0;
+  max-width: 500px;
   font-size: 2.5em;
   line-height: 127%;
   color: var(--color-text-light);
@@ -67,15 +73,12 @@ const Author = styled.p`
   }
 `;
 
-const Hero = () => {
+const Hero: React.FC<HeroProps> = ({ title, author, img }) => {
   return (
-    <StyledHero>
+    <StyledHero img={img}>
       <Label>Trending Now</Label>
-      <Title>
-        Mike’s famous salad
-        <br /> with cheese
-      </Title>
-      <Author>By John Mike</Author>
+      <Title>{title}</Title>
+      <Author>{author}</Author>
     </StyledHero>
   );
 };
