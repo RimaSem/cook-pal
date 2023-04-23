@@ -1,6 +1,7 @@
 import styled from "styled-components";
+import { useState } from "react";
 import Icon from "@mdi/react";
-import { mdiMenu } from "@mdi/js";
+import { mdiMenu, mdiWindowClose } from "@mdi/js";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -15,10 +16,10 @@ const StyledNav = styled.nav`
 `;
 
 const StyledLink = styled.a`
+  transition: color 0.2s;
   cursor: pointer;
   font-weight: 500;
   text-decoration: none;
-  transition: color 0.2s;
 
   &:hover {
     color: var(--color-accent-green);
@@ -35,20 +36,27 @@ const LogIn = styled(StyledLink)`
 `;
 
 const HamburgerMenu = styled.div`
+  z-index: 3;
   display: flex;
   align-items: center;
   width: 1.8em;
   cursor: pointer;
+
+  .menu-icon {
+    z-index: 1009;
+  }
 `;
 
 const HeaderNav = () => {
+  const [toggleMenu, setToggleMenu] = useState(false);
+
   return (
     <StyledNav>
       <StyledLink>Home</StyledLink>
       <StyledLink>Explore</StyledLink>
       <LogIn>Log In</LogIn>
-      <HamburgerMenu>
-        <Icon path={mdiMenu} />
+      <HamburgerMenu onClick={() => setToggleMenu((prev) => !prev)}>
+        {toggleMenu ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
       </HamburgerMenu>
     </StyledNav>
   );

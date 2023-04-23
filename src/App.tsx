@@ -1,6 +1,8 @@
 import styled from "styled-components";
-import Home from "./pages/Home";
 import GlobalStyle from "./global";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./components/Layout";
+import Home from "./pages/Home";
 
 const StyledApp = styled.div`
   min-width: 100%;
@@ -9,10 +11,18 @@ const StyledApp = styled.div`
 
 const App = () => {
   return (
-    <StyledApp>
+    <>
       <GlobalStyle />
-      <Home />
-    </StyledApp>
+      <StyledApp>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/cook-pal/" element={<Layout />}>
+              <Route index element={<Home />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </StyledApp>
+    </>
   );
 };
 

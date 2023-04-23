@@ -24,12 +24,9 @@ const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
 const Home: React.FC = () => {
   return (
     <HomeWrapper>
-      <Header />
-      {/* <Hero /> */}
       <CarouselSlider slides={SLIDES} options={OPTIONS} />
       <Nav />
       <Main />
-      <Footer />
     </HomeWrapper>
   );
 };

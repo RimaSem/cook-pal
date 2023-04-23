@@ -4,7 +4,7 @@ import SearchBar from "./header/SearchBar";
 import HeaderNav from "./header/HeaderNav";
 
 const StyledHeader = styled.div`
-  z-index: 2;
+  z-index: 4;
   position: sticky;
   left: 0px;
   top: 0px;

@@ -35,9 +35,9 @@ const GlobalStyle = createGlobalStyle`
 
     body {
         margin: 0;
-        width: 100%;
+        min-width: 100%;
         min-height: 100vh;
-        font-family: var(--font-primary); 
+        font-family: var(--font-primary);
 
         #root {
             min-width: 100%;
