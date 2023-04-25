@@ -4,6 +4,8 @@ import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
 import Header from "./Header";
 import Footer from "./Footer";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { toggleMenu } from "../features/menu/menuSlice";
 
 const Overlay = styled.div`
   z-index: 2;
@@ -13,7 +15,6 @@ const Overlay = styled.div`
   bottom: 0;
   left: 0;
   background-color: var(--color-footer-link);
-  visibility: hidden;
 `;
 
 const StyledLayout = styled.div`
@@ -29,10 +30,14 @@ const MainSection = styled.section`
 
 const Layout = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
+  const menuState = useAppSelector((state) => state.menu.isOpened);
+  const dispatch = useAppDispatch();
 
   return (
     <>
-      <Overlay ref={overlayRef} />
+      {menuState && (
+        <Overlay ref={overlayRef} onClick={() => dispatch(toggleMenu())} />
+      )}
       <StyledLayout>
         <Menu />
         <Header />

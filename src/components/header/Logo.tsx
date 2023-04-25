@@ -1,10 +1,16 @@
 import styled from "styled-components";
 import LogoImg from "../../img/homecooked_logo.png";
+import { Link } from "react-router-dom";
 
 const StyledLogo = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5em;
+
+  a {
+    text-decoration: none;
+    cursor: default;
+  }
 
   img {
     width: 4.2em;
@@ -31,8 +37,12 @@ const StyledLogo = styled.div`
 const Logo = () => {
   return (
     <StyledLogo>
-      <img src={LogoImg} alt="logo" />
-      <p>Cook-Pal</p>
+      <Link to=".">
+        <img src={LogoImg} alt="logo" />
+      </Link>
+      <Link to=".">
+        <p>Cook-Pal</p>
+      </Link>
     </StyledLogo>
   );
 };

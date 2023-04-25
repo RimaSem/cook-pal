@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface NavProps {
   btnColor?: string;
@@ -16,7 +17,7 @@ const NavContainer = styled.div`
   }
 `;
 
-const StyledLink = styled.a<NavProps>`
+const StyledLink = styled.div<NavProps>`
   flex: 1;
   transition: opacity 0.3s;
   border-radius: 10px;
@@ -33,6 +34,11 @@ const StyledLink = styled.a<NavProps>`
     opacity: 0.85;
   }
 
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
   @media (max-width: 675px) {
     padding: 0.95em 0.3em;
   }
@@ -41,16 +47,20 @@ const StyledLink = styled.a<NavProps>`
 const Nav: React.FC<NavProps> = ({}) => {
   return (
     <NavContainer>
-      <StyledLink>Browse Recipes</StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-2)">
-        Daily Suggestions
+      <StyledLink>
+        <Link to="#">Browse Recipes</Link>
       </StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-3)">Your Favorites</StyledLink>
+      <StyledLink btnColor="var(--color-nav-btn-2)">
+        <Link to="#">Daily Suggestions</Link>
+      </StyledLink>
+      <StyledLink btnColor="var(--color-nav-btn-3)">
+        <Link to="#">Your Favorites</Link>
+      </StyledLink>
       <StyledLink btnColor="var(--color-nav-btn-4)">
-        Custom Meal Plan
+        <Link to="#">Custom Meal Plan</Link>
       </StyledLink>
       <StyledLink btnColor="var(--color-nav-btn-5)">
-        Create Grocery List
+        <Link to="#">Create Grocery List</Link>
       </StyledLink>
     </NavContainer>
   );

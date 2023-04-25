@@ -1,9 +1,16 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../app/hooks";
+import { toggleMenu } from "../features/menu/menuSlice";
 
-const StyledMenu = styled.div`
+interface MenuProps {
+  menuState?: boolean;
+}
+
+const StyledMenu = styled.div<MenuProps>`
   z-index: 3;
   position: fixed;
-  right: 0;
+  right: ${({ menuState }) => (menuState ? "0" : "-600px")};
   display: flex;
   flex-direction: column;
   transition: right 0.5s;
@@ -32,17 +39,40 @@ const MenuContainer = styled.div`
 `;
 
 const Menu = () => {
+  const menuState = useAppSelector((state) => state.menu.isOpened);
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleMenu());
+  };
+
   return (
-    <StyledMenu>
-      <MenuContainer>
-        <a href="#">Home</a>
-        <a href="#">All Recipes</a>
-        <a href="#">Daily Suggestions</a>
-        <a href="#">Your Favorites</a>
-        <a href="#">Custom Meal Plan</a>
-        <a href="#">Create Grocery List</a>
-        <a href="#">Log In</a>
-      </MenuContainer>
+    <StyledMenu menuState={menuState}>
+      {menuState && (
+        <MenuContainer>
+          <Link to="#" onClick={handleClick}>
+            Home
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            All Recipes
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            Daily Suggestions
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            Your Favorites
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            Custom Meal Plan
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            Create Grocery List
+          </Link>
+          <Link to="#" onClick={handleClick}>
+            Log In
+          </Link>
+        </MenuContainer>
+      )}
     </StyledMenu>
   );
 };

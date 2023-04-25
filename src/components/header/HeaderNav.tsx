@@ -1,7 +1,9 @@
 import styled from "styled-components";
-import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiMenu, mdiWindowClose } from "@mdi/js";
+import { Link } from "react-router-dom";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
+import { toggleMenu } from "../../features/menu/menuSlice";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -15,11 +17,16 @@ const StyledNav = styled.nav`
   }
 `;
 
-const StyledLink = styled.a`
+const StyledLink = styled.div`
   transition: color 0.2s;
   cursor: pointer;
   font-weight: 500;
   text-decoration: none;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
 
   &:hover {
     color: var(--color-accent-green);
@@ -48,15 +55,26 @@ const HamburgerMenu = styled.div`
 `;
 
 const HeaderNav = () => {
-  const [toggleMenu, setToggleMenu] = useState(false);
+  const menuState = useAppSelector((state) => state.menu.isOpened);
+  const dispatch = useAppDispatch();
+
+  const handleClick = () => {
+    dispatch(toggleMenu());
+  };
 
   return (
     <StyledNav>
-      <StyledLink>Home</StyledLink>
-      <StyledLink>Explore</StyledLink>
-      <LogIn>Log In</LogIn>
-      <HamburgerMenu onClick={() => setToggleMenu((prev) => !prev)}>
-        {toggleMenu ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
+      <StyledLink>
+        <Link to="#">Home</Link>
+      </StyledLink>
+      <StyledLink>
+        <Link to="#">Explore</Link>
+      </StyledLink>
+      <LogIn>
+        <Link to="#">Log In</Link>
+      </LogIn>
+      <HamburgerMenu onClick={handleClick}>
+        {menuState ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
       </HamburgerMenu>
     </StyledNav>
   );

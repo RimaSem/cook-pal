@@ -1,10 +1,8 @@
 import styled from "styled-components";
-import Header from "../components/Header";
 import { EmblaOptionsType } from "embla-carousel-react";
 import CarouselSlider from "../components/slider/CarouselSlider";
 import Nav from "../components/Nav";
 import Main from "../components/home/Main";
-import Footer from "../components/Footer";
 
 const HomeWrapper = styled.div`
   display: flex;
