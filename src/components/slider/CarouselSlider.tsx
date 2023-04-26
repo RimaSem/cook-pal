@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import { DotButton, PrevButton, NextButton } from "./CarouselArrowsDotsButtons";
 import Autoplay from "embla-carousel-autoplay";
-import Hero from "../home/Hero";
+import Hero from "../Hero";
 import Slide1 from "../../img/hero_sample_img.jpg";
 import Slide2 from "../../img/hero_chicken_wings.jpg";
 import Slide3 from "../../img/hero_salad.jpg";

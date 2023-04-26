@@ -3,7 +3,7 @@ import styled from "styled-components";
 interface HeroProps {
   title?: string;
   author?: string;
-  img: string;
+  img?: string;
 }
 
 const StyledHero = styled.div<HeroProps>`

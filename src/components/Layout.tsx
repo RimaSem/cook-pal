@@ -3,9 +3,12 @@ import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
 import Header from "./Header";
+import CarouselSlider from "./slider/CarouselSlider";
+import Nav from "./Nav";
 import Footer from "./Footer";
 import { useAppSelector, useAppDispatch } from "../app/hooks";
 import { toggleMenu } from "../features/menu/menuSlice";
+import { EmblaOptionsType } from "embla-carousel-react";
 
 const Overlay = styled.div`
   z-index: 2;
@@ -33,6 +36,10 @@ const Layout = () => {
   const menuState = useAppSelector((state) => state.menu.isOpened);
   const dispatch = useAppDispatch();
 
+  const OPTIONS: EmblaOptionsType = {};
+  const SLIDE_COUNT = 5;
+  const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
+
   return (
     <>
       {menuState && (
@@ -41,6 +48,8 @@ const Layout = () => {
       <StyledLayout>
         <Menu />
         <Header />
+        <CarouselSlider slides={SLIDES} options={OPTIONS} />
+        <Nav />
         <MainSection>
           <Outlet />
         </MainSection>

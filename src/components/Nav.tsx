@@ -9,6 +9,7 @@ const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
   gap: 1.25em;
+  margin: 0 auto;
   max-width: var(--width-max);
   width: 95%;
 

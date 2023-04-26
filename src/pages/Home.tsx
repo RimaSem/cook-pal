@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import { EmblaOptionsType } from "embla-carousel-react";
-import CarouselSlider from "../components/slider/CarouselSlider";
-import Nav from "../components/Nav";
 import Main from "../components/home/Main";
 
 const HomeWrapper = styled.div`
@@ -15,15 +12,9 @@ const HomeWrapper = styled.div`
   color: var(--color-text-dark);
 `;
 
-const OPTIONS: EmblaOptionsType = {};
-const SLIDE_COUNT = 5;
-const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
-
-const Home: React.FC = () => {
+const Home = () => {
   return (
     <HomeWrapper>
-      <CarouselSlider slides={SLIDES} options={OPTIONS} />
-      <Nav />
       <Main />
     </HomeWrapper>
   );
