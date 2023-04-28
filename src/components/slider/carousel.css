@@ -1,0 +1,113 @@
+.embla {
+  --slide-spacing: 1rem;
+  --slide-size: 100%;
+  --slide-height: 19rem;
+  --default-dot-color: #d4d4d4;
+  --color-accent-orange: #dc582a;
+  --background-site: rgb(249, 249, 249);
+  --brand-primary: rgb(47, 112, 193);
+  --brand-secondary: rgb(116, 97, 195);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+}
+
+.embla_viewport {
+  overflow: hidden;
+}
+
+.embla_container {
+  display: flex;
+  flex-direction: row;
+}
+
+.embla_slide {
+  display: flex;
+  justify-content: center;
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.embla__dot,
+.embla__button {
+  -webkit-appearance: none;
+  display: inline-flex;
+  border: 0;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  cursor: pointer;
+  touch-action: manipulation;
+  text-decoration: none;
+}
+
+.embla__dots {
+  z-index: 1;
+  position: absolute;
+  bottom: 3.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.embla__dot {
+  display: flex;
+  align-items: center;
+  margin-right: 1.75px;
+  margin-left: 1.75px;
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+}
+
+.embla__dot:after {
+  border-radius: 0.2rem;
+  width: 100%;
+  height: 7px;
+  background: var(--default-dot-color);
+  content: "";
+}
+
+.embla__dot--selected:after {
+  background-color: var(--color-accent-orange);
+}
+
+.button_container {
+  position: absolute;
+  bottom: 5em;
+  display: flex;
+  gap: 1.25em;
+}
+
+.embla__button {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--background-site);
+  border-radius: 50%;
+  width: 2.125rem;
+  height: 2.125rem;
+  cursor: pointer;
+  color: var(--background-site);
+}
+
+.embla__button:disabled {
+  opacity: 0.3;
+}
+
+@media screen and (max-width: 54em) {
+  .button_container {
+    bottom: 2.2em;
+  }
+
+  .embla__button--next {
+    right: 40%;
+  }
+
+  .embla__dots {
+    bottom: 0.5rem;
+  }
+}
