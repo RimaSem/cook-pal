@@ -1,9 +1,12 @@
-import styled from "styled-components";
 import Icon from "@mdi/react";
 import { mdiMenu, mdiWindowClose } from "@mdi/js";
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import { toggleMenu } from "../../features/menu/menuSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../../state/hooks";
+import { getMenuStatus } from "../../state/menu/menuSelectors";
+import { toggleMenu } from "../../state/menu/menuSlice";
+import { RouteNames } from "../../types/RouteNames";
+import styled from "styled-components";
 
 const StyledNav = styled.nav`
   display: flex;
@@ -11,33 +14,29 @@ const StyledNav = styled.nav`
   gap: 1.5em;
   width: 17em;
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     gap: 0;
     width: fit-content;
   }
 `;
 
-const StyledLink = styled.div`
+const StyledLink = styled(Link)`
   transition: color 0.2s;
   cursor: pointer;
+  color: inherit;
   font-weight: 500;
   text-decoration: none;
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
   &:hover {
-    color: var(--color-accent-green);
+    color: ${({ theme }) => theme.colors.accentGreen};
   }
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     display: none;
   }
 `;
 
-const LogIn = styled(StyledLink)`
+const StyledLoginLink = styled(StyledLink)`
   margin: 0 1em 0 2em;
   white-space: nowrap;
 `;
@@ -54,27 +53,18 @@ const HamburgerMenu = styled.div`
   }
 `;
 
-const HeaderNav = () => {
-  const menuState = useAppSelector((state) => state.menu.isOpened);
+const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
-
-  const handleClick = () => {
-    dispatch(toggleMenu());
-  };
+  const { isOpened } = useSelector(getMenuStatus);
+  const handleClick = () => dispatch(toggleMenu());
 
   return (
     <StyledNav>
-      <StyledLink>
-        <Link to="#">Home</Link>
-      </StyledLink>
-      <StyledLink>
-        <Link to="#">Explore</Link>
-      </StyledLink>
-      <LogIn>
-        <Link to="#">Log In</Link>
-      </LogIn>
+      <StyledLink to=".">Home</StyledLink>
+      <StyledLink to={`./${RouteNames.RECIPES}`}>Explore</StyledLink>
+      <StyledLoginLink to={`./${RouteNames.LOGIN}`}>Log In</StyledLoginLink>
       <HamburgerMenu onClick={handleClick}>
-        {menuState ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
+        {isOpened ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
       </HamburgerMenu>
     </StyledNav>
   );

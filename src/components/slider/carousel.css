@@ -3,6 +3,7 @@
   --slide-size: 100%;
   --slide-height: 19rem;
   --default-dot-color: #d4d4d4;
+  --color-accent-orange: #dc582a;
   --background-site: rgb(249, 249, 249);
   --brand-primary: rgb(47, 112, 193);
   --brand-secondary: rgb(116, 97, 195);
@@ -97,7 +98,7 @@
   opacity: 0.3;
 }
 
-@media screen and (max-width: 865px) {
+@media screen and (max-width: 54em) {
   .button_container {
     bottom: 2.2em;
   }

@@ -1,7 +1,9 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { toggleMenu } from "../features/menu/menuSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../state/hooks";
+import { getMenuStatus } from "../state/menu/menuSelectors";
+import { toggleMenu } from "../state/menu/menuSlice";
+import styled from "styled-components";
 
 interface MenuProps {
   menuState?: boolean;
@@ -14,11 +16,11 @@ const StyledMenu = styled.div<MenuProps>`
   display: flex;
   flex-direction: column;
   transition: right 0.5s;
-  width: 420px;
+  width: 26.25em;
   height: 100vh;
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.colors.white};
 
-  @media (max-width: 520px) {
+  @media ${({ theme }) => theme.mQueries.menuQ} {
     width: 100%;
   }
 `;
@@ -29,48 +31,43 @@ const MenuContainer = styled.div`
   align-items: center;
   margin: 6em auto;
   width: 95%;
-
-  a {
-    margin-bottom: 1.4em;
-    font-size: 1.2rem;
-    color: var(--color-text-dark);
-    text-decoration: none;
-  }
 `;
 
-const Menu = () => {
-  const menuState = useAppSelector((state) => state.menu.isOpened);
-  const dispatch = useAppDispatch();
+const StyledLink = styled(Link)`
+  margin-bottom: 1.4em;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.colors.darker};
+  text-decoration: none;
+`;
 
-  const handleClick = () => {
-    dispatch(toggleMenu());
-  };
+const Menu: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isOpened } = useSelector(getMenuStatus);
+
+  const handleClick = () => dispatch(toggleMenu());
 
   return (
-    <StyledMenu menuState={menuState}>
-      {menuState && (
+    <StyledMenu menuState={isOpened}>
+      {isOpened && (
         <MenuContainer>
-          <Link to="#" onClick={handleClick}>
+          <StyledLink to="." onClick={handleClick}>
             Home
-          </Link>
-          <Link to="#" onClick={handleClick}>
+          </StyledLink>
+          <StyledLink to="#" onClick={handleClick}>
             All Recipes
-          </Link>
-          <Link to="#" onClick={handleClick}>
+          </StyledLink>
+          <StyledLink to="#" onClick={handleClick}>
             Daily Suggestions
-          </Link>
-          <Link to="#" onClick={handleClick}>
+          </StyledLink>
+          <StyledLink to="#" onClick={handleClick}>
             Your Favorites
-          </Link>
-          <Link to="#" onClick={handleClick}>
-            Custom Meal Plan
-          </Link>
-          <Link to="#" onClick={handleClick}>
+          </StyledLink>
+          <StyledLink to="#" onClick={handleClick}>
             Create Grocery List
-          </Link>
-          <Link to="#" onClick={handleClick}>
+          </StyledLink>
+          <StyledLink to="#" onClick={handleClick}>
             Log In
-          </Link>
+          </StyledLink>
         </MenuContainer>
       )}
     </StyledMenu>

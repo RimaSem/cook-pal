@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
+import styled from "styled-components";
 
 const StyledSearchBar = styled.div`
   display: flex;
@@ -9,7 +9,7 @@ const StyledSearchBar = styled.div`
   width: 100%;
   height: 2.625em;
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     display: none;
   }
 `;
@@ -19,7 +19,7 @@ const StyledInput = styled.input`
   border: none;
   border-radius: 2px 0px 0px 2px;
   padding-left: 0.75em;
-  background-color: var(--color-input-light);
+  background-color: ${({ theme }) => theme.colors.inputLight};
   font-size: 0.875em;
   font-weight: 400;
   font-family: inherit;
@@ -36,24 +36,22 @@ const StyledIcon = styled.div`
   border-radius: 0px 2px 2px 0px;
   width: 3.45em;
   height: 2.625em;
-  background-color: var(--color-accent-green);
+  background-color: ${({ theme }) => theme.colors.accentGreen};
   cursor: pointer;
 
   .search-bar-icon {
     height: 2em;
-    color: var(--color-white);
+    color: ${({ theme }) => theme.colors.white};
   }
 `;
 
-const SearchBar = () => {
-  return (
-    <StyledSearchBar>
-      <StyledInput name="search-bar" placeholder="Search for recipes..." />
-      <StyledIcon>
-        <Icon className="search-bar-icon" path={mdiMagnify} />
-      </StyledIcon>
-    </StyledSearchBar>
-  );
-};
+const SearchBar: React.FC = () => (
+  <StyledSearchBar>
+    <StyledInput name="search-bar" placeholder="Search for recipes..." />
+    <StyledIcon>
+      <Icon className="search-bar-icon" path={mdiMagnify} />
+    </StyledIcon>
+  </StyledSearchBar>
+);
 
 export default SearchBar;

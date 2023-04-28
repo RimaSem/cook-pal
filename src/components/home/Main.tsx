@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import RecipeCard from "../RecipeCard";
 import { useEffect, useState } from "react";
+import styled from "styled-components";
 
 interface Recipe {
   idMeal?: string;
@@ -32,22 +32,22 @@ const LoadMoreBtn = styled.button`
   transition: opacity 0.3s;
   margin-top: 2em;
   border: none;
-  border-radius: 10px;
+  border-radius: 0.625em;
   max-width: 95%;
   width: 25em;
   height: 3.25em;
-  background-color: var(--color-accent-green);
+  background-color: ${({ theme }) => theme.colors.accentGreen};
   cursor: pointer;
   font-size: 1.125em;
   font-family: var(--font-primary);
   font-weight: 500;
-  color: var(--color-white);
+  color: ${({ theme }) => theme.colors.white};
 
   &:hover {
     opacity: 0.85;
   }
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     margin-top: 0.3em;
   }
 `;
@@ -56,13 +56,16 @@ const ErrorMessage = styled.div`
   margin: 3em 0;
 `;
 
-const Main = () => {
+const Main: React.FC = () => {
   const [homepageRecipes, setHomepageRecipes] = useState<Recipe[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState(false);
 
   useEffect(() => {
-    fetch("http://www.themealdb.com/api/json/v1/1/search.php?f=f")
+    fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=f", {
+      method: "GET",
+      mode: "cors",
+    })
       .then((res) => {
         if (!res.ok) {
           setLoadMore(false);

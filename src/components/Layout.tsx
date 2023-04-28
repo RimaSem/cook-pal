@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { useRef } from "react";
 import { Outlet } from "react-router-dom";
 import Menu from "./Menu";
@@ -6,9 +5,12 @@ import Header from "./Header";
 import CarouselSlider from "./slider/CarouselSlider";
 import Nav from "./Nav";
 import Footer from "./Footer";
-import { useAppSelector, useAppDispatch } from "../app/hooks";
-import { toggleMenu } from "../features/menu/menuSlice";
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../state/hooks";
+import { getMenuStatus } from "../state/menu/menuSelectors";
+import { toggleMenu } from "../state/menu/menuSlice";
 import { EmblaOptionsType } from "embla-carousel-react";
+import styled from "styled-components";
 
 const Overlay = styled.div`
   z-index: 2;
@@ -17,7 +19,7 @@ const Overlay = styled.div`
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: var(--color-footer-link);
+  background-color: ${({ theme }) => theme.colors.footerLink};
 `;
 
 const StyledLayout = styled.div`
@@ -31,10 +33,10 @@ const MainSection = styled.section`
   flex: 1;
 `;
 
-const Layout = () => {
+const Layout: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
-  const menuState = useAppSelector((state) => state.menu.isOpened);
   const dispatch = useAppDispatch();
+  const { isOpened } = useSelector(getMenuStatus);
 
   const OPTIONS: EmblaOptionsType = {};
   const SLIDE_COUNT = 5;
@@ -42,7 +44,7 @@ const Layout = () => {
 
   return (
     <>
-      {menuState && (
+      {isOpened && (
         <Overlay ref={overlayRef} onClick={() => dispatch(toggleMenu())} />
       )}
       <StyledLayout>

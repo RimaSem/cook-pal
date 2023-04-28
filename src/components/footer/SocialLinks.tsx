@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import Icon from "@mdi/react";
 import { mdiEmail, mdiGithub, mdiLinkedin, mdiFacebook } from "@mdi/js";
+import styled from "styled-components";
 
 const StyledSocialLinks = styled.div`
   display: flex;
@@ -15,43 +15,41 @@ const IconWrapper = styled.a`
   .social-links-icon {
     transition: color 0.3s;
     width: 1.875em;
-    color: var(--color-text-dark);
+    color: ${({ theme }) => theme.colors.darker};
 
     &:hover {
-      color: var(--color-accent-green);
+      color: ${({ theme }) => theme.colors.accentGreen};
     }
   }
 `;
 
-const SocialLinks = () => {
-  return (
-    <StyledSocialLinks>
-      <IconWrapper href="mailto:rima.semetaite@gmail.com" aria-label="Email">
-        <Icon className="social-links-icon" path={mdiEmail} />
-      </IconWrapper>
-      <IconWrapper
-        href="https://github.com/RimaSem"
-        target="_blank"
-        aria-label="GitHub"
-      >
-        <Icon className="social-links-icon" path={mdiGithub} />
-      </IconWrapper>
-      <IconWrapper
-        href="https://www.linkedin.com/in/rima-semetaite/"
-        target="_blank"
-        aria-label="Linkedin"
-      >
-        <Icon className="social-links-icon" path={mdiLinkedin} />
-      </IconWrapper>
-      <IconWrapper
-        href="https://facebook.com/rimasemetaite"
-        target="_blank"
-        aria-label="Facebook"
-      >
-        <Icon className="social-links-icon" path={mdiFacebook} />
-      </IconWrapper>
-    </StyledSocialLinks>
-  );
-};
+const SocialLinks: React.FC = () => (
+  <StyledSocialLinks>
+    <IconWrapper href="mailto:rima.semetaite@gmail.com" aria-label="Email">
+      <Icon className="social-links-icon" path={mdiEmail} />
+    </IconWrapper>
+    <IconWrapper
+      href="https://github.com/RimaSem"
+      target="_blank"
+      aria-label="GitHub"
+    >
+      <Icon className="social-links-icon" path={mdiGithub} />
+    </IconWrapper>
+    <IconWrapper
+      href="https://www.linkedin.com/in/rima-semetaite/"
+      target="_blank"
+      aria-label="Linkedin"
+    >
+      <Icon className="social-links-icon" path={mdiLinkedin} />
+    </IconWrapper>
+    <IconWrapper
+      href="https://facebook.com/rimasemetaite"
+      target="_blank"
+      aria-label="Facebook"
+    >
+      <Icon className="social-links-icon" path={mdiFacebook} />
+    </IconWrapper>
+  </StyledSocialLinks>
+);
 
 export default SocialLinks;

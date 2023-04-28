@@ -1,50 +1,46 @@
-import styled from "styled-components";
 import LogoImg from "../../img/homecooked_logo.png";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
-const StyledLogo = styled.div`
+const LogoContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5em;
+`;
 
-  a {
-    text-decoration: none;
-    cursor: default;
-  }
+const StyledLink = styled(Link)`
+  text-decoration: none;
+  cursor: default;
+`;
 
-  img {
-    width: 4.2em;
-  }
+const StyledImg = styled.img`
+  width: 4.2em;
 
-  p {
-    white-space: nowrap;
-    font-size: 1.5rem;
-    font-weight: 900;
-    color: var(--color-accent-green);
-  }
-
-  @media (max-width: 865px) {
-    img {
-      width: 3.2em;
-    }
-
-    p {
-      font-size: 1.2rem;
-    }
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
+    width: 3.2em;
   }
 `;
 
-const Logo = () => {
-  return (
-    <StyledLogo>
-      <Link to=".">
-        <img src={LogoImg} alt="logo" />
-      </Link>
-      <Link to=".">
-        <p>Cook-Pal</p>
-      </Link>
-    </StyledLogo>
-  );
-};
+const LogoName = styled.p`
+  white-space: nowrap;
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: ${({ theme }) => theme.colors.accentGreen};
+
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
+    font-size: 1.2rem;
+  }
+`;
+
+const Logo: React.FC = () => (
+  <LogoContainer>
+    <StyledLink to=".">
+      <StyledImg src={LogoImg} alt="logo" />
+    </StyledLink>
+    <StyledLink to=".">
+      <LogoName>Cook-Pal</LogoName>
+    </StyledLink>
+  </LogoContainer>
+);
 
 export default Logo;

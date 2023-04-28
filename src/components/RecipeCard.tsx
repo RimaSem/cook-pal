@@ -1,7 +1,7 @@
-import styled from "styled-components";
 import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
+import styled from "styled-components";
 
 interface CardProps {
   name?: string;
@@ -16,29 +16,29 @@ const CardContainer = styled.div`
   flex-direction: column;
   margin: 0.7em 0;
   box-shadow: var(--shadow-card);
-  border-radius: 16px;
+  border-radius: 1em;
   width: 19em;
   height: 21em;
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.colors.white};
   font-family: var(--font-secondary);
 
-  .CardSaveIcon {
-    position: absolute;
-    right: 0.8em;
-    bottom: 1.2em;
-    width: 1.6em;
-    cursor: pointer;
-    color: var(--color-text-dark);
-  }
-
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     margin: 0;
   }
 `;
 
+const CardSaveIcon = styled.div`
+  position: absolute;
+  right: 0.8em;
+  bottom: 0.5em;
+  width: 1.6em;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.darker};
+`;
+
 const CardImg = styled.div<CardProps>`
   margin: 0.5em auto 0 auto;
-  border-radius: 16px;
+  border-radius: 1em;
   width: 18em;
   height: 12.5em;
   background-image: url(${({ img }) => img});
@@ -51,7 +51,7 @@ const CardImg = styled.div<CardProps>`
 const DishArea = styled.p`
   margin: 1em 0 0.2em 1.6em;
   font-size: 0.625em;
-  color: var(--color-text-grey);
+  color: ${({ theme }) => theme.colors.grey};
 `;
 
 const DishName = styled.p`
@@ -59,7 +59,7 @@ const DishName = styled.p`
   padding: 0;
   font-size: 1.4em;
   font-weight: 700;
-  color: var(--color-text-dark);
+  color: ${({ theme }) => theme.colors.darker};
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -69,10 +69,10 @@ const DishCategory = styled.p`
   margin: 1em 0 1em 1em;
   font-size: 1em;
   font-weight: 500;
-  color: var(--color-accent-orange);
+  color: ${({ theme }) => theme.colors.accentOrange};
 `;
 
-const RecipeCard = ({ name, category, area, img }: CardProps) => {
+const RecipeCard: React.FC<CardProps> = ({ name, category, area, img }) => {
   const [saveCard, setSaveCard] = useState(false);
 
   return (
@@ -81,12 +81,12 @@ const RecipeCard = ({ name, category, area, img }: CardProps) => {
       <DishArea>{area}</DishArea>
       <DishName>{name}</DishName>
       <DishCategory>{category}</DishCategory>
-      <div onClick={() => setSaveCard((prev) => !prev)}>
+      <CardSaveIcon onClick={() => setSaveCard((prev) => !prev)}>
         <Icon
-          className="CardSaveIcon"
+          className="cardSaveIcon"
           path={saveCard ? mdiBookmark : mdiBookmarkOutline}
         />
-      </div>
+      </CardSaveIcon>
     </CardContainer>
   );
 };

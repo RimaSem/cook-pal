@@ -1,35 +1,33 @@
-import styled from "styled-components";
 import Logo from "./header/Logo";
 import SearchBar from "./header/SearchBar";
 import HeaderNav from "./header/HeaderNav";
+import styled from "styled-components";
 
 const StyledHeader = styled.div`
   z-index: 4;
   position: sticky;
-  left: 0px;
-  top: 0px;
+  left: 0;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1600px;
+  max-width: 100em;
   width: 100%;
   height: 5em;
   padding: 0 1em;
-  background-color: var(--color-white);
+  background-color: ${({ theme }) => theme.colors.white};
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     height: 3.5em;
   }
 `;
 
-const Header = () => {
-  return (
-    <StyledHeader>
-      <Logo />
-      <SearchBar />
-      <HeaderNav />
-    </StyledHeader>
-  );
-};
+const Header: React.FC = () => (
+  <StyledHeader>
+    <Logo />
+    <SearchBar />
+    <HeaderNav />
+  </StyledHeader>
+);
 
 export default Header;

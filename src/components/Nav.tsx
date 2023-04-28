@@ -1,8 +1,9 @@
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { theme } from "../styles/theme";
+import styled from "styled-components";
 
 interface NavProps {
-  btnColor?: string;
+  btncolor?: string;
 }
 
 const NavContainer = styled.div`
@@ -13,21 +14,21 @@ const NavContainer = styled.div`
   max-width: var(--width-max);
   width: 95%;
 
-  @media (max-width: 865px) {
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
     display: none;
   }
 `;
 
-const StyledLink = styled.div<NavProps>`
+const StyledLink = styled(Link)<NavProps>`
   flex: 1;
   transition: opacity 0.3s;
-  border-radius: 10px;
+  border-radius: 0.625em;
   padding: 1.95em 0.3em;
-  background-color: ${({ btnColor }) =>
-    btnColor ? btnColor : "var(--color-nav-btn-1)"};
+  background-color: ${({ btncolor }) =>
+    btncolor ? btncolor : ({ theme }) => theme.colors.navBtn1};
   cursor: pointer;
   font-weight: 500;
-  color: var(--color-white);
+  color: ${({ theme }) => theme.colors.white};
   text-decoration: none;
   text-align: center;
 
@@ -35,33 +36,31 @@ const StyledLink = styled.div<NavProps>`
     opacity: 0.85;
   }
 
-  a {
-    color: inherit;
-    text-decoration: none;
-  }
-
-  @media (max-width: 675px) {
+  @media ${({ theme }) => theme.mQueries.navQ} {
     padding: 0.95em 0.3em;
   }
 `;
 
-const Nav: React.FC<NavProps> = ({}) => {
+const Nav: React.FC<NavProps> = () => {
+  const color2 = theme.colors.navBtn2;
+  const color3 = theme.colors.navBtn3;
+  const color4 = theme.colors.navBtn4;
+  const color5 = theme.colors.navBtn5;
+
   return (
     <NavContainer>
-      <StyledLink>
-        <Link to="#">Browse Recipes</Link>
+      <StyledLink to=".">Home</StyledLink>
+      <StyledLink to="#" btncolor={color2}>
+        Browse Recipes
       </StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-2)">
-        <Link to="#">Daily Suggestions</Link>
+      <StyledLink to="#" btncolor={color3}>
+        Daily Suggestions
       </StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-3)">
-        <Link to="#">Your Favorites</Link>
+      <StyledLink to="#" btncolor={color4}>
+        Your Favorites
       </StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-4)">
-        <Link to="#">Custom Meal Plan</Link>
-      </StyledLink>
-      <StyledLink btnColor="var(--color-nav-btn-5)">
-        <Link to="#">Create Grocery List</Link>
+      <StyledLink to="#" btncolor={color5}>
+        Create Grocery List
       </StyledLink>
     </NavContainer>
   );
