@@ -1,5 +1,10 @@
+import { useSelector } from "react-redux";
+import { setErrorMessage } from "../../state/error/errorSlice";
+import { useAppDispatch } from "../../state/hooks";
 import RecipeCard from "../RecipeCard";
+import ErrorMessage from "../shared/ErrorMessage";
 import { useEffect, useState } from "react";
+import { getErrorMessage } from "../../state/error/errorSelectors";
 import styled from "styled-components";
 
 export interface Recipe {
@@ -52,14 +57,11 @@ const LoadMoreBtn = styled.button`
   }
 `;
 
-const ErrorMessage = styled.div`
-  margin: 3em 0;
-`;
-
 const Main: React.FC = () => {
   const [homepageRecipes, setHomepageRecipes] = useState<Recipe[]>([]);
-  const [error, setError] = useState<string | null>(null);
   const [loadMore, setLoadMore] = useState(false);
+  const { errorMessage } = useSelector(getErrorMessage);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=f", {
@@ -77,9 +79,9 @@ const Main: React.FC = () => {
       })
       .then((data) => {
         setHomepageRecipes(data.meals);
-        setError(null);
+        dispatch(setErrorMessage(null));
       })
-      .catch((err) => setError(err.message));
+      .catch((err) => dispatch(setErrorMessage(err.message)));
   }, []);
 
   const allRecipes = homepageRecipes.map((recipe) => (
@@ -96,15 +98,15 @@ const Main: React.FC = () => {
   return (
     <StyledMain>
       <AllCards>
-        {error ? (
-          <ErrorMessage>{error}</ErrorMessage>
+        {errorMessage ? (
+          <ErrorMessage />
         ) : loadMore ? (
           allRecipes
         ) : (
           allRecipes.slice(0, 8)
         )}
       </AllCards>
-      {!error && !loadMore && (
+      {!errorMessage && !loadMore && (
         <LoadMoreBtn onClick={() => setLoadMore(true)}>Load More</LoadMoreBtn>
       )}
     </StyledMain>
