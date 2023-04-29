@@ -1,5 +1,14 @@
+import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
+
+const recipeData = {
+  name: "",
+  area: "",
+  category: "",
+  image: "",
+  instructions: "",
+};
 
 const RecipeContainer = styled.div`
   margin: 3em auto;
@@ -125,64 +134,87 @@ const StyledSpan = styled.span`
 `;
 
 const RecipeDetail: React.FC = () => {
+  const [recipe, setRecipe] = useState(recipeData);
+  const [amounts, setAmounts] = useState<string[]>([""]);
+  const [ingredients, setIngredients] = useState<string[]>([""]);
   const { id } = useParams();
   const navigate = useNavigate();
 
+  window.scrollTo({
+    top: 450,
+  });
+
+  const getIngredients = (obj: any) => {
+    const amountArr = [];
+    const ingredientArr = [];
+    for (const key in obj) {
+      if (key.startsWith("strMeasure") && obj[key].trim()) {
+        amountArr.push(obj[key]);
+      }
+      if (key.startsWith("strIngredient") && obj[key].trim()) {
+        ingredientArr.push(obj[key]);
+      }
+    }
+    setAmounts(amountArr);
+    setIngredients(ingredientArr);
+  };
+
+  useEffect(() => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(
+            res.status + ": Could not fetch the data for that resource"
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setRecipe({
+          name: data.meals[0].strMeal,
+          area: data.meals[0].strArea,
+          category: data.meals[0].strCategory,
+          image: data.meals[0].strMealThumb,
+          instructions: data.meals[0].strInstructions,
+        });
+        getIngredients(data.meals[0]);
+      })
+      .catch((err) => console.log(err.message));
+  }, []);
+
+  const listItemsArr = () => {
+    const arr = [];
+    for (let i = 0; i < amounts.length; i++) {
+      arr.push(
+        <ListItem key={i}>
+          <StyledSpan>{amounts[i] + " "}</StyledSpan>
+          {ingredients[i]}
+        </ListItem>
+      );
+    }
+    return arr;
+  };
+
   return (
     <RecipeContainer>
-      <DishName>Spicy Arrabiata Penne</DishName>
-      <AreaLabel>Italian</AreaLabel> <CategoryLabel>Vegetarian</CategoryLabel>
+      <DishName>{recipe.name}</DishName>
+      <AreaLabel>{recipe.area}</AreaLabel>
+      <CategoryLabel>{recipe.category}</CategoryLabel>
       <TopWrapper>
-        <Image src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" />
+        <Image src={recipe.image} />
         <Ingredients>
           <SectionName>Ingredients</SectionName>
           <IngredientList>
-            <UnorderedList>
-              <ListItem>
-                <StyledSpan>1 pound</StyledSpan> penne rigate
-              </ListItem>
-              <ListItem>
-                <StyledSpan>1/4 cup</StyledSpan> olive oil
-              </ListItem>
-              <ListItem>
-                <StyledSpan>3 cloves</StyledSpan> garlic
-              </ListItem>
-              <ListItem>
-                <StyledSpan>1 tin</StyledSpan> chopped tomatoes
-              </ListItem>
-              <ListItem>
-                <StyledSpan>1/2 teaspoon</StyledSpan> red chile flakes
-              </ListItem>
-              <ListItem>
-                <StyledSpan>1/2 teaspoon</StyledSpan> italian seasoning
-              </ListItem>
-              <ListItem>
-                <StyledSpan>6 leaves</StyledSpan> basil
-              </ListItem>
-              <ListItem>
-                <StyledSpan>sprinkling</StyledSpan> Parmigiano-Reggiano
-              </ListItem>
-            </UnorderedList>
+            <UnorderedList>{listItemsArr()}</UnorderedList>
           </IngredientList>
         </Ingredients>
       </TopWrapper>
       <Instructions>
         <SectionName>Instructions</SectionName>
-        <InstructionsText>
-          Bring a large pot of water to a boil. Add kosher salt to the boiling
-          water, then add the pasta. Cook according to the package instructions,
-          about 9 minutes.
-          <br />
-          In a large skillet over medium-high heat, add the olive oil and heat
-          until the oil starts to shimmer. Add the garlic and cook, stirring,
-          until fragrant, 1 to 2 minutes. Add the chopped tomatoes, red chile
-          flakes, Italian seasoning and salt and pepper to taste. Bring to a
-          boil and cook for 5 minutes. Remove from the heat and add the chopped
-          basil.
-          <br />
-          Drain the pasta and add it to the sauce. Garnish with
-          Parmigiano-Reggiano flakes and more basil and serve warm.
-        </InstructionsText>
+        <InstructionsText>{recipe.instructions}</InstructionsText>
       </Instructions>
       <BackBtn type="button" onClick={() => navigate(-1)}>
         &larr; Go Back

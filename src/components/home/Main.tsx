@@ -2,7 +2,7 @@ import RecipeCard from "../RecipeCard";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-interface Recipe {
+export interface Recipe {
   idMeal?: string;
   strMeal?: string;
   strCategory?: string;
@@ -85,6 +85,7 @@ const Main: React.FC = () => {
   const allRecipes = homepageRecipes.map((recipe) => (
     <RecipeCard
       key={recipe.idMeal}
+      id={recipe.idMeal}
       name={recipe.strMeal}
       category={recipe.strCategory}
       area={recipe.strArea}

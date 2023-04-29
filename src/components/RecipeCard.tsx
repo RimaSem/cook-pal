@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
+import { RouteNames } from "../types/RouteNames";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 interface CardProps {
+  id?: string;
   name?: string;
   category?: string;
   area?: string;
@@ -72,12 +75,14 @@ const DishCategory = styled.p`
   color: ${({ theme }) => theme.colors.accentOrange};
 `;
 
-const RecipeCard: React.FC<CardProps> = ({ name, category, area, img }) => {
+const RecipeCard: React.FC<CardProps> = ({ id, name, category, area, img }) => {
   const [saveCard, setSaveCard] = useState(false);
 
   return (
     <CardContainer>
-      <CardImg img={img} />
+      <Link to={`./${RouteNames.RECIPES}/${id}`}>
+        <CardImg img={img} />
+      </Link>
       <DishArea>{area}</DishArea>
       <DishName>{name}</DishName>
       <DishCategory>{category}</DishCategory>
