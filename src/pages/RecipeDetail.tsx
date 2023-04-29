@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import BackButton from "../components/shared/BackButton";
 import styled from "styled-components";
 
 const recipeData = {
@@ -65,21 +66,6 @@ const Image = styled.img`
   }
 `;
 
-const BackBtn = styled.button`
-  margin: 2em 0 1em 1em;
-  border: none;
-  width: fit-content;
-  background-color: ${({ theme }) => theme.colors.white};
-  cursor: pointer;
-  font-size: 1.2rem;
-  font-family: inherit;
-  text-align: left;
-
-  &:hover {
-    color: ${({ theme }) => theme.colors.accentGreen};
-  }
-`;
-
 const AreaLabel = styled.div`
   display: inline-block;
   margin: 0.5em 0.3em 1em 0;
@@ -124,10 +110,12 @@ const IngredientList = styled.div`
 
 const UnorderedList = styled.ul`
   margin-top: 0;
-  padding-left: 1em;
+  padding: 0;
 `;
 
-const ListItem = styled.li``;
+const ListItem = styled.li`
+  list-style: none;
+`;
 
 const StyledSpan = styled.span`
   font-weight: 600;
@@ -138,7 +126,6 @@ const RecipeDetail: React.FC = () => {
   const [amounts, setAmounts] = useState<string[]>([""]);
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const { id } = useParams();
-  const navigate = useNavigate();
 
   window.scrollTo({
     top: 450,
@@ -216,9 +203,7 @@ const RecipeDetail: React.FC = () => {
         <SectionName>Instructions</SectionName>
         <InstructionsText>{recipe.instructions}</InstructionsText>
       </Instructions>
-      <BackBtn type="button" onClick={() => navigate(-1)}>
-        &larr; Go Back
-      </BackBtn>
+      <BackButton />
     </RecipeContainer>
   );
 };
