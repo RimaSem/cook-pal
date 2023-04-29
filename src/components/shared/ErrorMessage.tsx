@@ -4,6 +4,7 @@ import styled from "styled-components";
 
 const StyledErrorMessage = styled.div`
   margin: 3em 0;
+  text-align: center;
 `;
 
 const ErrorMessage: React.FC = () => {

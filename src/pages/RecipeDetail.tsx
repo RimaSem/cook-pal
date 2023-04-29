@@ -1,3 +1,8 @@
+import { useSelector } from "react-redux";
+import { useAppDispatch } from "../state/hooks";
+import { getErrorMessage } from "../state/error/errorSelectors";
+import { setErrorMessage } from "../state/error/errorSlice";
+import ErrorMessage from "../components/shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/shared/BackButton";
@@ -126,6 +131,8 @@ const RecipeDetail: React.FC = () => {
   const [amounts, setAmounts] = useState<string[]>([""]);
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const { id } = useParams();
+  const { errorMessage } = useSelector(getErrorMessage);
+  const dispatch = useAppDispatch();
 
   window.scrollTo({
     top: 450,
@@ -168,8 +175,9 @@ const RecipeDetail: React.FC = () => {
           instructions: data.meals[0].strInstructions,
         });
         getIngredients(data.meals[0]);
+        dispatch(setErrorMessage(null));
       })
-      .catch((err) => console.log(err.message));
+      .catch((err) => dispatch(setErrorMessage(err.message)));
   }, []);
 
   const listItemsArr = () => {
@@ -187,23 +195,29 @@ const RecipeDetail: React.FC = () => {
 
   return (
     <RecipeContainer>
-      <DishName>{recipe.name}</DishName>
-      <AreaLabel>{recipe.area}</AreaLabel>
-      <CategoryLabel>{recipe.category}</CategoryLabel>
-      <TopWrapper>
-        <Image src={recipe.image} />
-        <Ingredients>
-          <SectionName>Ingredients</SectionName>
-          <IngredientList>
-            <UnorderedList>{listItemsArr()}</UnorderedList>
-          </IngredientList>
-        </Ingredients>
-      </TopWrapper>
-      <Instructions>
-        <SectionName>Instructions</SectionName>
-        <InstructionsText>{recipe.instructions}</InstructionsText>
-      </Instructions>
-      <BackButton />
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <>
+          <DishName>{recipe.name}</DishName>
+          <AreaLabel>{recipe.area}</AreaLabel>
+          <CategoryLabel>{recipe.category}</CategoryLabel>
+          <TopWrapper>
+            <Image src={recipe.image} />
+            <Ingredients>
+              <SectionName>Ingredients</SectionName>
+              <IngredientList>
+                <UnorderedList>{listItemsArr()}</UnorderedList>
+              </IngredientList>
+            </Ingredients>
+          </TopWrapper>
+          <Instructions>
+            <SectionName>Instructions</SectionName>
+            <InstructionsText>{recipe.instructions}</InstructionsText>
+          </Instructions>
+          <BackButton />
+        </>
+      )}
     </RecipeContainer>
   );
 };
