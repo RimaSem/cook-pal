@@ -1,3 +1,4 @@
+import { useParams, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const RecipeContainer = styled.div`
@@ -55,6 +56,21 @@ const Image = styled.img`
   }
 `;
 
+const BackBtn = styled.button`
+  margin: 2em 0 1em 1em;
+  border: none;
+  width: fit-content;
+  background-color: ${({ theme }) => theme.colors.white};
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-family: inherit;
+  text-align: left;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.accentGreen};
+  }
+`;
+
 const AreaLabel = styled.div`
   display: inline-block;
   margin: 0.5em 0.3em 1em 0;
@@ -108,62 +124,71 @@ const StyledSpan = styled.span`
   font-weight: 600;
 `;
 
-const RecipeDetail: React.FC = () => (
-  <RecipeContainer>
-    <DishName>Spicy Arrabiata Penne</DishName>
-    <AreaLabel>Italian</AreaLabel> <CategoryLabel>Vegetarian</CategoryLabel>
-    <TopWrapper>
-      <Image src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" />
-      <Ingredients>
-        <SectionName>Ingredients</SectionName>
-        <IngredientList>
-          <UnorderedList>
-            <ListItem>
-              <StyledSpan>1 pound</StyledSpan> penne rigate
-            </ListItem>
-            <ListItem>
-              <StyledSpan>1/4 cup</StyledSpan> olive oil
-            </ListItem>
-            <ListItem>
-              <StyledSpan>3 cloves</StyledSpan> garlic
-            </ListItem>
-            <ListItem>
-              <StyledSpan>1 tin</StyledSpan> chopped tomatoes
-            </ListItem>
-            <ListItem>
-              <StyledSpan>1/2 teaspoon</StyledSpan> red chile flakes
-            </ListItem>
-            <ListItem>
-              <StyledSpan>1/2 teaspoon</StyledSpan> italian seasoning
-            </ListItem>
-            <ListItem>
-              <StyledSpan>6 leaves</StyledSpan> basil
-            </ListItem>
-            <ListItem>
-              <StyledSpan>sprinkling</StyledSpan> Parmigiano-Reggiano
-            </ListItem>
-          </UnorderedList>
-        </IngredientList>
-      </Ingredients>
-    </TopWrapper>
-    <Instructions>
-      <SectionName>Instructions</SectionName>
-      <InstructionsText>
-        Bring a large pot of water to a boil. Add kosher salt to the boiling
-        water, then add the pasta. Cook according to the package instructions,
-        about 9 minutes.
-        <br />
-        In a large skillet over medium-high heat, add the olive oil and heat
-        until the oil starts to shimmer. Add the garlic and cook, stirring,
-        until fragrant, 1 to 2 minutes. Add the chopped tomatoes, red chile
-        flakes, Italian seasoning and salt and pepper to taste. Bring to a boil
-        and cook for 5 minutes. Remove from the heat and add the chopped basil.
-        <br />
-        Drain the pasta and add it to the sauce. Garnish with
-        Parmigiano-Reggiano flakes and more basil and serve warm.
-      </InstructionsText>
-    </Instructions>
-  </RecipeContainer>
-);
+const RecipeDetail: React.FC = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  return (
+    <RecipeContainer>
+      <DishName>Spicy Arrabiata Penne</DishName>
+      <AreaLabel>Italian</AreaLabel> <CategoryLabel>Vegetarian</CategoryLabel>
+      <TopWrapper>
+        <Image src="https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg" />
+        <Ingredients>
+          <SectionName>Ingredients</SectionName>
+          <IngredientList>
+            <UnorderedList>
+              <ListItem>
+                <StyledSpan>1 pound</StyledSpan> penne rigate
+              </ListItem>
+              <ListItem>
+                <StyledSpan>1/4 cup</StyledSpan> olive oil
+              </ListItem>
+              <ListItem>
+                <StyledSpan>3 cloves</StyledSpan> garlic
+              </ListItem>
+              <ListItem>
+                <StyledSpan>1 tin</StyledSpan> chopped tomatoes
+              </ListItem>
+              <ListItem>
+                <StyledSpan>1/2 teaspoon</StyledSpan> red chile flakes
+              </ListItem>
+              <ListItem>
+                <StyledSpan>1/2 teaspoon</StyledSpan> italian seasoning
+              </ListItem>
+              <ListItem>
+                <StyledSpan>6 leaves</StyledSpan> basil
+              </ListItem>
+              <ListItem>
+                <StyledSpan>sprinkling</StyledSpan> Parmigiano-Reggiano
+              </ListItem>
+            </UnorderedList>
+          </IngredientList>
+        </Ingredients>
+      </TopWrapper>
+      <Instructions>
+        <SectionName>Instructions</SectionName>
+        <InstructionsText>
+          Bring a large pot of water to a boil. Add kosher salt to the boiling
+          water, then add the pasta. Cook according to the package instructions,
+          about 9 minutes.
+          <br />
+          In a large skillet over medium-high heat, add the olive oil and heat
+          until the oil starts to shimmer. Add the garlic and cook, stirring,
+          until fragrant, 1 to 2 minutes. Add the chopped tomatoes, red chile
+          flakes, Italian seasoning and salt and pepper to taste. Bring to a
+          boil and cook for 5 minutes. Remove from the heat and add the chopped
+          basil.
+          <br />
+          Drain the pasta and add it to the sauce. Garnish with
+          Parmigiano-Reggiano flakes and more basil and serve warm.
+        </InstructionsText>
+      </Instructions>
+      <BackBtn type="button" onClick={() => navigate(-1)}>
+        &larr; Go Back
+      </BackBtn>
+    </RecipeContainer>
+  );
+};
 
 export default RecipeDetail;
