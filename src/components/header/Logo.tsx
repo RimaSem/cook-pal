@@ -34,10 +34,10 @@ const LogoName = styled.p`
 
 const Logo: React.FC = () => (
   <LogoContainer>
-    <StyledLink to=".">
+    <StyledLink to="./">
       <StyledImg src={LogoImg} alt="logo" />
     </StyledLink>
-    <StyledLink to=".">
+    <StyledLink to="./">
       <LogoName>Cook-Pal</LogoName>
     </StyledLink>
   </LogoContainer>
