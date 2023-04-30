@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { theme } from "../styles/theme";
+import { RouteNames } from "../types/RouteNames";
 import styled from "styled-components";
 
 interface NavProps {
@@ -49,14 +50,14 @@ const Nav: React.FC<NavProps> = () => {
 
   return (
     <NavContainer>
-      <StyledLink to=".">Home</StyledLink>
+      <StyledLink to="./">Home</StyledLink>
       <StyledLink to="#" btncolor={color2}>
         Browse Recipes
       </StyledLink>
       <StyledLink to="#" btncolor={color3}>
         Daily Suggestions
       </StyledLink>
-      <StyledLink to="#" btncolor={color4}>
+      <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
         Your Favorites
       </StyledLink>
       <StyledLink to="#" btncolor={color5}>

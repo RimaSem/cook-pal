@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import RecipeDetail from "./pages/RecipeDetail";
+import Favorites from "./pages/Favorites";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { RouteNames } from "./types/RouteNames";
@@ -25,6 +26,7 @@ const App: React.FC = () => (
               path={`${RouteNames.RECIPES}/:id`}
               element={<RecipeDetail />}
             />
+            <Route path={RouteNames.FAVORITES} element={<Favorites />} />
           </Route>
         </Routes>
       </BrowserRouter>

@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../state/hooks";
 import { getMenuStatus } from "../state/menu/menuSelectors";
 import { toggleMenu } from "../state/menu/menuSlice";
+import { RouteNames } from "../types/RouteNames";
 import styled from "styled-components";
 
 interface MenuProps {
@@ -50,7 +51,7 @@ const Menu: React.FC = () => {
     <StyledMenu menuState={isOpened}>
       {isOpened && (
         <MenuContainer>
-          <StyledLink to="." onClick={handleClick}>
+          <StyledLink to="./" onClick={handleClick}>
             Home
           </StyledLink>
           <StyledLink to="#" onClick={handleClick}>
@@ -59,7 +60,7 @@ const Menu: React.FC = () => {
           <StyledLink to="#" onClick={handleClick}>
             Daily Suggestions
           </StyledLink>
-          <StyledLink to="#" onClick={handleClick}>
+          <StyledLink to={RouteNames.FAVORITES} onClick={handleClick}>
             Your Favorites
           </StyledLink>
           <StyledLink to="#" onClick={handleClick}>

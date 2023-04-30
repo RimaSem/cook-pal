@@ -6,6 +6,7 @@ import ErrorMessage from "../components/shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/shared/BackButton";
+import { StyledPageHeading } from "../styles/sharedStyles";
 import styled from "styled-components";
 
 const recipeData = {
@@ -28,11 +29,7 @@ const RecipeContainer = styled.div`
   }
 `;
 
-const DishName = styled.h1`
-  margin: 1.5em 0;
-  font-size: 2.2rem;
-  text-align: center;
-
+const DishName = styled(StyledPageHeading)`
   @media ${({ theme }) => theme.mQueries.secondaryQ} {
     font-size: 1.8rem;
   }

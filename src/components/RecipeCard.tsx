@@ -6,10 +6,16 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 
 interface CardProps {
-  id?: string;
-  name?: string;
-  category?: string;
-  area?: string;
+  cardData?: {
+    id?: string;
+    name?: string;
+    category?: string;
+    area?: string;
+    img?: string;
+  };
+}
+
+interface CardImgProp {
   img?: string;
 }
 
@@ -39,7 +45,7 @@ const CardSaveIcon = styled.div`
   color: ${({ theme }) => theme.colors.darker};
 `;
 
-const CardImg = styled.div<CardProps>`
+const CardImg = styled.div<CardImgProp>`
   margin: 0.5em auto 0 auto;
   border-radius: 1em;
   width: 18em;
@@ -75,17 +81,17 @@ const DishCategory = styled.p`
   color: ${({ theme }) => theme.colors.accentOrange};
 `;
 
-const RecipeCard: React.FC<CardProps> = ({ id, name, category, area, img }) => {
+const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
   const [saveCard, setSaveCard] = useState(false);
 
   return (
     <CardContainer>
-      <Link to={`./${RouteNames.RECIPES}/${id}`}>
-        <CardImg img={img} />
+      <Link to={`./${RouteNames.RECIPES}/${cardData?.id}`}>
+        <CardImg img={cardData?.img} />
       </Link>
-      <DishArea>{area}</DishArea>
-      <DishName>{name}</DishName>
-      <DishCategory>{category}</DishCategory>
+      <DishArea>{cardData?.area}</DishArea>
+      <DishName>{cardData?.name}</DishName>
+      <DishCategory>{cardData?.category}</DishCategory>
       <CardSaveIcon onClick={() => setSaveCard((prev) => !prev)}>
         <Icon
           className="cardSaveIcon"

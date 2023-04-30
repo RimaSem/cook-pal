@@ -5,6 +5,7 @@ import RecipeCard from "../RecipeCard";
 import ErrorMessage from "../shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { getErrorMessage } from "../../state/error/errorSelectors";
+import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 
 export interface Recipe {
@@ -15,23 +16,9 @@ export interface Recipe {
   strMealThumb?: string;
 }
 
-const StyledMain = styled.main`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.9em;
-  margin: 3.125em 0;
-  max-width: var(--width-max);
-  width: 95%;
-`;
+const StyledMain = styled(MainContainer)``;
 
-const AllCards = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.9em;
-  width: 100%;
-`;
+const AllCards = styled(CardContainer)``;
 
 const LoadMoreBtn = styled.button`
   transition: opacity 0.3s;
@@ -87,11 +74,13 @@ const Main: React.FC = () => {
   const allRecipes = homepageRecipes.map((recipe) => (
     <RecipeCard
       key={recipe.idMeal}
-      id={recipe.idMeal}
-      name={recipe.strMeal}
-      category={recipe.strCategory}
-      area={recipe.strArea}
-      img={recipe.strMealThumb}
+      cardData={{
+        id: recipe.idMeal,
+        name: recipe.strMeal,
+        category: recipe.strCategory,
+        area: recipe.strArea,
+        img: recipe.strMealThumb,
+      }}
     />
   ));
 

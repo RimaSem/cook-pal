@@ -5,6 +5,7 @@ const GlobalStyle = createGlobalStyle`
         /**** FONTS ****/
         --font-primary: "Poppins", sans-serif;
         --font-secondary: "Inter", sans-serif;
+        --font-size-large: 2.2rem;
 
         /**** SHADOWS ****/
         --shadow-card: 0px 0px 1px rgba(12, 26, 75, 0.24),
