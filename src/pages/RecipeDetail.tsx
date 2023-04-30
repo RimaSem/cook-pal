@@ -139,10 +139,10 @@ const RecipeDetail: React.FC = () => {
     const amountArr = [];
     const ingredientArr = [];
     for (const key in obj) {
-      if (key.startsWith("strMeasure") && obj[key].trim()) {
+      if (key.startsWith("strMeasure") && obj[key] && obj[key] !== " ") {
         amountArr.push(obj[key]);
       }
-      if (key.startsWith("strIngredient") && obj[key].trim()) {
+      if (key.startsWith("strIngredient") && obj[key] && obj[key] !== " ") {
         ingredientArr.push(obj[key]);
       }
     }

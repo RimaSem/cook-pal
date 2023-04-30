@@ -22,11 +22,12 @@ const App: React.FC = () => (
         <Routes>
           <Route path="/cook-pal/" element={<Layout />}>
             <Route index element={<Home />} />
+            <Route path={`:id`} element={<RecipeDetail />} />
+            <Route path={RouteNames.FAVORITES} element={<Favorites />} />
             <Route
-              path={`${RouteNames.RECIPES}/:id`}
+              path={`${RouteNames.FAVORITES}/:id`}
               element={<RecipeDetail />}
             />
-            <Route path={RouteNames.FAVORITES} element={<Favorites />} />
           </Route>
         </Routes>
       </BrowserRouter>

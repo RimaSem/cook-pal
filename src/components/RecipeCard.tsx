@@ -1,9 +1,12 @@
 import { useState } from "react";
 import Icon from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
-import { RouteNames } from "../types/RouteNames";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { getFavorites } from "../state/favorites/favoritesSelectors";
+import { useAppDispatch } from "../state/hooks";
+import { addFavorite, removeFavorite } from "../state/favorites/favoritesSlice";
+import styled from "styled-components";
 
 interface CardProps {
   cardData?: {
@@ -82,17 +85,29 @@ const DishCategory = styled.p`
 `;
 
 const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
-  const [saveCard, setSaveCard] = useState(false);
+  const [cardID, setCardID] = useState(cardData?.id || "42");
+  const { favRecipes } = useSelector(getFavorites);
+  const [saveCard, setSaveCard] = useState(favRecipes?.includes(cardID));
+  const dispatch = useAppDispatch();
+
+  const handleClick = (id = "42") => {
+    setSaveCard((prev) => !prev);
+    if (!saveCard) {
+      dispatch(addFavorite(id));
+    } else {
+      dispatch(removeFavorite(id));
+    }
+  };
 
   return (
     <CardContainer>
-      <Link to={`./${RouteNames.RECIPES}/${cardData?.id}`}>
+      <Link to={`./${cardData?.id}`}>
         <CardImg img={cardData?.img} />
       </Link>
       <DishArea>{cardData?.area}</DishArea>
       <DishName>{cardData?.name}</DishName>
       <DishCategory>{cardData?.category}</DishCategory>
-      <CardSaveIcon onClick={() => setSaveCard((prev) => !prev)}>
+      <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
         <Icon
           className="cardSaveIcon"
           path={saveCard ? mdiBookmark : mdiBookmarkOutline}
