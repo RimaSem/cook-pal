@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { setErrorMessage } from "../../state/error/errorSlice";
 import { useAppDispatch } from "../../state/hooks";
 import RecipeCard from "../RecipeCard";
-import ErrorMessage from "../shared/ErrorMessage";
+import ErrorMessage, { handleFetchError } from "../shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { getErrorMessage } from "../../state/error/errorSelectors";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
@@ -56,12 +56,7 @@ const Main: React.FC = () => {
       mode: "cors",
     })
       .then((res) => {
-        if (!res.ok) {
-          setLoadMore(false);
-          throw Error(
-            res.status + ": Could not fetch the data for that resource"
-          );
-        }
+        handleFetchError(res);
         return res.json();
       })
       .then((data) => {

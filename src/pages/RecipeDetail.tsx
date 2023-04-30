@@ -2,7 +2,9 @@ import { useSelector } from "react-redux";
 import { useAppDispatch } from "../state/hooks";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
-import ErrorMessage from "../components/shared/ErrorMessage";
+import ErrorMessage, {
+  handleFetchError,
+} from "../components/shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/shared/BackButton";
@@ -156,11 +158,7 @@ const RecipeDetail: React.FC = () => {
       mode: "cors",
     })
       .then((res) => {
-        if (!res.ok) {
-          throw Error(
-            res.status + ": Could not fetch the data for that resource"
-          );
-        }
+        handleFetchError(res);
         return res.json();
       })
       .then((data) => {

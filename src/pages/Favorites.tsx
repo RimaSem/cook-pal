@@ -7,7 +7,9 @@ import { useSelector } from "react-redux";
 import { getFavorites } from "../state/favorites/favoritesSelectors";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../state/hooks";
-import ErrorMessage from "../components/shared/ErrorMessage";
+import ErrorMessage, {
+  handleFetchError,
+} from "../components/shared/ErrorMessage";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
 import RecipeCard from "../components/RecipeCard";
@@ -36,11 +38,7 @@ const Favorites: React.FC = () => {
         }
       )
         .then((res) => {
-          if (!res.ok) {
-            throw Error(
-              res.status + ": Could not fetch the data for that resource"
-            );
-          }
+          handleFetchError(res);
           return res.json();
         })
         .then((data) =>
