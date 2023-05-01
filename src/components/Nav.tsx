@@ -51,7 +51,7 @@ const Nav: React.FC<NavProps> = () => {
   return (
     <NavContainer>
       <StyledLink to="./">Home</StyledLink>
-      <StyledLink to="#" btncolor={color2}>
+      <StyledLink to={RouteNames.RECIPES} btncolor={color2}>
         Browse Recipes
       </StyledLink>
       <StyledLink to={RouteNames.DAILY} btncolor={color3}>
@@ -60,7 +60,7 @@ const Nav: React.FC<NavProps> = () => {
       <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
         Your Favorites
       </StyledLink>
-      <StyledLink to="#" btncolor={color5}>
+      <StyledLink to={RouteNames.GROCERIES} btncolor={color5}>
         Create Grocery List
       </StyledLink>
     </NavContainer>

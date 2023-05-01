@@ -9,6 +9,9 @@ import { ThemeProvider } from "styled-components";
 import { RouteNames } from "./types/RouteNames";
 import GlobalStyle from "./styles/global";
 import styled from "styled-components";
+import Explore from "./pages/Explore";
+import GroceryList from "./pages/GroceryList";
+import Login from "./pages/Login";
 
 const StyledApp = styled.div`
   min-width: 100%;
@@ -24,6 +27,11 @@ const App: React.FC = () => (
           <Route path="/cook-pal/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path={`:id`} element={<RecipeDetail />} />
+            <Route path={RouteNames.RECIPES} element={<Explore />} />
+            <Route
+              path={`${RouteNames.RECIPES}/:id`}
+              element={<RecipeDetail />}
+            />
             <Route path={RouteNames.DAILY} element={<DailySuggestions />} />
             <Route
               path={`${RouteNames.DAILY}/:id`}
@@ -34,6 +42,8 @@ const App: React.FC = () => (
               path={`${RouteNames.FAVORITES}/:id`}
               element={<RecipeDetail />}
             />
+            <Route path={RouteNames.GROCERIES} element={<GroceryList />} />
+            <Route path={`${RouteNames.LOGIN}`} element={<Login />} />
           </Route>
         </Routes>
       </BrowserRouter>

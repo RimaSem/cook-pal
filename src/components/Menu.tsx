@@ -54,7 +54,7 @@ const Menu: React.FC = () => {
           <StyledLink to="./" onClick={handleClick}>
             Home
           </StyledLink>
-          <StyledLink to="#" onClick={handleClick}>
+          <StyledLink to={RouteNames.RECIPES} onClick={handleClick}>
             All Recipes
           </StyledLink>
           <StyledLink to={RouteNames.DAILY} onClick={handleClick}>
@@ -63,10 +63,10 @@ const Menu: React.FC = () => {
           <StyledLink to={RouteNames.FAVORITES} onClick={handleClick}>
             Your Favorites
           </StyledLink>
-          <StyledLink to="#" onClick={handleClick}>
+          <StyledLink to={RouteNames.GROCERIES} onClick={handleClick}>
             Create Grocery List
           </StyledLink>
-          <StyledLink to="#" onClick={handleClick}>
+          <StyledLink to={RouteNames.LOGIN} onClick={handleClick}>
             Log In
           </StyledLink>
         </MenuContainer>

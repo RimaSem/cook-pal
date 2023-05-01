@@ -3,4 +3,5 @@ export enum RouteNames {
   LOGIN = "login",
   FAVORITES = "favorites",
   DAILY = "daily-suggestions",
+  GROCERIES = "grocery-list",
 }
