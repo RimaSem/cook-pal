@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import RecipeDetail from "./pages/RecipeDetail";
+import DailySuggestions from "./pages/DailySuggestions";
 import Favorites from "./pages/Favorites";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
@@ -23,6 +24,11 @@ const App: React.FC = () => (
           <Route path="/cook-pal/" element={<Layout />}>
             <Route index element={<Home />} />
             <Route path={`:id`} element={<RecipeDetail />} />
+            <Route path={RouteNames.DAILY} element={<DailySuggestions />} />
+            <Route
+              path={`${RouteNames.DAILY}/:id`}
+              element={<RecipeDetail />}
+            />
             <Route path={RouteNames.FAVORITES} element={<Favorites />} />
             <Route
               path={`${RouteNames.FAVORITES}/:id`}
