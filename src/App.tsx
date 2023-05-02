@@ -7,11 +7,12 @@ import Favorites from "./pages/Favorites";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
 import { RouteNames } from "./types/RouteNames";
-import GlobalStyle from "./styles/global";
-import styled from "styled-components";
 import Explore from "./pages/Explore";
 import GroceryList from "./pages/GroceryList";
 import Login from "./pages/Login";
+import AuthRoute from "./components/AuthRoute";
+import GlobalStyle from "./styles/global";
+import styled from "styled-components";
 
 const StyledApp = styled.div`
   min-width: 100%;
@@ -37,12 +38,26 @@ const App: React.FC = () => (
               path={`${RouteNames.DAILY}/:id`}
               element={<RecipeDetail />}
             />
-            <Route path={RouteNames.FAVORITES} element={<Favorites />} />
+            <Route
+              path={RouteNames.FAVORITES}
+              element={
+                <AuthRoute>
+                  <Favorites />
+                </AuthRoute>
+              }
+            />
             <Route
               path={`${RouteNames.FAVORITES}/:id`}
               element={<RecipeDetail />}
             />
-            <Route path={RouteNames.GROCERIES} element={<GroceryList />} />
+            <Route
+              path={RouteNames.GROCERIES}
+              element={
+                <AuthRoute>
+                  <GroceryList />
+                </AuthRoute>
+              }
+            />
             <Route path={`${RouteNames.LOGIN}`} element={<Login />} />
           </Route>
         </Routes>

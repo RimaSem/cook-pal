@@ -6,6 +6,8 @@ import { useAppDispatch } from "../../state/hooks";
 import { getMenuStatus } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
+import { auth } from "../../firebase/firebaseConfig";
+import { signOut } from "firebase/auth";
 import styled from "styled-components";
 
 const StyledNav = styled.nav`
@@ -63,6 +65,7 @@ const HeaderNav: React.FC = () => {
       <StyledLink to=".">Home</StyledLink>
       <StyledLink to={`./${RouteNames.RECIPES}`}>Explore</StyledLink>
       <StyledLoginLink to={`./${RouteNames.LOGIN}`}>Log In</StyledLoginLink>
+      {/* <button onClick={() => signOut(auth)}>Sign out</button> */}
       <HamburgerMenu onClick={handleClick}>
         {isOpened ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
       </HamburgerMenu>

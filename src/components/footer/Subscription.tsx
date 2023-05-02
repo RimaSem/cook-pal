@@ -22,7 +22,7 @@ const FooterInput = styled.input`
   border-radius: 0.25em;
   outline: none;
   width: 18.125em;
-  height: 2.75rem;
+  height: 2.75em;
   padding: 0 1em;
   font-size: 1rem;
   font-family: inherit;
