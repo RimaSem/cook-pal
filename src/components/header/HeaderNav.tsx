@@ -7,7 +7,10 @@ import { getMenuStatus } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
 import { auth } from "../../firebase/firebaseConfig";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect } from "react";
+import { getAuthStatus } from "../../state/auth/authSelectors";
+import { setUserLogin } from "../../state/auth/authSlice";
 import styled from "styled-components";
 
 const StyledNav = styled.nav`
@@ -58,15 +61,35 @@ const HamburgerMenu = styled.div`
 const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
-  const handleClick = () => dispatch(toggleMenu());
+  const { isLoggedIn } = useSelector(getAuthStatus);
+
+  const handleMenu = () => dispatch(toggleMenu());
+
+  const handleAuthLink = () => {
+    if (isLoggedIn) {
+      signOut(auth);
+      dispatch(setUserLogin(false));
+    }
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        dispatch(setUserLogin(true));
+      } else {
+        dispatch(setUserLogin(false));
+      }
+    });
+  }, []);
 
   return (
     <StyledNav>
       <StyledLink to=".">Home</StyledLink>
       <StyledLink to={`./${RouteNames.RECIPES}`}>Explore</StyledLink>
-      <StyledLoginLink to={`./${RouteNames.LOGIN}`}>Log In</StyledLoginLink>
-      {/* <button onClick={() => signOut(auth)}>Sign out</button> */}
-      <HamburgerMenu onClick={handleClick}>
+      <StyledLoginLink to={`./${RouteNames.LOGIN}`} onClick={handleAuthLink}>
+        {isLoggedIn ? "Sign Out" : "Sign In"}
+      </StyledLoginLink>
+      <HamburgerMenu onClick={handleMenu}>
         {isOpened ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
       </HamburgerMenu>
     </StyledNav>

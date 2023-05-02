@@ -65,7 +65,7 @@ const StyledButton = styled.button`
 
 const StyledGoogleButton = styled(StyledButton)`
   position: relative;
-  background-color: #3d78d1;
+  background-color: ${({ theme }) => theme.colors.googleBtn};
 `;
 
 const GoogleImg = styled.img`
@@ -81,7 +81,10 @@ const Login: React.FC = () => {
   const [user, setUser] = useState({ email: "" });
 
   const navigate = useNavigate();
-  // const [authing, setAuthing] = useState(false);
+
+  window.scrollTo({
+    top: 450,
+  });
 
   useEffect(() => {
     onAuthStateChanged(auth, (currentUser: any) => {
@@ -91,7 +94,7 @@ const Login: React.FC = () => {
 
   const register = async () => {
     try {
-      const user = await createUserWithEmailAndPassword(
+      await createUserWithEmailAndPassword(
         auth,
         registerEmail,
         registerPassword
@@ -104,57 +107,27 @@ const Login: React.FC = () => {
   const login = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const user = await signInWithEmailAndPassword(
-        auth,
-        loginEmail,
-        loginPassword
-      );
+      await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       navigate(-1);
     } catch (err) {
       console.error(err);
     }
   };
 
-  const logout = async () => {
+  const handleGoogle = async (e: SyntheticEvent) => {
+    e.preventDefault();
     try {
-      await signOut(auth);
+      const response = await new GoogleAuthProvider();
+      await signInWithPopup(auth, response);
+      navigate(-1);
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const handleGoogle = async () => {
-    try {
-      const provider = await new GoogleAuthProvider();
-      return signInWithPopup(auth, provider);
-    } catch (err) {
-      console.error(err);
-    }
-
-    // try {
-    //   await signInWithPopup(auth, googleProvider);
-    // } catch (err) {
-    //   console.error(err);
-    // }
-    // setAuthing(true);
-
-    // signInWithPopup(auth, new GoogleAuthProvider())
-    //   .then((response) => {
-    //     console.log(response.user.uid);
-    //     navigate("/cook-pal/");
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //     setAuthing(false);
-    //   });
   };
 
   return (
     <LoginContainer>
       <PageHeading>Log in</PageHeading>
-      {/* <button onClick={() => signInWithGoogle()} disabled={authing}>
-        Sign in with Google
-      </button> */}
       <StyledForm>
         <StyledInput
           type="email"
@@ -169,7 +142,7 @@ const Login: React.FC = () => {
           onChange={(e) => setLoginPassword(e.target.value)}
         />
         <StyledButton onClick={login}>Sign in</StyledButton>
-        <StyledGoogleButton>
+        <StyledGoogleButton onClick={handleGoogle}>
           <GoogleImg src={GoogleIcon} />
           Sign in with Google
         </StyledGoogleButton>
@@ -186,21 +159,6 @@ const Login: React.FC = () => {
         ></input>
         <button onClick={register}>Create User</button>
       </div> */}
-      {/* <div className="login-user">
-        <h3>Login</h3>
-        <input
-          placeholder="Email..."
-          onChange={(e) => setLoginEmail(e.target.value)}
-        ></input>
-        <input
-          placeholder="Password..."
-          onChange={(e) => setLoginPassword(e.target.value)}
-        ></input>
-        <button onClick={login}>Login</button>
-      </div> */}
-      {/* <button onClick={handleGoogle}>Sign In With Google</button>
-      <h4>User Logged In: {user?.email}</h4>
-      <button onClick={logout}>Sign Out</button> */}
     </LoginContainer>
   );
 };

@@ -13,6 +13,7 @@ interface ThemeProps {
     navBtn4: string;
     navBtn5: string;
     footerLink: string;
+    googleBtn: string;
   };
 
   mQueries: {
@@ -41,6 +42,7 @@ export const theme: ThemeProps = {
     navBtn4: "#ED8B00",
     navBtn5: "#84BD00",
     footerLink: "rgba(0, 0, 0, 0.6)",
+    googleBtn: "#3d78d1",
   },
 
   mQueries: {

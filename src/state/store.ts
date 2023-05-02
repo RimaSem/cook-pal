@@ -3,6 +3,7 @@ import menuReducer from "./menu/menuSlice";
 import errorReducer from "./error/errorSlice";
 import suggestionsReducer from "./suggestions/suggestionsSlice";
 import favoritesReducer from "./favorites/favoritesSlice";
+import authReducer from "./auth/authSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ export const store = configureStore({
     suggestions: suggestionsReducer,
     error: errorReducer,
     favorites: favoritesReducer,
+    auth: authReducer,
   },
 });
 

@@ -4,10 +4,18 @@ import { useAppDispatch } from "../state/hooks";
 import { getMenuStatus } from "../state/menu/menuSelectors";
 import { toggleMenu } from "../state/menu/menuSlice";
 import { RouteNames } from "../types/RouteNames";
+import { getAuthStatus } from "../state/auth/authSelectors";
+import { setUserLogin } from "../state/auth/authSlice";
 import styled from "styled-components";
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
 interface MenuProps {
   menuState?: boolean;
+}
+
+interface AuthProps {
+  isLoggedIn?: boolean;
 }
 
 const StyledMenu = styled.div<MenuProps>`
@@ -41,11 +49,30 @@ const StyledLink = styled(Link)`
   text-decoration: none;
 `;
 
+const LinkWrapper = styled.div<AuthProps>`
+  margin-top: 2em;
+  color: ${({ isLoggedIn }) => (isLoggedIn ? "red" : "green")};
+`;
+
+const StyledAuthLink = styled(StyledLink)<AuthProps>`
+  font-weight: 500;
+  color: inherit;
+`;
+
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
+  const { isLoggedIn } = useSelector(getAuthStatus);
 
   const handleClick = () => dispatch(toggleMenu());
+
+  const handleAuthLink = () => {
+    if (isLoggedIn) {
+      signOut(auth);
+      dispatch(setUserLogin(false));
+    }
+    dispatch(toggleMenu());
+  };
 
   return (
     <StyledMenu menuState={isOpened}>
@@ -66,9 +93,11 @@ const Menu: React.FC = () => {
           <StyledLink to={RouteNames.GROCERIES} onClick={handleClick}>
             Create Grocery List
           </StyledLink>
-          <StyledLink to={RouteNames.LOGIN} onClick={handleClick}>
-            Log In
-          </StyledLink>
+          <LinkWrapper isLoggedIn={isLoggedIn}>
+            <StyledAuthLink to={RouteNames.LOGIN} onClick={handleAuthLink}>
+              {isLoggedIn ? "Sign Out" : "Sign In"}
+            </StyledAuthLink>
+          </LinkWrapper>
         </MenuContainer>
       )}
     </StyledMenu>
