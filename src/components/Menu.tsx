@@ -6,9 +6,9 @@ import { toggleMenu } from "../state/menu/menuSlice";
 import { RouteNames } from "../types/RouteNames";
 import { getAuthStatus } from "../state/auth/authSelectors";
 import { setUserLogin } from "../state/auth/authSlice";
-import styled from "styled-components";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase/firebaseConfig";
+import styled from "styled-components";
 
 interface MenuProps {
   menuState?: boolean;

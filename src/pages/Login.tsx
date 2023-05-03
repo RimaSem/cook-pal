@@ -4,7 +4,6 @@ import {
   signInWithPopup,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  signOut,
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useNavigate } from "react-router";
@@ -19,6 +18,20 @@ const LoginContainer = styled(MainContainer)`
 `;
 
 const PageHeading = styled(StyledPageHeading)``;
+
+const TextWrapper = styled.div`
+  margin-bottom: 1em;
+  font-size: 0.85rem;
+`;
+
+const StyledSpan = styled.span`
+  cursor: pointer;
+  color: green;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 const StyledForm = styled.form`
   display: flex;
@@ -78,6 +91,7 @@ const Login: React.FC = () => {
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [notRegistered, setNotRegistered] = useState(false);
   const [user, setUser] = useState({ email: "" });
 
   const navigate = useNavigate();
@@ -99,6 +113,7 @@ const Login: React.FC = () => {
         registerEmail,
         registerPassword
       );
+      setNotRegistered(false);
     } catch (err) {
       console.error(err);
     }
@@ -127,38 +142,61 @@ const Login: React.FC = () => {
 
   return (
     <LoginContainer>
-      <PageHeading>Log in</PageHeading>
-      <StyledForm>
-        <StyledInput
-          type="email"
-          placeholder="Email"
-          aria-label="Email"
-          onChange={(e) => setLoginEmail(e.target.value)}
-        />
-        <StyledInput
-          type="password"
-          placeholder="Password"
-          aria-label="Password"
-          onChange={(e) => setLoginPassword(e.target.value)}
-        />
-        <StyledButton onClick={login}>Sign in</StyledButton>
-        <StyledGoogleButton onClick={handleGoogle}>
-          <GoogleImg src={GoogleIcon} />
-          Sign in with Google
-        </StyledGoogleButton>
-      </StyledForm>
-      {/* <div className="register-user">
-        <h3>Register User</h3>
-        <input
-          placeholder="Email..."
-          onChange={(e) => setRegisterEmail(e.target.value)}
-        ></input>
-        <input
-          placeholder="Password..."
-          onChange={(e) => setRegisterPassword(e.target.value)}
-        ></input>
-        <button onClick={register}>Create User</button>
-      </div> */}
+      <PageHeading>{notRegistered ? "Register" : "Log In"}</PageHeading>
+      {notRegistered ? (
+        <TextWrapper>
+          Already have an account?{" "}
+          <StyledSpan onClick={() => setNotRegistered(false)}>
+            Sign in here
+          </StyledSpan>
+        </TextWrapper>
+      ) : (
+        <TextWrapper>
+          Don't have an account?{" "}
+          <StyledSpan onClick={() => setNotRegistered(true)}>
+            Register here
+          </StyledSpan>
+        </TextWrapper>
+      )}
+      {!notRegistered ? (
+        <StyledForm>
+          <StyledInput
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            onChange={(e) => setLoginEmail(e.target.value)}
+          />
+          <StyledInput
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
+            onChange={(e) => setLoginPassword(e.target.value)}
+          />
+          <StyledButton onClick={login}>Sign in</StyledButton>
+          <StyledGoogleButton onClick={handleGoogle}>
+            <GoogleImg src={GoogleIcon} />
+            Sign in with Google
+          </StyledGoogleButton>
+        </StyledForm>
+      ) : (
+        <StyledForm>
+          <StyledInput
+            type="email"
+            placeholder="Email"
+            aria-label="Email"
+            onChange={(e) => setRegisterEmail(e.target.value)}
+          />
+          <StyledInput
+            type="password"
+            placeholder="Password"
+            aria-label="Password"
+            onChange={(e) => setRegisterPassword(e.target.value)}
+          />
+          <StyledButton onClick={register}>
+            {notRegistered ? "Create account" : "Sign in"}
+          </StyledButton>
+        </StyledForm>
+      )}
     </LoginContainer>
   );
 };
