@@ -2,6 +2,17 @@ import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import styled from "styled-components";
 
+const SearchBar: React.FC = () => (
+  <StyledSearchBar>
+    <StyledInput name="search-bar" placeholder="Search for recipes..." />
+    <StyledIcon>
+      <Icon className="search-bar-icon" path={mdiMagnify} />
+    </StyledIcon>
+  </StyledSearchBar>
+);
+
+export default SearchBar;
+
 const StyledSearchBar = styled.div`
   display: flex;
   margin: 0 2em;
@@ -44,14 +55,3 @@ const StyledIcon = styled.div`
     color: ${({ theme }) => theme.colors.white};
   }
 `;
-
-const SearchBar: React.FC = () => (
-  <StyledSearchBar>
-    <StyledInput name="search-bar" placeholder="Search for recipes..." />
-    <StyledIcon>
-      <Icon className="search-bar-icon" path={mdiMagnify} />
-    </StyledIcon>
-  </StyledSearchBar>
-);
-
-export default SearchBar;

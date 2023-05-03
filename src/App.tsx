@@ -14,11 +14,6 @@ import AuthRoute from "./components/AuthRoute";
 import GlobalStyle from "./styles/global";
 import styled from "styled-components";
 
-const StyledApp = styled.div`
-  min-width: 100%;
-  min-height: inherit;
-`;
-
 const App: React.FC = () => (
   <ThemeProvider theme={theme}>
     <GlobalStyle />
@@ -67,3 +62,8 @@ const App: React.FC = () => (
 );
 
 export default App;
+
+const StyledApp = styled.div`
+  min-width: 100%;
+  min-height: inherit;
+`;

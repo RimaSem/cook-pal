@@ -12,80 +12,6 @@ import { SyntheticEvent, useEffect, useState } from "react";
 import GoogleIcon from "../img/btn_google.svg";
 import styled from "styled-components";
 
-const LoginContainer = styled(MainContainer)`
-  flex-direction: column;
-  align-items: center;
-`;
-
-const PageHeading = styled(StyledPageHeading)``;
-
-const TextWrapper = styled.div`
-  margin-bottom: 1em;
-  font-size: 0.85rem;
-`;
-
-const StyledSpan = styled.span`
-  cursor: pointer;
-  color: green;
-
-  &:hover {
-    text-decoration: underline;
-  }
-`;
-
-const StyledForm = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5em;
-  width: 24em;
-  max-width: 95%;
-`;
-
-const StyledInput = styled.input`
-  border: 1px solid ${({ theme }) => theme.colors.grey};
-  border-radius: 0.25em;
-  outline: none;
-  padding: 0em 1em;
-  height: 2.75em;
-  font-size: inherit;
-  font-family: inherit;
-  font-weight: 300;
-  letter-spacing: 0.02em;
-
-  &:focus {
-    border: 1px solid ${({ theme }) => theme.colors.darker};
-  }
-`;
-
-const StyledButton = styled.button`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: none;
-  border-radius: 0.25em;
-  padding: 0.9em;
-  height: 2.75em;
-  background-color: ${({ theme }) => theme.colors.accentGreen};
-  cursor: pointer;
-  font-size: inherit;
-  font-family: inherit;
-  color: ${({ theme }) => theme.colors.lighter};
-
-  &:hover {
-    opacity: 0.85;
-  }
-`;
-
-const StyledGoogleButton = styled(StyledButton)`
-  position: relative;
-  background-color: ${({ theme }) => theme.colors.googleBtn};
-`;
-
-const GoogleImg = styled.img`
-  position: absolute;
-  left: 0;
-`;
-
 const Login: React.FC = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -202,3 +128,77 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+const LoginContainer = styled(MainContainer)`
+  flex-direction: column;
+  align-items: center;
+`;
+
+const PageHeading = styled(StyledPageHeading)``;
+
+const TextWrapper = styled.div`
+  margin-bottom: 1em;
+  font-size: 0.85rem;
+`;
+
+const StyledSpan = styled.span`
+  cursor: pointer;
+  color: green;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 24em;
+  max-width: 95%;
+`;
+
+const StyledInput = styled.input`
+  border: 1px solid ${({ theme }) => theme.colors.grey};
+  border-radius: 0.25em;
+  outline: none;
+  padding: 0em 1em;
+  height: 2.75em;
+  font-size: inherit;
+  font-family: inherit;
+  font-weight: 300;
+  letter-spacing: 0.02em;
+
+  &:focus {
+    border: 1px solid ${({ theme }) => theme.colors.darker};
+  }
+`;
+
+const StyledButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 0.25em;
+  padding: 0.9em;
+  height: 2.75em;
+  background-color: ${({ theme }) => theme.colors.accentGreen};
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  color: ${({ theme }) => theme.colors.lighter};
+
+  &:hover {
+    opacity: 0.85;
+  }
+`;
+
+const StyledGoogleButton = styled(StyledButton)`
+  position: relative;
+  background-color: ${({ theme }) => theme.colors.googleBtn};
+`;
+
+const GoogleImg = styled.img`
+  position: absolute;
+  left: 0;
+`;

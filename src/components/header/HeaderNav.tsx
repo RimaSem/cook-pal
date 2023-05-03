@@ -1,4 +1,4 @@
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiMenu, mdiWindowClose } from "@mdi/js";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,6 +12,46 @@ import { useEffect } from "react";
 import { getAuthStatus } from "../../state/auth/authSelectors";
 import { setUserLogin } from "../../state/auth/authSlice";
 import styled from "styled-components";
+
+const HeaderNav: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { isOpened } = useSelector(getMenuStatus);
+  const { isLoggedIn } = useSelector(getAuthStatus);
+
+  const handleMenu = () => dispatch(toggleMenu());
+
+  const handleAuthLink = () => {
+    if (isLoggedIn) {
+      signOut(auth);
+      dispatch(setUserLogin(false));
+    }
+  };
+
+  useEffect(() => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        dispatch(setUserLogin(true));
+      } else {
+        dispatch(setUserLogin(false));
+      }
+    });
+  }, []);
+
+  return (
+    <StyledNav>
+      <StyledLink to=".">Home</StyledLink>
+      <StyledLink to={`./${RouteNames.RECIPES}`}>Explore</StyledLink>
+      <StyledLoginLink to={`./${RouteNames.LOGIN}`} onClick={handleAuthLink}>
+        {isLoggedIn ? "Sign Out" : "Sign In"}
+      </StyledLoginLink>
+      <HamburgerMenu onClick={handleMenu}>
+        {isOpened ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
+      </HamburgerMenu>
+    </StyledNav>
+  );
+};
+
+export default HeaderNav;
 
 const StyledNav = styled.nav`
   display: flex;
@@ -57,43 +97,3 @@ const HamburgerMenu = styled.div`
     z-index: 1009;
   }
 `;
-
-const HeaderNav: React.FC = () => {
-  const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(getMenuStatus);
-  const { isLoggedIn } = useSelector(getAuthStatus);
-
-  const handleMenu = () => dispatch(toggleMenu());
-
-  const handleAuthLink = () => {
-    if (isLoggedIn) {
-      signOut(auth);
-      dispatch(setUserLogin(false));
-    }
-  };
-
-  useEffect(() => {
-    onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        dispatch(setUserLogin(true));
-      } else {
-        dispatch(setUserLogin(false));
-      }
-    });
-  }, []);
-
-  return (
-    <StyledNav>
-      <StyledLink to=".">Home</StyledLink>
-      <StyledLink to={`./${RouteNames.RECIPES}`}>Explore</StyledLink>
-      <StyledLoginLink to={`./${RouteNames.LOGIN}`} onClick={handleAuthLink}>
-        {isLoggedIn ? "Sign Out" : "Sign In"}
-      </StyledLoginLink>
-      <HamburgerMenu onClick={handleMenu}>
-        {isOpened ? <Icon path={mdiWindowClose} /> : <Icon path={mdiMenu} />}
-      </HamburgerMenu>
-    </StyledNav>
-  );
-};
-
-export default HeaderNav;

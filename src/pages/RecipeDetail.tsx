@@ -19,6 +19,100 @@ const recipeData = {
   instructions: "",
 };
 
+const RecipeDetail: React.FC = () => {
+  const [recipe, setRecipe] = useState(recipeData);
+  const [amounts, setAmounts] = useState<string[]>([""]);
+  const [ingredients, setIngredients] = useState<string[]>([""]);
+  const { id } = useParams();
+  const { errorMessage } = useSelector(getErrorMessage);
+  const dispatch = useAppDispatch();
+
+  window.scrollTo({
+    top: 450,
+  });
+
+  const getIngredients = (obj: any) => {
+    const amountArr = [];
+    const ingredientArr = [];
+    for (const key in obj) {
+      if (key.startsWith("strMeasure") && obj[key] && obj[key] !== " ") {
+        amountArr.push(obj[key]);
+      }
+      if (key.startsWith("strIngredient") && obj[key] && obj[key] !== " ") {
+        ingredientArr.push(obj[key]);
+      }
+    }
+    setAmounts(amountArr);
+    setIngredients(ingredientArr);
+  };
+
+  useEffect(() => {
+    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, {
+      method: "GET",
+      mode: "cors",
+    })
+      .then((res) => {
+        handleFetchError(res);
+        return res.json();
+      })
+      .then((data) => {
+        setRecipe({
+          name: data.meals[0].strMeal,
+          area: data.meals[0].strArea,
+          category: data.meals[0].strCategory,
+          image: data.meals[0].strMealThumb,
+          instructions: data.meals[0].strInstructions,
+        });
+        getIngredients(data.meals[0]);
+        dispatch(setErrorMessage(null));
+      })
+      .catch((err) => dispatch(setErrorMessage(err.message)));
+  }, []);
+
+  const listItemsArr = () => {
+    const arr = [];
+    for (let i = 0; i < amounts.length; i++) {
+      arr.push(
+        <ListItem key={i}>
+          <StyledSpan>{amounts[i] + " "}</StyledSpan>
+          {ingredients[i]}
+        </ListItem>
+      );
+    }
+    return arr;
+  };
+
+  return (
+    <RecipeContainer>
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <>
+          <DishName>{recipe.name}</DishName>
+          <AreaLabel>{recipe.area}</AreaLabel>
+          <CategoryLabel>{recipe.category}</CategoryLabel>
+          <TopWrapper>
+            <Image src={recipe.image} />
+            <Ingredients>
+              <SectionName>Ingredients</SectionName>
+              <IngredientList>
+                <UnorderedList>{listItemsArr()}</UnorderedList>
+              </IngredientList>
+            </Ingredients>
+          </TopWrapper>
+          <Instructions>
+            <SectionName>Instructions</SectionName>
+            <InstructionsText>{recipe.instructions}</InstructionsText>
+          </Instructions>
+          <BackButton />
+        </>
+      )}
+    </RecipeContainer>
+  );
+};
+
+export default RecipeDetail;
+
 const RecipeContainer = styled.div`
   margin: 3em auto;
   max-width: 62.5em;
@@ -124,97 +218,3 @@ const ListItem = styled.li`
 const StyledSpan = styled.span`
   font-weight: 600;
 `;
-
-const RecipeDetail: React.FC = () => {
-  const [recipe, setRecipe] = useState(recipeData);
-  const [amounts, setAmounts] = useState<string[]>([""]);
-  const [ingredients, setIngredients] = useState<string[]>([""]);
-  const { id } = useParams();
-  const { errorMessage } = useSelector(getErrorMessage);
-  const dispatch = useAppDispatch();
-
-  window.scrollTo({
-    top: 450,
-  });
-
-  const getIngredients = (obj: any) => {
-    const amountArr = [];
-    const ingredientArr = [];
-    for (const key in obj) {
-      if (key.startsWith("strMeasure") && obj[key] && obj[key] !== " ") {
-        amountArr.push(obj[key]);
-      }
-      if (key.startsWith("strIngredient") && obj[key] && obj[key] !== " ") {
-        ingredientArr.push(obj[key]);
-      }
-    }
-    setAmounts(amountArr);
-    setIngredients(ingredientArr);
-  };
-
-  useEffect(() => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((res) => {
-        handleFetchError(res);
-        return res.json();
-      })
-      .then((data) => {
-        setRecipe({
-          name: data.meals[0].strMeal,
-          area: data.meals[0].strArea,
-          category: data.meals[0].strCategory,
-          image: data.meals[0].strMealThumb,
-          instructions: data.meals[0].strInstructions,
-        });
-        getIngredients(data.meals[0]);
-        dispatch(setErrorMessage(null));
-      })
-      .catch((err) => dispatch(setErrorMessage(err.message)));
-  }, []);
-
-  const listItemsArr = () => {
-    const arr = [];
-    for (let i = 0; i < amounts.length; i++) {
-      arr.push(
-        <ListItem key={i}>
-          <StyledSpan>{amounts[i] + " "}</StyledSpan>
-          {ingredients[i]}
-        </ListItem>
-      );
-    }
-    return arr;
-  };
-
-  return (
-    <RecipeContainer>
-      {errorMessage ? (
-        <ErrorMessage />
-      ) : (
-        <>
-          <DishName>{recipe.name}</DishName>
-          <AreaLabel>{recipe.area}</AreaLabel>
-          <CategoryLabel>{recipe.category}</CategoryLabel>
-          <TopWrapper>
-            <Image src={recipe.image} />
-            <Ingredients>
-              <SectionName>Ingredients</SectionName>
-              <IngredientList>
-                <UnorderedList>{listItemsArr()}</UnorderedList>
-              </IngredientList>
-            </Ingredients>
-          </TopWrapper>
-          <Instructions>
-            <SectionName>Instructions</SectionName>
-            <InstructionsText>{recipe.instructions}</InstructionsText>
-          </Instructions>
-          <BackButton />
-        </>
-      )}
-    </RecipeContainer>
-  );
-};
-
-export default RecipeDetail;

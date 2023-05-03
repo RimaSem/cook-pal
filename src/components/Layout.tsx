@@ -12,27 +12,6 @@ import { toggleMenu } from "../state/menu/menuSlice";
 import { EmblaOptionsType } from "embla-carousel-react";
 import styled from "styled-components";
 
-const Overlay = styled.div`
-  z-index: 2;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: ${({ theme }) => theme.colors.footerLink};
-`;
-
-const StyledLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-`;
-
-const MainSection = styled.section`
-  flex: 1;
-`;
-
 const Layout: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
@@ -62,3 +41,24 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
+
+const Overlay = styled.div`
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: ${({ theme }) => theme.colors.footerLink};
+`;
+
+const StyledLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+`;
+
+const MainSection = styled.section`
+  flex: 1;
+`;

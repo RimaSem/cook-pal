@@ -1,15 +1,6 @@
 import { StyledPageHeading, MainContainer } from "../styles/sharedStyles";
 import styled from "styled-components";
 
-const GroceryContainer = styled(MainContainer)`
-  flex-direction: column;
-  align-items: center;
-`;
-
-const PageHeading = styled(StyledPageHeading)``;
-
-const Text = styled.p``;
-
 const GroceryList: React.FC = () => (
   <GroceryContainer>
     <PageHeading>Grocery List</PageHeading>
@@ -18,3 +9,12 @@ const GroceryList: React.FC = () => (
 );
 
 export default GroceryList;
+
+const GroceryContainer = styled(MainContainer)`
+  flex-direction: column;
+  align-items: center;
+`;
+
+const PageHeading = styled(StyledPageHeading)``;
+
+const Text = styled.p``;

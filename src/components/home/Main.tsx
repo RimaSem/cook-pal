@@ -16,34 +16,6 @@ export interface Recipe {
   strMealThumb?: string;
 }
 
-const StyledMain = styled(MainContainer)``;
-
-const AllCards = styled(CardContainer)``;
-
-const LoadMoreBtn = styled.button`
-  transition: opacity 0.3s;
-  margin-top: 2em;
-  border: none;
-  border-radius: 0.625em;
-  max-width: 95%;
-  width: 25em;
-  height: 3.25em;
-  background-color: ${({ theme }) => theme.colors.accentGreen};
-  cursor: pointer;
-  font-size: 1.125em;
-  font-family: var(--font-primary);
-  font-weight: 500;
-  color: ${({ theme }) => theme.colors.white};
-
-  &:hover {
-    opacity: 0.85;
-  }
-
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
-    margin-top: 0.3em;
-  }
-`;
-
 const Main: React.FC = () => {
   const [homepageRecipes, setHomepageRecipes] = useState<Recipe[]>([]);
   const [loadMore, setLoadMore] = useState(false);
@@ -98,3 +70,31 @@ const Main: React.FC = () => {
 };
 
 export default Main;
+
+const StyledMain = styled(MainContainer)``;
+
+const AllCards = styled(CardContainer)``;
+
+const LoadMoreBtn = styled.button`
+  transition: opacity 0.3s;
+  margin-top: 2em;
+  border: none;
+  border-radius: 0.625em;
+  max-width: 95%;
+  width: 25em;
+  height: 3.25em;
+  background-color: ${({ theme }) => theme.colors.accentGreen};
+  cursor: pointer;
+  font-size: 1.125em;
+  font-family: var(--font-primary);
+  font-weight: 500;
+  color: ${({ theme }) => theme.colors.white};
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  @media ${({ theme }) => theme.mQueries.primaryQ} {
+    margin-top: 0.3em;
+  }
+`;

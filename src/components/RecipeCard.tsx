@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -21,6 +21,41 @@ interface CardProps {
 interface CardImgProp {
   img?: string;
 }
+
+const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
+  const [cardID, setCardID] = useState(cardData?.id || "42");
+  const { favRecipes } = useSelector(getFavorites);
+  const [saveCard, setSaveCard] = useState(favRecipes?.includes(cardID));
+  const dispatch = useAppDispatch();
+
+  const handleClick = (id = "42") => {
+    setSaveCard((prev) => !prev);
+    if (!saveCard) {
+      dispatch(addFavorite(id));
+    } else {
+      dispatch(removeFavorite(id));
+    }
+  };
+
+  return (
+    <CardContainer>
+      <Link to={`./${cardData?.id}`}>
+        <CardImg img={cardData?.img} />
+      </Link>
+      <DishArea>{cardData?.area}</DishArea>
+      <DishName>{cardData?.name}</DishName>
+      <DishCategory>{cardData?.category}</DishCategory>
+      <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
+        <Icon
+          className="cardSaveIcon"
+          path={saveCard ? mdiBookmark : mdiBookmarkOutline}
+        />
+      </CardSaveIcon>
+    </CardContainer>
+  );
+};
+
+export default RecipeCard;
 
 const CardContainer = styled.div`
   position: relative;
@@ -83,38 +118,3 @@ const DishCategory = styled.p`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.accentOrange};
 `;
-
-const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
-  const [cardID, setCardID] = useState(cardData?.id || "42");
-  const { favRecipes } = useSelector(getFavorites);
-  const [saveCard, setSaveCard] = useState(favRecipes?.includes(cardID));
-  const dispatch = useAppDispatch();
-
-  const handleClick = (id = "42") => {
-    setSaveCard((prev) => !prev);
-    if (!saveCard) {
-      dispatch(addFavorite(id));
-    } else {
-      dispatch(removeFavorite(id));
-    }
-  };
-
-  return (
-    <CardContainer>
-      <Link to={`./${cardData?.id}`}>
-        <CardImg img={cardData?.img} />
-      </Link>
-      <DishArea>{cardData?.area}</DishArea>
-      <DishName>{cardData?.name}</DishName>
-      <DishCategory>{cardData?.category}</DishCategory>
-      <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
-        <Icon
-          className="cardSaveIcon"
-          path={saveCard ? mdiBookmark : mdiBookmarkOutline}
-        />
-      </CardSaveIcon>
-    </CardContainer>
-  );
-};
-
-export default RecipeCard;

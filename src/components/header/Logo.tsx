@@ -2,6 +2,19 @@ import LogoImg from "../../img/homecooked_logo.png";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
+const Logo: React.FC = () => (
+  <LogoContainer>
+    <StyledLink to="./">
+      <StyledImg src={LogoImg} alt="logo" />
+    </StyledLink>
+    <StyledLink to="./">
+      <LogoName>Cook-Pal</LogoName>
+    </StyledLink>
+  </LogoContainer>
+);
+
+export default Logo;
+
 const LogoContainer = styled.div`
   display: flex;
   align-items: center;
@@ -31,16 +44,3 @@ const LogoName = styled.p`
     font-size: 1.2rem;
   }
 `;
-
-const Logo: React.FC = () => (
-  <LogoContainer>
-    <StyledLink to="./">
-      <StyledImg src={LogoImg} alt="logo" />
-    </StyledLink>
-    <StyledLink to="./">
-      <LogoName>Cook-Pal</LogoName>
-    </StyledLink>
-  </LogoContainer>
-);
-
-export default Logo;

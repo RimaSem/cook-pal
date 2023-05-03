@@ -15,12 +15,6 @@ import { setErrorMessage } from "../state/error/errorSlice";
 import RecipeCard from "../components/RecipeCard";
 import styled from "styled-components";
 
-const FavoritesContainer = styled(MainContainer)`
-  flex-direction: column;
-`;
-const StyledHeading = styled(StyledPageHeading)``;
-const AllCards = styled(CardContainer)``;
-
 const Favorites: React.FC = () => {
   const [allFavorites, setAllFavorites] = useState<JSX.Element[]>([]);
   const { favRecipes } = useSelector(getFavorites);
@@ -73,3 +67,11 @@ const Favorites: React.FC = () => {
 };
 
 export default Favorites;
+
+const FavoritesContainer = styled(MainContainer)`
+  flex-direction: column;
+`;
+
+const StyledHeading = styled(StyledPageHeading)``;
+
+const AllCards = styled(CardContainer)``;

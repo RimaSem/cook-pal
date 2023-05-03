@@ -18,47 +18,6 @@ interface AuthProps {
   isLoggedIn?: boolean;
 }
 
-const StyledMenu = styled.div<MenuProps>`
-  z-index: 3;
-  position: fixed;
-  right: ${({ menuState }) => (menuState ? "0" : "-600px")};
-  display: flex;
-  flex-direction: column;
-  transition: right 0.5s;
-  width: 26.25em;
-  height: 100vh;
-  background-color: ${({ theme }) => theme.colors.white};
-
-  @media ${({ theme }) => theme.mQueries.menuQ} {
-    width: 100%;
-  }
-`;
-
-const MenuContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 6em auto;
-  width: 95%;
-`;
-
-const StyledLink = styled(Link)`
-  margin-bottom: 1.4em;
-  font-size: 1.2rem;
-  color: ${({ theme }) => theme.colors.darker};
-  text-decoration: none;
-`;
-
-const LinkWrapper = styled.div<AuthProps>`
-  margin-top: 2em;
-  color: ${({ isLoggedIn }) => (isLoggedIn ? "red" : "green")};
-`;
-
-const StyledAuthLink = styled(StyledLink)<AuthProps>`
-  font-weight: 500;
-  color: inherit;
-`;
-
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
@@ -105,3 +64,44 @@ const Menu: React.FC = () => {
 };
 
 export default Menu;
+
+const StyledMenu = styled.div<MenuProps>`
+  z-index: 3;
+  position: fixed;
+  right: ${({ menuState }) => (menuState ? "0" : "-600px")};
+  display: flex;
+  flex-direction: column;
+  transition: right 0.5s;
+  width: 26.25em;
+  height: 100vh;
+  background-color: ${({ theme }) => theme.colors.white};
+
+  @media ${({ theme }) => theme.mQueries.menuQ} {
+    width: 100%;
+  }
+`;
+
+const MenuContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6em auto;
+  width: 95%;
+`;
+
+const StyledLink = styled(Link)`
+  margin-bottom: 1.4em;
+  font-size: 1.2rem;
+  color: ${({ theme }) => theme.colors.darker};
+  text-decoration: none;
+`;
+
+const LinkWrapper = styled.div<AuthProps>`
+  margin-top: 2em;
+  color: ${({ isLoggedIn }) => (isLoggedIn ? "red" : "green")};
+`;
+
+const StyledAuthLink = styled(StyledLink)<AuthProps>`
+  font-weight: 500;
+  color: inherit;
+`;

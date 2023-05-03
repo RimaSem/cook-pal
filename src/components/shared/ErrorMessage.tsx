@@ -8,11 +8,6 @@ export const handleFetchError = (res: { ok: boolean; status: number }) => {
   }
 };
 
-const StyledErrorMessage = styled.div`
-  margin: 3em 0;
-  text-align: center;
-`;
-
 const ErrorMessage: React.FC = () => {
   const { errorMessage } = useSelector(getErrorMessage);
 
@@ -20,3 +15,8 @@ const ErrorMessage: React.FC = () => {
 };
 
 export default ErrorMessage;
+
+const StyledErrorMessage = styled.div`
+  margin: 3em 0;
+  text-align: center;
+`;

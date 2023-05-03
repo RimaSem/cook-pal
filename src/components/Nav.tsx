@@ -7,6 +7,33 @@ interface NavProps {
   btncolor?: string;
 }
 
+const Nav: React.FC<NavProps> = () => {
+  const color2 = theme.colors.navBtn2;
+  const color3 = theme.colors.navBtn3;
+  const color4 = theme.colors.navBtn4;
+  const color5 = theme.colors.navBtn5;
+
+  return (
+    <NavContainer>
+      <StyledLink to="./">Home</StyledLink>
+      <StyledLink to={RouteNames.RECIPES} btncolor={color2}>
+        Browse Recipes
+      </StyledLink>
+      <StyledLink to={RouteNames.DAILY} btncolor={color3}>
+        Daily Suggestions
+      </StyledLink>
+      <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
+        Your Favorites
+      </StyledLink>
+      <StyledLink to={RouteNames.GROCERIES} btncolor={color5}>
+        Create Grocery List
+      </StyledLink>
+    </NavContainer>
+  );
+};
+
+export default Nav;
+
 const NavContainer = styled.div`
   display: flex;
   justify-content: space-between;
@@ -41,30 +68,3 @@ const StyledLink = styled(Link)<NavProps>`
     padding: 0.95em 0.3em;
   }
 `;
-
-const Nav: React.FC<NavProps> = () => {
-  const color2 = theme.colors.navBtn2;
-  const color3 = theme.colors.navBtn3;
-  const color4 = theme.colors.navBtn4;
-  const color5 = theme.colors.navBtn5;
-
-  return (
-    <NavContainer>
-      <StyledLink to="./">Home</StyledLink>
-      <StyledLink to={RouteNames.RECIPES} btncolor={color2}>
-        Browse Recipes
-      </StyledLink>
-      <StyledLink to={RouteNames.DAILY} btncolor={color3}>
-        Daily Suggestions
-      </StyledLink>
-      <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
-        Your Favorites
-      </StyledLink>
-      <StyledLink to={RouteNames.GROCERIES} btncolor={color5}>
-        Create Grocery List
-      </StyledLink>
-    </NavContainer>
-  );
-};
-
-export default Nav;

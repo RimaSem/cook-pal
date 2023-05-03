@@ -2,6 +2,14 @@ import React from "react";
 import Main from "../components/home/Main";
 import styled from "styled-components";
 
+const Home: React.FC = () => (
+  <HomeWrapper>
+    <Main />
+  </HomeWrapper>
+);
+
+export default Home;
+
 const HomeWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,11 +20,3 @@ const HomeWrapper = styled.div`
   font-family: var(--font-primary);
   color: ${({ theme }) => theme.colors.darker};
 `;
-
-const Home: React.FC = () => (
-  <HomeWrapper>
-    <Main />
-  </HomeWrapper>
-);
-
-export default Home;

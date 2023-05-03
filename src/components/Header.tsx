@@ -3,6 +3,16 @@ import SearchBar from "./header/SearchBar";
 import HeaderNav from "./header/HeaderNav";
 import styled from "styled-components";
 
+const Header: React.FC = () => (
+  <StyledHeader>
+    <Logo />
+    <SearchBar />
+    <HeaderNav />
+  </StyledHeader>
+);
+
+export default Header;
+
 const StyledHeader = styled.div`
   z-index: 4;
   position: sticky;
@@ -21,13 +31,3 @@ const StyledHeader = styled.div`
     height: 3.5em;
   }
 `;
-
-const Header: React.FC = () => (
-  <StyledHeader>
-    <Logo />
-    <SearchBar />
-    <HeaderNav />
-  </StyledHeader>
-);
-
-export default Header;

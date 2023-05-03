@@ -4,6 +4,19 @@ import Subscription from "./footer/Subscription";
 import SocialLinks from "./footer/SocialLinks";
 import styled from "styled-components";
 
+const Footer: React.FC = () => (
+  <StyledFooter>
+    <ContentWrapper>
+      <Info />
+      <FooterNav />
+      <Subscription />
+    </ContentWrapper>
+    <SocialLinks />
+  </StyledFooter>
+);
+
+export default Footer;
+
 const StyledFooter = styled.footer`
   display: flex;
   flex-direction: column;
@@ -21,16 +34,3 @@ const ContentWrapper = styled.div`
   width: 95%;
   color: ${({ theme }) => theme.colors.darker};
 `;
-
-const Footer: React.FC = () => (
-  <StyledFooter>
-    <ContentWrapper>
-      <Info />
-      <FooterNav />
-      <Subscription />
-    </ContentWrapper>
-    <SocialLinks />
-  </StyledFooter>
-);
-
-export default Footer;

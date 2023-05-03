@@ -20,17 +20,6 @@ import {
 import RecipeCard from "../components/RecipeCard";
 import styled from "styled-components";
 
-const SuggestionsContainer = styled(MainContainer)`
-  flex-direction: column;
-`;
-const StyledHeading = styled(StyledPageHeading)``;
-
-const StyledParagraph = styled.p`
-  text-align: center;
-`;
-
-const AllCards = styled(CardContainer)``;
-
 const DailySuggestions: React.FC = () => {
   const [suggestions, setSuggestions] = useState<JSX.Element[]>([]);
   const { errorMessage } = useSelector(getErrorMessage);
@@ -108,3 +97,14 @@ const DailySuggestions: React.FC = () => {
 };
 
 export default DailySuggestions;
+
+const SuggestionsContainer = styled(MainContainer)`
+  flex-direction: column;
+`;
+const StyledHeading = styled(StyledPageHeading)``;
+
+const StyledParagraph = styled.p`
+  text-align: center;
+`;
+
+const AllCards = styled(CardContainer)``;

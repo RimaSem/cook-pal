@@ -6,6 +6,16 @@ interface HeroProps {
   img?: string;
 }
 
+const Hero: React.FC<HeroProps> = ({ title, author, img }) => (
+  <StyledHero img={img}>
+    <Label>Trending Now</Label>
+    <Title>{title}</Title>
+    <Author>{author}</Author>
+  </StyledHero>
+);
+
+export default Hero;
+
 const StyledHero = styled.div<HeroProps>`
   display: flex;
   flex-direction: column;
@@ -72,13 +82,3 @@ const Author = styled.p`
     font-size: 5vw;
   }
 `;
-
-const Hero: React.FC<HeroProps> = ({ title, author, img }) => (
-  <StyledHero img={img}>
-    <Label>Trending Now</Label>
-    <Title>{title}</Title>
-    <Author>{author}</Author>
-  </StyledHero>
-);
-
-export default Hero;
