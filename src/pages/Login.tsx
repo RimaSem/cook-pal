@@ -15,6 +15,7 @@ import styled from "styled-components";
 import { FirebaseError } from "firebase/app";
 import { setUserLogin } from "../state/auth/authSlice";
 import { useAppDispatch } from "../state/hooks";
+import { RouteNames } from "../types/RouteNames";
 
 const Login: React.FC = () => {
   const [registerEmail, setRegisterEmail] = useState("");
@@ -25,7 +26,7 @@ const Login: React.FC = () => {
   const [notRegistered, setNotRegistered] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const regx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
+  const emailRegx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
 
   const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
@@ -39,7 +40,7 @@ const Login: React.FC = () => {
     e.preventDefault();
 
     try {
-      if (!registerEmail.match(regx) || !registerEmail) {
+      if (!registerEmail.match(emailRegx) || !registerEmail) {
         setErrorMessage(AuthMessages.INCORRECT_EMAIL_FORMAT);
         throw Error("Incorrect email format");
       }
@@ -75,7 +76,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      navigate("/cook-pal/");
+      navigate(`${RouteNames.HOME}`);
     } catch (err) {
       if (err instanceof FirebaseError) {
         if (err.code === "auth/invalid-email") {
@@ -95,7 +96,7 @@ const Login: React.FC = () => {
     try {
       const response = await new GoogleAuthProvider();
       await signInWithPopup(auth, response);
-      navigate("/cook-pal/");
+      navigate(`${RouteNames.HOME}`);
     } catch (err) {
       setErrorMessage("Could not sign in with Google.");
     }

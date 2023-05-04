@@ -22,7 +22,7 @@ const AuthRoute: React.FC<AuthRouteProps> = (props) => {
     if (user) {
       setLoading(false);
     } else {
-      navigate(`/cook-pal/${RouteNames.LOGIN}`);
+      navigate(`${RouteNames.HOME + RouteNames.LOGIN}`);
     }
   });
 

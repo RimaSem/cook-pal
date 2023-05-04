@@ -20,7 +20,7 @@ const App: React.FC = () => (
     <StyledApp>
       <BrowserRouter>
         <Routes>
-          <Route path="/cook-pal/" element={<Layout />}>
+          <Route path={RouteNames.HOME} element={<Layout />}>
             <Route index element={<Home />} />
             <Route path={`:id`} element={<RecipeDetail />} />
             <Route path={RouteNames.RECIPES} element={<Explore />} />
