@@ -56,7 +56,7 @@ const Label = styled.p`
   color: ${({ theme }) => theme.colors.accentOrange};
 
   @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
-    font-size: 6vw;
+    font-size: 1.4rem;
   }
 `;
 
@@ -68,7 +68,7 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.colors.lighter};
 
   @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
-    font-size: 8vw;
+    font-size: 1.8rem;
   }
 `;
 
@@ -79,6 +79,6 @@ const Author = styled.p`
   color: ${({ theme }) => theme.colors.lighter};
 
   @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
-    font-size: 5vw;
+    font-size: 1.1rem;
   }
 `;

@@ -24,7 +24,9 @@ export default FooterNav;
 
 const StyledFooterNav = styled.div`
   display: flex;
-  gap: clamp(3.125rem, 8vw, 5rem);
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 5em;
 `;
 
 const FooterNavWrapper = styled.div``;

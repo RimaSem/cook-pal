@@ -23,9 +23,10 @@ const RegistrationForm: React.FC<FormProps> = ({
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
-  const emailRegx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
+
+  const emailRegx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
 
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

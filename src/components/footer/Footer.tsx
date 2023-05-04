@@ -28,7 +28,7 @@ const ContentWrapper = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: clamp(3.125em, 8vw, 5em);
+  gap: 6em;
   margin: 3.625em auto;
   max-width: 81.25em;
   width: 95%;
