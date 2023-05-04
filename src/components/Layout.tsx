@@ -1,10 +1,10 @@
 import { useRef } from "react";
 import { Outlet } from "react-router-dom";
-import Menu from "./Menu";
-import Header from "./Header";
+import Menu from "./header/Menu";
+import Header from "./header/Header";
 import CarouselSlider from "./slider/CarouselSlider";
-import Nav from "./Nav";
-import Footer from "./Footer";
+import Nav from "./home/Nav";
+import Footer from "./footer/Footer";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../state/hooks";
 import { getMenuStatus } from "../state/menu/menuSelectors";

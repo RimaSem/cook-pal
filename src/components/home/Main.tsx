@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { setErrorMessage } from "../../state/error/errorSlice";
 import { useAppDispatch } from "../../state/hooks";
-import RecipeCard from "../RecipeCard";
+import RecipeCard from "./RecipeCard";
 import ErrorMessage, { handleFetchError } from "../shared/ErrorMessage";
 import { useEffect, useState } from "react";
 import { getErrorMessage } from "../../state/error/errorSelectors";

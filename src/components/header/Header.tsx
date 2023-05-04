@@ -1,6 +1,6 @@
-import Logo from "./header/Logo";
-import SearchBar from "./header/SearchBar";
-import HeaderNav from "./header/HeaderNav";
+import Logo from "./Logo";
+import SearchBar from "./SearchBar";
+import HeaderNav from "./HeaderNav";
 import styled from "styled-components";
 
 const Header: React.FC = () => (

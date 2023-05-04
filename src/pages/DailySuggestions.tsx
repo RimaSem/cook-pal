@@ -17,7 +17,7 @@ import {
   saveCurrentDate,
   saveRecipe,
 } from "../state/suggestions/suggestionsSlice";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCard from "../components/home/RecipeCard";
 import styled from "styled-components";
 
 const DailySuggestions: React.FC = () => {

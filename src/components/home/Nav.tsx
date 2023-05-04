@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { theme } from "../styles/theme";
-import { RouteNames } from "../types/RouteNames";
+import { theme } from "../../styles/theme";
+import { RouteNames } from "../../types/RouteNames";
 import styled from "styled-components";
 
 interface NavProps {

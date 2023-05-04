@@ -1,7 +1,7 @@
-import FooterNav from "./footer/FooterNav";
-import Info from "./footer/Info";
-import Subscription from "./footer/Subscription";
-import SocialLinks from "./footer/SocialLinks";
+import FooterNav from "./FooterNav";
+import Info from "./Info";
+import Subscription from "./Subscription";
+import SocialLinks from "./SocialLinks";
 import styled from "styled-components";
 
 const Footer: React.FC = () => (

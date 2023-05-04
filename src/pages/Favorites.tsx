@@ -12,7 +12,7 @@ import ErrorMessage, {
 } from "../components/shared/ErrorMessage";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCard from "../components/home/RecipeCard";
 import styled from "styled-components";
 
 const Favorites: React.FC = () => {

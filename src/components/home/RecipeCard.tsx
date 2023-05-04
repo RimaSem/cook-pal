@@ -3,9 +3,12 @@ import { Icon } from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { getFavorites } from "../state/favorites/favoritesSelectors";
-import { useAppDispatch } from "../state/hooks";
-import { addFavorite, removeFavorite } from "../state/favorites/favoritesSlice";
+import { getFavorites } from "../../state/favorites/favoritesSelectors";
+import { useAppDispatch } from "../../state/hooks";
+import {
+  addFavorite,
+  removeFavorite,
+} from "../../state/favorites/favoritesSlice";
 import styled from "styled-components";
 
 interface CardProps {
