@@ -19,6 +19,7 @@ import { useAppDispatch } from "../state/hooks";
 const Login: React.FC = () => {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
+  const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [notRegistered, setNotRegistered] = useState(false);
@@ -42,6 +43,10 @@ const Login: React.FC = () => {
         setErrorMessage(AuthMessages.INCORRECT_EMAIL_FORMAT);
         throw Error("Incorrect email format");
       }
+      if (registerPassword !== registerPasswordConfirm) {
+        setErrorMessage(AuthMessages.PASSWORDS_NOT_MATCH);
+        throw Error("Passwords do not match");
+      }
       await createUserWithEmailAndPassword(
         auth,
         registerEmail,
@@ -53,9 +58,7 @@ const Login: React.FC = () => {
       signOut(auth);
       dispatch(setUserLogin(false));
     } catch (err) {
-      setErrorMessage(AuthMessages.INCORRECT_EMAIL_FORMAT);
       if (err instanceof FirebaseError) {
-        console.log(err.code);
         if (err.code === "auth/email-already-in-use") {
           setErrorMessage(AuthMessages.EMAIL_EXISTS);
         } else if (
@@ -77,7 +80,6 @@ const Login: React.FC = () => {
       if (err instanceof FirebaseError) {
         if (err.code === "auth/invalid-email") {
           setErrorMessage(AuthMessages.INCORRECT_EMAIL);
-          console.log(err.code);
         } else if (
           err.code === "auth/missing-password" ||
           err.code === "auth/wrong-password"
@@ -85,7 +87,6 @@ const Login: React.FC = () => {
           setErrorMessage(AuthMessages.INCORRECT_PASSWORD);
         }
       }
-      console.log(err);
     }
   };
 
@@ -97,7 +98,6 @@ const Login: React.FC = () => {
       navigate("/cook-pal/");
     } catch (err) {
       setErrorMessage("Could not sign in with Google.");
-      console.error(err);
     }
   };
 
@@ -167,6 +167,12 @@ const Login: React.FC = () => {
             placeholder="Password"
             aria-label="Password"
             onChange={(e) => setRegisterPassword(e.target.value)}
+          />
+          <StyledInput
+            type="password"
+            placeholder="Confirm password"
+            aria-label="Confirm password"
+            onChange={(e) => setRegisterPasswordConfirm(e.target.value)}
           />
           <StyledErrorMessage>{errorMessage}</StyledErrorMessage>
           <StyledButton>
