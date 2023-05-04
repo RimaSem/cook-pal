@@ -1,4 +1,4 @@
-import LogoImg from "../../img/homecooked_logo.png";
+import LogoImg from "../../assets/img/homecooked_logo.png";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 

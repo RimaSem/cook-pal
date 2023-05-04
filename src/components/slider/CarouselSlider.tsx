@@ -4,11 +4,11 @@ import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import { DotButton, PrevButton, NextButton } from "./CarouselArrowsDotsButtons";
 import Autoplay from "embla-carousel-autoplay";
 import Hero from "../home/Hero";
-import Slide1 from "../../img/hero-sample-img.webp";
-import Slide2 from "../../img/hero-chicken-wings.webp";
-import Slide3 from "../../img/hero-salad.webp";
-import Slide4 from "../../img/hero-seafood-delicacy.webp";
-import Slide5 from "../../img/hero-fried-chicken.webp";
+import Slide1 from "../../assets/img/hero-sample-img.webp";
+import Slide2 from "../../assets/img/hero-chicken-wings.webp";
+import Slide3 from "../../assets/img/hero-salad.webp";
+import Slide4 from "../../assets/img/hero-seafood-delicacy.webp";
+import Slide5 from "../../assets/img/hero-fried-chicken.webp";
 
 type PropType = {
   slides: number[];

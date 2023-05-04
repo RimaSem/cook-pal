@@ -46,12 +46,12 @@ export const theme: ThemeProps = {
   },
 
   mQueries: {
-    primaryQ: "(max-width: 54em)",
-    secondaryQ: "(max-width: 40.625em)",
-    heroLargerQ: "(max-width: 36.25em)",
-    heroSmallerQ: "(max-width: 31.25em)",
-    menuQ: "(max-width: 32.5em)",
-    navQ: "(max-width: 42.18em)",
-    footerQ: "(max-width: 26.56em)",
+    primaryQ: "(max-width: 865px)",
+    secondaryQ: "(max-width: 650px)",
+    heroLargerQ: "(max-width: 580px)",
+    heroSmallerQ: "(max-width: 500px)",
+    menuQ: "(max-width: 520px)",
+    navQ: "(max-width: 675px)",
+    footerQ: "(max-width: 425px)",
   },
 };

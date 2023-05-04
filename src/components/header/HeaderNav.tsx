@@ -9,14 +9,14 @@ import { RouteNames } from "../../types/RouteNames";
 import { auth } from "../../firebase/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect } from "react";
-import { getAuthStatus } from "../../state/auth/authSelectors";
+import { userLoggedIn } from "../../state/auth/authSelectors";
 import { setUserLogin } from "../../state/auth/authSlice";
 import styled from "styled-components";
 
 const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
-  const { isLoggedIn } = useSelector(getAuthStatus);
+  const { isLoggedIn } = useSelector(userLoggedIn);
 
   const handleMenu = () => dispatch(toggleMenu());
 

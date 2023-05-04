@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../state/hooks";
 import { getMenuStatus } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
-import { getAuthStatus } from "../../state/auth/authSelectors";
+import { userLoggedIn } from "../../state/auth/authSelectors";
 import { setUserLogin } from "../../state/auth/authSlice";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
@@ -21,7 +21,7 @@ interface AuthProps {
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
-  const { isLoggedIn } = useSelector(getAuthStatus);
+  const { isLoggedIn } = useSelector(userLoggedIn);
 
   const handleClick = () => dispatch(toggleMenu());
 
