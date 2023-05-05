@@ -6,6 +6,7 @@ import { auth } from "../../firebase/firebaseConfig";
 import { setUserLogin } from "../../state/auth/authSlice";
 import { useAppDispatch } from "../../state/hooks";
 import { AuthMessages } from "../../types/AuthMessages";
+import { emailRegx } from "../../utils/basicUtils";
 
 interface FormProps {
   errorMessage: string;
@@ -25,8 +26,6 @@ const RegistrationForm: React.FC<FormProps> = ({
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
-
-  const emailRegx = /^([a-zA-Z0-9\._]+)@([a-zA-Z0-9])+.([a-z]+)(.[a-z]+)?$/;
 
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
