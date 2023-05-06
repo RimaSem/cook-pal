@@ -1,8 +1,32 @@
-import { StyledPageHeading, MainContainer } from "../styles/sharedStyles";
+import {
+  StyledPageHeading,
+  MainContainer,
+  CardContainer,
+} from "../styles/sharedStyles";
 import styled from "styled-components";
-import { categoryOptions, areaOptions } from "../utils/basicUtils";
+import {
+  categoryOptions,
+  areaOptions,
+  defaultRecipes,
+} from "../utils/basicUtils";
+import { useEffect, useState } from "react";
+import { Recipe } from "../components/home/Main";
+import ErrorMessage, {
+  handleFetchError,
+} from "../components/shared/ErrorMessage";
+import RecipeCard from "../components/home/RecipeCard";
+import { setErrorMessage } from "../state/error/errorSlice";
+import { getErrorMessage } from "../state/error/errorSelectors";
+import { useSelector } from "react-redux";
 
 const Explore: React.FC = () => {
+  const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState(
+    "-- Select Category --"
+  );
+  const [selectedArea, setSelectedArea] = useState("-- Select Area --");
+  const { errorMessage } = useSelector(getErrorMessage);
+
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
       {category}
@@ -15,14 +39,64 @@ const Explore: React.FC = () => {
     </StyledOption>
   ));
 
+  const sampleRecipes = () => {
+    setShowRecipes([]);
+    defaultRecipes.forEach((recipeID) => {
+      fetch(
+        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`,
+        {
+          method: "GET",
+          mode: "cors",
+        }
+      )
+        .then((res) => {
+          handleFetchError(res);
+          return res.json();
+        })
+        .then((data) =>
+          setShowRecipes((prev) => [
+            ...prev,
+            <RecipeCard
+              key={data.meals[0].idMeal}
+              cardData={{
+                id: data.meals[0].idMeal,
+                name: data.meals[0].strMeal,
+                category: data.meals[0].strCategory,
+                area: data.meals[0].strArea,
+                img: data.meals[0].strMealThumb,
+              }}
+            />,
+          ])
+        )
+        .catch((err) => dispatch(setErrorMessage(err.message)));
+    });
+  };
+
+  const getRecipesByCategory = (category: string) => {
+    if (!selectedCategory.includes("Select")) {
+    }
+  };
+
+  useEffect(() => {
+    sampleRecipes();
+  }, []);
+
   return (
     <ExploreContainer>
       <Filters>
-        <StyledSelect name="category" defaultValue="-- Select Category --">
+        <StyledSelect
+          name="category"
+          defaultValue="-- Select Category --"
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
           <StyledOption value="none">-- Select Category --</StyledOption>
           {categories}
         </StyledSelect>
-        <StyledSelect name="area" defaultValue="-- Select Area --">
+        <StyledSelect
+          name="area"
+          defaultValue="-- Select Area --"
+          onChange={(e) => setSelectedArea(e.target.value)}
+        >
           <StyledOption value="none">-- Select Area --</StyledOption>
           {areas}
         </StyledSelect>
@@ -31,6 +105,9 @@ const Explore: React.FC = () => {
           <StyledButton>Search</StyledButton>
         </Search>
       </Filters>
+      <FilteredCards>
+        {errorMessage ? <ErrorMessage /> : showRecipes}
+      </FilteredCards>
     </ExploreContainer>
   );
 };
@@ -124,3 +201,8 @@ const StyledButton = styled.button`
     font-size: 0.7rem;
   }
 `;
+
+const FilteredCards = styled(CardContainer)``;
+function dispatch(arg0: any): any {
+  throw new Error("Function not implemented.");
+}

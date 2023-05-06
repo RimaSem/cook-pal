@@ -48,3 +48,18 @@ export const areaOptions = [
   "Unknown",
   "Vietnamese",
 ];
+
+export const defaultRecipes = [
+  "52872",
+  "52873",
+  "52874",
+  "52875",
+  "52876",
+  "52877",
+  "52878",
+  "52879",
+  "52891",
+  "52892",
+  "52893",
+  "52894",
+];
