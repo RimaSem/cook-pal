@@ -9,7 +9,7 @@ import {
   areaOptions,
   defaultRecipes,
 } from "../utils/basicUtils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
@@ -19,6 +19,7 @@ import { getErrorMessage } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 
 const Explore: React.FC = () => {
+  const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
   const [filteredRecipes, setFilteredRecipes] = useState<
     string[] | undefined
   >();
@@ -29,6 +30,9 @@ const Explore: React.FC = () => {
   const [areaArray, setAreaArray] = useState<string[] | undefined>();
   const { errorMessage } = useAppSelector(getErrorMessage);
   const dispatch = useAppDispatch();
+
+  const categoryRef = useRef<HTMLSelectElement>(null);
+  const areaRef = useRef<HTMLSelectElement>(null);
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -42,12 +46,14 @@ const Explore: React.FC = () => {
     </StyledOption>
   ));
 
+  useEffect(() => {
+    setFilteredRecipes(defaultRecipes);
+  }, []);
+
   // Filter by category
   useEffect(() => {
     setShowRecipes([]);
-    if (selectedArea === "Area" && selectedCategory === "Category") {
-      setFilteredRecipes(defaultRecipes);
-    } else if (selectedCategory !== "Category") {
+    if (selectedCategory !== "Category") {
       fetch(
         `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`
       )
@@ -75,9 +81,7 @@ const Explore: React.FC = () => {
   // Filter by area
   useEffect(() => {
     setShowRecipes([]);
-    if (selectedArea === "Area" && selectedCategory === "Category") {
-      setFilteredRecipes(defaultRecipes);
-    } else if (selectedArea !== "Area") {
+    if (selectedArea !== "Area") {
       fetch(
         `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedArea}`
       )
@@ -137,10 +141,33 @@ const Explore: React.FC = () => {
     }
   }, [filteredRecipes]);
 
+  const handleSearch = (input: string = "") => {
+    if (searchInput && searchInput !== "") {
+      if (categoryRef.current && areaRef.current) {
+        categoryRef.current.value = "Category";
+        areaRef.current.value = "Area";
+      }
+      setShowRecipes([]);
+      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setSelectedCategory("Category");
+          setSelectedArea("Area");
+          const newArr: string[] | null = [];
+          data.meals.forEach((obj: { idMeal: string }) =>
+            newArr.push(obj.idMeal)
+          );
+          setFilteredRecipes(newArr);
+        })
+        .catch((err) => dispatch(setErrorMessage(err.message)));
+    }
+  };
+
   return (
     <ExploreContainer>
       <Filters>
         <StyledSelect
+          ref={categoryRef}
           name="category"
           defaultValue="Category"
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -149,6 +176,7 @@ const Explore: React.FC = () => {
           {categories}
         </StyledSelect>
         <StyledSelect
+          ref={areaRef}
           name="area"
           onChange={(e) => setSelectedArea(e.target.value)}
         >
@@ -156,8 +184,10 @@ const Explore: React.FC = () => {
           {areas}
         </StyledSelect>
         <Search>
-          <SearchInput />
-          <StyledButton>Search</StyledButton>
+          <SearchInput onChange={(e) => setSearchInput(e.target.value)} />
+          <StyledButton onClick={() => handleSearch(searchInput)}>
+            Search
+          </StyledButton>
         </Search>
       </Filters>
       <FilteredCards>
