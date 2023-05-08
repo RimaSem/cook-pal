@@ -10,22 +10,25 @@ import {
   defaultRecipes,
 } from "../utils/basicUtils";
 import { useEffect, useState } from "react";
-import { Recipe } from "../components/home/Main";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
 import RecipeCard from "../components/home/RecipeCard";
 import { setErrorMessage } from "../state/error/errorSlice";
 import { getErrorMessage } from "../state/error/errorSelectors";
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 
 const Explore: React.FC = () => {
+  const [filteredRecipes, setFilteredRecipes] = useState<
+    string[] | undefined
+  >();
   const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState(
-    "-- Select Category --"
-  );
-  const [selectedArea, setSelectedArea] = useState("-- Select Area --");
-  const { errorMessage } = useSelector(getErrorMessage);
+  const [selectedCategory, setSelectedCategory] = useState<string>("Category");
+  const [selectedArea, setSelectedArea] = useState<string>("Area");
+  const [categoryArray, setCategoryArray] = useState<string[] | undefined>();
+  const [areaArray, setAreaArray] = useState<string[] | undefined>();
+  const { errorMessage } = useAppSelector(getErrorMessage);
+  const dispatch = useAppDispatch();
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -39,65 +42,117 @@ const Explore: React.FC = () => {
     </StyledOption>
   ));
 
-  const sampleRecipes = () => {
-    setShowRecipes([]);
-    defaultRecipes.forEach((recipeID) => {
-      fetch(
-        `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`,
-        {
-          method: "GET",
-          mode: "cors",
-        }
-      )
-        .then((res) => {
-          handleFetchError(res);
-          return res.json();
-        })
-        .then((data) =>
-          setShowRecipes((prev) => [
-            ...prev,
-            <RecipeCard
-              key={data.meals[0].idMeal}
-              cardData={{
-                id: data.meals[0].idMeal,
-                name: data.meals[0].strMeal,
-                category: data.meals[0].strCategory,
-                area: data.meals[0].strArea,
-                img: data.meals[0].strMealThumb,
-              }}
-            />,
-          ])
-        )
-        .catch((err) => dispatch(setErrorMessage(err.message)));
-    });
-  };
-
-  const getRecipesByCategory = (category: string) => {
-    if (!selectedCategory.includes("Select")) {
-    }
-  };
-
+  // Filter by category
   useEffect(() => {
-    sampleRecipes();
-  }, []);
+    setShowRecipes([]);
+    if (selectedArea === "Area" && selectedCategory === "Category") {
+      setFilteredRecipes(defaultRecipes);
+    } else if (selectedCategory !== "Category") {
+      fetch(
+        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const newArr: string[] | null = [];
+          data.meals.forEach((obj: { idMeal: string }) =>
+            newArr.push(obj.idMeal)
+          );
+          setCategoryArray(newArr);
+          if (selectedArea !== "Area") {
+            setFilteredRecipes(
+              newArr.filter((item) => areaArray?.includes(item))
+            );
+          } else {
+            setFilteredRecipes(newArr);
+          }
+        })
+        .catch((err) => dispatch(setErrorMessage(err.message)));
+    } else {
+      setFilteredRecipes(areaArray);
+    }
+  }, [selectedCategory]);
+
+  // Filter by area
+  useEffect(() => {
+    setShowRecipes([]);
+    if (selectedArea === "Area" && selectedCategory === "Category") {
+      setFilteredRecipes(defaultRecipes);
+    } else if (selectedArea !== "Area") {
+      fetch(
+        `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedArea}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          const newArr: string[] = [];
+          data.meals.forEach((obj: { idMeal: string }) =>
+            newArr.push(obj.idMeal)
+          );
+          setAreaArray(newArr);
+          if (selectedCategory !== "Category") {
+            setFilteredRecipes(
+              newArr.filter((item) => categoryArray?.includes(item))
+            );
+          } else {
+            setFilteredRecipes(newArr);
+          }
+        })
+        .catch((err) => dispatch(setErrorMessage(err.message)));
+    } else {
+      setFilteredRecipes(categoryArray);
+    }
+  }, [selectedArea]);
+
+  // Display filtered recipes
+  useEffect(() => {
+    if (filteredRecipes) {
+      filteredRecipes?.forEach((recipeID) => {
+        fetch(
+          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`,
+          {
+            method: "GET",
+            mode: "cors",
+          }
+        )
+          .then((res) => {
+            handleFetchError(res);
+            return res.json();
+          })
+          .then((data) =>
+            setShowRecipes((prev) => [
+              ...prev,
+              <RecipeCard
+                key={data.meals[0].idMeal}
+                cardData={{
+                  id: data.meals[0].idMeal,
+                  name: data.meals[0].strMeal,
+                  category: data.meals[0].strCategory,
+                  area: data.meals[0].strArea,
+                  img: data.meals[0].strMealThumb,
+                }}
+              />,
+            ])
+          )
+          .catch((err) => dispatch(setErrorMessage(err.message)));
+      });
+    }
+  }, [filteredRecipes]);
 
   return (
     <ExploreContainer>
       <Filters>
         <StyledSelect
           name="category"
-          defaultValue="-- Select Category --"
+          defaultValue="Category"
           onChange={(e) => setSelectedCategory(e.target.value)}
         >
-          <StyledOption value="none">-- Select Category --</StyledOption>
+          <StyledOption value="Category">Category</StyledOption>
           {categories}
         </StyledSelect>
         <StyledSelect
           name="area"
-          defaultValue="-- Select Area --"
           onChange={(e) => setSelectedArea(e.target.value)}
         >
-          <StyledOption value="none">-- Select Area --</StyledOption>
+          <StyledOption value="Area">Area</StyledOption>
           {areas}
         </StyledSelect>
         <Search>
@@ -203,6 +258,3 @@ const StyledButton = styled.button`
 `;
 
 const FilteredCards = styled(CardContainer)``;
-function dispatch(arg0: any): any {
-  throw new Error("Function not implemented.");
-}
