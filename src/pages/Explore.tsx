@@ -4,12 +4,13 @@ import {
   CardContainer,
 } from "../styles/sharedStyles";
 import styled from "styled-components";
+import Search from "../components/explore/Search";
 import {
   categoryOptions,
   areaOptions,
   defaultRecipes,
 } from "../utils/basicUtils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
@@ -18,10 +19,8 @@ import { setErrorMessage } from "../state/error/errorSlice";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { getSearchWord } from "../state/search/searchSelectors";
-import { setSearchWord } from "../state/search/searchSlice";
 
 const Explore: React.FC = () => {
-  const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
   const [filteredRecipes, setFilteredRecipes] = useState<
     string[] | undefined
   >();
@@ -33,13 +32,6 @@ const Explore: React.FC = () => {
   const { errorMessage } = useAppSelector(getErrorMessage);
   const { searchWord } = useAppSelector(getSearchWord);
   const dispatch = useAppDispatch();
-
-  const categoryRef = useRef<HTMLSelectElement>(null);
-  const areaRef = useRef<HTMLSelectElement>(null);
-
-  // window.scrollTo({
-  //   top: 450,
-  // });
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -146,39 +138,6 @@ const Explore: React.FC = () => {
     }
   }, [filteredRecipes]);
 
-  // Search for recipes by recipe name
-  const handleSearch = (input: string = "") => {
-    if ((searchInput && searchInput !== "") || searchWord !== "") {
-      if (categoryRef.current && areaRef.current) {
-        categoryRef.current.value = "Category";
-        areaRef.current.value = "Area";
-      }
-      setShowRecipes([]);
-      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setSelectedCategory("Category");
-          setSelectedArea("Area");
-          setCategoryArray([]);
-          setAreaArray([]);
-          const newArr: string[] | null = [];
-          data.meals.forEach((obj: { idMeal: string }) =>
-            newArr.push(obj.idMeal)
-          );
-          setFilteredRecipes(newArr);
-          dispatch(setSearchWord(""));
-        })
-        .catch((err) => dispatch(setErrorMessage(err.message)));
-    }
-  };
-
-  // Search for recipes via header search bar
-  useEffect(() => {
-    if (searchWord !== "") {
-      handleSearch(searchWord);
-    }
-  }, [searchWord]);
-
   useEffect(() => {
     if (searchWord === "") {
       setFilteredRecipes(defaultRecipes);
@@ -193,7 +152,7 @@ const Explore: React.FC = () => {
       <StyledPageHeading>Browse Recipes</StyledPageHeading>
       <Filters>
         <StyledSelect
-          ref={categoryRef}
+          className="category-select"
           name="category"
           defaultValue="Category"
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -202,19 +161,21 @@ const Explore: React.FC = () => {
           {categories}
         </StyledSelect>
         <StyledSelect
-          ref={areaRef}
+          className="area-select"
           name="area"
           onChange={(e) => setSelectedArea(e.target.value)}
         >
           <StyledOption value="Area">Area</StyledOption>
           {areas}
         </StyledSelect>
-        <Search>
-          <SearchInput onChange={(e) => setSearchInput(e.target.value)} />
-          <StyledButton onClick={() => handleSearch(searchInput)}>
-            Search
-          </StyledButton>
-        </Search>
+        <Search
+          setShowRecipes={setShowRecipes}
+          setSelectedCategory={setSelectedCategory}
+          setSelectedArea={setSelectedArea}
+          setCategoryArray={setCategoryArray}
+          setAreaArray={setAreaArray}
+          setFilteredRecipes={setFilteredRecipes}
+        />
       </Filters>
       <FilteredCards>
         {errorMessage ? <ErrorMessage /> : showRecipes}
@@ -260,57 +221,6 @@ const StyledSelect = styled.select`
 
 const StyledOption = styled.option`
   font-weight: 300;
-`;
-
-const Search = styled.div`
-  display: flex;
-  width: 40%;
-
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
-    margin: 1em auto 0 auto;
-    width: 80%;
-  }
-
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
-    width: 100%;
-  }
-`;
-
-const SearchInput = styled.input`
-  flex: 1;
-  border: 1px solid ${({ theme }) => theme.colors.accentGreen};
-  border-radius: 6px 0px 0px 6px;
-  padding-left: 0.75em;
-  font-size: 0.875em;
-  font-weight: 400;
-  font-family: inherit;
-
-  &:focus {
-    outline: 1px solid ${({ theme }) => theme.colors.accentGreen};
-  }
-`;
-
-const StyledButton = styled.button`
-  border: none;
-  border-radius: 0px 6px 6px 0px;
-  padding: 0 1em;
-  width: fit-content;
-  height: 2.625em;
-  background-color: ${({ theme }) => theme.colors.accentGreen};
-  cursor: pointer;
-  font-size: 1rem;
-  font-family: inherit;
-  font-weight: 300;
-  color: ${({ theme }) => theme.colors.white};
-
-  &:hover {
-    opacity: 0.9;
-  }
-
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
-    height: 3em;
-    font-size: 0.7rem;
-  }
 `;
 
 const FilteredCards = styled(CardContainer)``;
