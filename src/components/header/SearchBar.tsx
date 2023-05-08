@@ -1,15 +1,36 @@
 import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import styled from "styled-components";
+import { useAppDispatch } from "../../state/hooks";
+import { setSearchWord } from "../../state/search/searchSlice";
+import { useState } from "react";
+import { useNavigate, useNavigation } from "react-router";
 
-const SearchBar: React.FC = () => (
-  <StyledSearchBar>
-    <StyledInput name="search-bar" placeholder="Search for recipes..." />
-    <StyledIcon>
-      <Icon className="search-bar-icon" path={mdiMagnify} />
-    </StyledIcon>
-  </StyledSearchBar>
-);
+const SearchBar: React.FC = () => {
+  const [typedWord, setTypedWord] = useState("");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (typedWord !== "") {
+      navigate("/cook-pal/recipes");
+      dispatch(setSearchWord(typedWord));
+    }
+  };
+
+  return (
+    <StyledSearchBar>
+      <StyledInput
+        name="search-bar"
+        placeholder="Search for recipes..."
+        onChange={(e) => setTypedWord(e.target.value)}
+      />
+      <StyledIcon onClick={handleClick}>
+        <Icon className="search-bar-icon" path={mdiMagnify} />
+      </StyledIcon>
+    </StyledSearchBar>
+  );
+};
 
 export default SearchBar;
 

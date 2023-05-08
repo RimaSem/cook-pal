@@ -17,6 +17,8 @@ import RecipeCard from "../components/home/RecipeCard";
 import { setErrorMessage } from "../state/error/errorSlice";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { getSearchWord } from "../state/search/searchSelectors";
+import { setSearchWord } from "../state/search/searchSlice";
 
 const Explore: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
@@ -29,10 +31,15 @@ const Explore: React.FC = () => {
   const [categoryArray, setCategoryArray] = useState<string[] | undefined>();
   const [areaArray, setAreaArray] = useState<string[] | undefined>();
   const { errorMessage } = useAppSelector(getErrorMessage);
+  const { searchWord } = useAppSelector(getSearchWord);
   const dispatch = useAppDispatch();
 
   const categoryRef = useRef<HTMLSelectElement>(null);
   const areaRef = useRef<HTMLSelectElement>(null);
+
+  // window.scrollTo({
+  //   top: 450,
+  // });
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -45,10 +52,6 @@ const Explore: React.FC = () => {
       {area}
     </StyledOption>
   ));
-
-  useEffect(() => {
-    setFilteredRecipes(defaultRecipes);
-  }, []);
 
   // Filter by category
   useEffect(() => {
@@ -74,6 +77,7 @@ const Explore: React.FC = () => {
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     } else {
+      setCategoryArray([]);
       setFilteredRecipes(areaArray);
     }
   }, [selectedCategory]);
@@ -102,6 +106,7 @@ const Explore: React.FC = () => {
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     } else {
+      setAreaArray([]);
       setFilteredRecipes(categoryArray);
     }
   }, [selectedArea]);
@@ -141,8 +146,9 @@ const Explore: React.FC = () => {
     }
   }, [filteredRecipes]);
 
+  // Search for recipes by recipe name
   const handleSearch = (input: string = "") => {
-    if (searchInput && searchInput !== "") {
+    if ((searchInput && searchInput !== "") || searchWord !== "") {
       if (categoryRef.current && areaRef.current) {
         categoryRef.current.value = "Category";
         areaRef.current.value = "Area";
@@ -153,18 +159,38 @@ const Explore: React.FC = () => {
         .then((data) => {
           setSelectedCategory("Category");
           setSelectedArea("Area");
+          setCategoryArray([]);
+          setAreaArray([]);
           const newArr: string[] | null = [];
           data.meals.forEach((obj: { idMeal: string }) =>
             newArr.push(obj.idMeal)
           );
           setFilteredRecipes(newArr);
+          dispatch(setSearchWord(""));
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     }
   };
 
+  // Search for recipes via header search bar
+  useEffect(() => {
+    if (searchWord !== "") {
+      handleSearch(searchWord);
+    }
+  }, [searchWord]);
+
+  useEffect(() => {
+    if (searchWord === "") {
+      setFilteredRecipes(defaultRecipes);
+    }
+    window.scrollTo({
+      top: 450,
+    });
+  }, []);
+
   return (
     <ExploreContainer>
+      <StyledPageHeading>Browse Recipes</StyledPageHeading>
       <Filters>
         <StyledSelect
           ref={categoryRef}

@@ -4,6 +4,7 @@ import errorReducer from "./error/errorSlice";
 import suggestionsReducer from "./suggestions/suggestionsSlice";
 import favoritesReducer from "./favorites/favoritesSlice";
 import authReducer from "./auth/authSlice";
+import searchReducer from "./search/searchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     error: errorReducer,
     favorites: favoritesReducer,
     auth: authReducer,
+    search: searchReducer,
   },
 });
 
