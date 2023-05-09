@@ -2,11 +2,12 @@ import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword, signOut } from "firebase/auth";
 import { useRef, useState } from "react";
 import styled from "styled-components";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth, db } from "../../firebase/firebaseConfig";
 import { setUserLogin } from "../../state/auth/authSlice";
 import { useAppDispatch } from "../../state/hooks";
 import { AuthMessages } from "../../types/AuthMessages";
 import { emailRegx } from "../../utils/basicUtils";
+import { addDoc, collection } from "firebase/firestore";
 
 interface FormProps {
   errorMessage: string;
@@ -26,6 +27,7 @@ const RegistrationForm: React.FC<FormProps> = ({
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
+  const collectionRef = collection(db, "users");
 
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,6 +46,10 @@ const RegistrationForm: React.FC<FormProps> = ({
         registerEmail,
         registerPassword
       );
+      await addDoc(collectionRef, {
+        id: auth.currentUser?.uid,
+        favorites: ["52903", "53030", "52815"],
+      });
       setNotRegistered(false);
       setErrorMessage("");
       formRef.current?.reset();

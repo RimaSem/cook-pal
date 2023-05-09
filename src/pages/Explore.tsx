@@ -196,7 +196,7 @@ const Filters = styled.div`
   justify-content: center;
   flex-wrap: wrap;
   gap: 0.5em;
-  padding: 0.75rem;
+  padding: 0.75em;
   min-width: 100%;
 `;
 

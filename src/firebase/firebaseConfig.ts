@@ -1,6 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
+// TO-DO: replace the following with environment variables
 export const firebaseConfig = {
   apiKey: "AIzaSyBVLWrkCJsQ9W8zBLkvaB5zNZJBElHSfuQ",
   authDomain: "cook-pal-5538b.firebaseapp.com",
@@ -13,3 +15,4 @@ export const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const db = getFirestore(app);

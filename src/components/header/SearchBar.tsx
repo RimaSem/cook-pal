@@ -4,7 +4,8 @@ import styled from "styled-components";
 import { useAppDispatch } from "../../state/hooks";
 import { setSearchWord } from "../../state/search/searchSlice";
 import { useState } from "react";
-import { useNavigate, useNavigation } from "react-router";
+import { useNavigate } from "react-router";
+import { RouteNames } from "../../types/RouteNames";
 
 const SearchBar: React.FC = () => {
   const [typedWord, setTypedWord] = useState("");
@@ -13,7 +14,7 @@ const SearchBar: React.FC = () => {
 
   const handleClick = () => {
     if (typedWord !== "") {
-      navigate("/cook-pal/recipes");
+      navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);
       dispatch(setSearchWord(typedWord));
     }
   };
