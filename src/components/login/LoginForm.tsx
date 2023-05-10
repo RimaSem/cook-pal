@@ -8,7 +8,7 @@ import { useState, useRef, SyntheticEvent } from "react";
 import { useNavigate } from "react-router";
 import GoogleIcon from "../../assets/img/btn_google.svg";
 import styled from "styled-components";
-import { auth } from "../../firebase/firebaseConfig";
+import { auth, db } from "../../firebase/firebaseConfig";
 import { AuthMessages } from "../../types/AuthMessages";
 import { RouteNames } from "../../types/RouteNames";
 import {
@@ -17,6 +17,7 @@ import {
   StyledInput,
   StyledError,
 } from "./RegistrationForm";
+import { getDoc, doc, setDoc } from "firebase/firestore";
 
 interface FormProps {
   errorMessage: string;
@@ -52,8 +53,16 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
   const handleGoogle = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
-      const response = await new GoogleAuthProvider();
-      await signInWithPopup(auth, response);
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider);
+      console.log(result.user.uid);
+      const docData = (await getDoc(doc(db, "users", result.user.uid))).data();
+      if (!docData) {
+        await setDoc(doc(db, "users", result.user.uid), {
+          userID: result.user.uid,
+          favorites: ["52903", "53030", "52815"],
+        });
+      }
       navigate(`${RouteNames.HOME}`);
     } catch (err) {
       setErrorMessage("Could not sign in with Google.");

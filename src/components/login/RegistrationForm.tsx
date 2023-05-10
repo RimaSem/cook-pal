@@ -7,7 +7,7 @@ import { setUserLogin } from "../../state/auth/authSlice";
 import { useAppDispatch } from "../../state/hooks";
 import { AuthMessages } from "../../types/AuthMessages";
 import { emailRegx } from "../../utils/basicUtils";
-import { addDoc, collection } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 
 interface FormProps {
   errorMessage: string;
@@ -46,8 +46,8 @@ const RegistrationForm: React.FC<FormProps> = ({
         registerEmail,
         registerPassword
       );
-      await addDoc(collectionRef, {
-        id: auth.currentUser?.uid,
+      await setDoc(doc(collectionRef, auth.currentUser?.uid), {
+        userID: auth.currentUser?.uid,
         favorites: ["52903", "53030", "52815"],
       });
       setNotRegistered(false);

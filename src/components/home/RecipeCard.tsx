@@ -1,15 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Icon } from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { getFavorites } from "../../state/favorites/favoritesSelectors";
 import { useAppDispatch } from "../../state/hooks";
 import {
   addFavorite,
   removeFavorite,
 } from "../../state/favorites/favoritesSlice";
 import styled from "styled-components";
+import { db, auth } from "../../firebase/firebaseConfig";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 interface CardProps {
   cardData?: {
@@ -26,17 +26,48 @@ interface CardImgProp {
 }
 
 const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
-  const [cardID, setCardID] = useState(cardData?.id || "42");
-  const { favRecipes } = useSelector(getFavorites);
-  const [saveCard, setSaveCard] = useState(favRecipes?.includes(cardID));
+  const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
 
-  const handleClick = (id = "42") => {
-    setSaveCard((prev) => !prev);
-    if (!saveCard) {
-      dispatch(addFavorite(id));
-    } else {
-      dispatch(removeFavorite(id));
+  useEffect(() => {
+    if (auth.currentUser) {
+      const docRef = doc(db, "users", auth.currentUser.uid);
+      const getFavorites = async () => {
+        try {
+          const docData = (await getDoc(docRef)).data();
+          if (docData?.favorites.includes(cardData?.id)) {
+            setIsFavorite(true);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      getFavorites();
+    }
+  }, []);
+
+  const handleClick = async (id = "42") => {
+    if (auth.currentUser) {
+      try {
+        const docToUpdate = doc(db, "users", auth.currentUser.uid);
+        const docData = (await getDoc(docToUpdate)).data();
+        if (!isFavorite) {
+          setIsFavorite(true);
+          await updateDoc(docToUpdate, {
+            favorites: [...docData?.favorites, id],
+          });
+          dispatch(addFavorite(id));
+        } else if (isFavorite) {
+          setIsFavorite(false);
+          await updateDoc(docToUpdate, {
+            favorites: docData?.favorites.filter((item: string) => item !== id),
+          });
+          dispatch(removeFavorite(id));
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
@@ -51,7 +82,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
       <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
         <Icon
           className="cardSaveIcon"
-          path={saveCard ? mdiBookmark : mdiBookmarkOutline}
+          path={isFavorite ? mdiBookmark : mdiBookmarkOutline}
         />
       </CardSaveIcon>
     </CardContainer>

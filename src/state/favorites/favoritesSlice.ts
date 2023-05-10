@@ -5,13 +5,16 @@ interface FavoritesState {
 }
 
 const initialState: FavoritesState = {
-  favRecipes: ["52903", "53030", "52815"],
+  favRecipes: [],
 };
 
 export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
+    updateFavorites: (state, action: PayloadAction<string[]>) => {
+      state.favRecipes = action.payload;
+    },
     addFavorite: (state, action: PayloadAction<string>) => {
       if (state.favRecipes.includes(action.payload)) {
         state.favRecipes = state.favRecipes.filter(
@@ -29,6 +32,7 @@ export const favoritesSlice = createSlice({
   },
 });
 
-export const { addFavorite, removeFavorite } = favoritesSlice.actions;
+export const { addFavorite, removeFavorite, updateFavorites } =
+  favoritesSlice.actions;
 
 export default favoritesSlice.reducer;
