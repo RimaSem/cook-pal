@@ -15,6 +15,7 @@ export const DotButton: React.FC<DotButtonPropType> = (props) => {
       className={"embla__dot".concat(selected ? " embla__dot--selected" : "")}
       type="button"
       onClick={onClick}
+      aria-label="Dot button"
     />
   );
 };
@@ -32,6 +33,7 @@ export const PrevButton: React.FC<PrevNextButtonPropType> = (props) => {
       className="embla__button embla__button--prev"
       onClick={onClick}
       disabled={!enabled}
+      aria-label="Back button"
     >
       <Icon path={mdiArrowLeft} size={0.85} />
     </button>
@@ -46,6 +48,7 @@ export const NextButton: React.FC<PrevNextButtonPropType> = (props) => {
       className="embla__button embla__button--next"
       onClick={onClick}
       disabled={!enabled}
+      aria-label="Next button"
     >
       <Icon path={mdiArrowRight} size={0.85} />
     </button>

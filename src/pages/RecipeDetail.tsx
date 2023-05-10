@@ -92,7 +92,7 @@ const RecipeDetail: React.FC = () => {
           <AreaLabel>{recipe.area}</AreaLabel>
           <CategoryLabel>{recipe.category}</CategoryLabel>
           <TopWrapper>
-            <Image src={recipe.image} />
+            <Image src={recipe.image} alt="Recipe image" />
             <Ingredients>
               <SectionName>Ingredients</SectionName>
               <IngredientList>

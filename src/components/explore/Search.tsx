@@ -37,8 +37,10 @@ const Search: React.FC<SearchProps> = ({
   // Search for recipes by recipe name
   const handleSearch = (input: string = "") => {
     if ((searchInput && searchInput !== "") || searchWord !== "") {
-      categorySelect.value = "Category";
-      areaSelect.value = "Area";
+      if (categorySelect?.value && areaSelect?.value) {
+        categorySelect.value = "Category";
+        areaSelect.value = "Area";
+      }
       setShowRecipes([]);
       fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
         .then((res) => res.json())

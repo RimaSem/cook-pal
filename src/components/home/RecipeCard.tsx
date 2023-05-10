@@ -73,7 +73,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
 
   return (
     <CardContainer>
-      <Link to={`./${cardData?.id}`}>
+      <Link to={`./${cardData?.id}`} aria-label="Link to recipe details">
         <CardImg img={cardData?.img} />
       </Link>
       <DishArea>{cardData?.area}</DishArea>

@@ -96,8 +96,16 @@ const CarouselSlider: React.FC<PropType> = (props) => {
           </div>
         </div>
         <div className="button_container">
-          <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
-          <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
+          <PrevButton
+            onClick={scrollPrev}
+            enabled={prevBtnEnabled}
+            aria-label="Back button"
+          />
+          <NextButton
+            onClick={scrollNext}
+            enabled={nextBtnEnabled}
+            aria-label="Forward button"
+          />
         </div>
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
@@ -105,6 +113,7 @@ const CarouselSlider: React.FC<PropType> = (props) => {
               key={index}
               selected={index === selectedIndex}
               onClick={() => scrollTo(index)}
+              aria-label="Dot button"
             />
           ))}
         </div>

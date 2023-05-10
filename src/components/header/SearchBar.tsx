@@ -14,8 +14,8 @@ const SearchBar: React.FC = () => {
 
   const handleClick = () => {
     if (typedWord !== "") {
-      navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);
       dispatch(setSearchWord(typedWord));
+      navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);
     }
   };
 

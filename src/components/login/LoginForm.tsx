@@ -38,7 +38,10 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
       navigate(`${RouteNames.HOME}`);
     } catch (err) {
       if (err instanceof FirebaseError) {
-        if (err.code === "auth/invalid-email") {
+        if (
+          err.code === "auth/invalid-email" ||
+          err.code === "auth/user-not-found"
+        ) {
           setErrorMessage(AuthMessages.INCORRECT_EMAIL);
         } else if (
           err.code === "auth/missing-password" ||
