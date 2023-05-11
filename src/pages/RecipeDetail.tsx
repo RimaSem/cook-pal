@@ -78,6 +78,8 @@ const RecipeDetail: React.FC = () => {
         const docToUpdate = doc(db, "users", auth.currentUser.uid);
         const docData = (await getDoc(docToUpdate)).data();
         if (!docData?.groceryList.includes(addedItem)) {
+          const markAsAdded = (e.target as HTMLElement).parentNode?.firstChild;
+          (markAsAdded as HTMLSpanElement).style.display = "block";
           await updateDoc(docToUpdate, {
             groceryList: [...docData?.groceryList, addedItem],
           });
@@ -92,9 +94,12 @@ const RecipeDetail: React.FC = () => {
     const arr = [];
     for (let i = 0; i < amounts.length; i++) {
       arr.push(
-        <ListItem key={i} onClick={addToGroceryList}>
-          <StyledSpan>{amounts[i] + " "}</StyledSpan>
-          {ingredients[i]}
+        <ListItem key={i}>
+          <AddedSpan>Added</AddedSpan>
+          <LinkWrapper onClick={addToGroceryList}>
+            <StyledSpan>{amounts[i] + " "}</StyledSpan>
+            {ingredients[i]}
+          </LinkWrapper>
         </ListItem>
       );
     }
@@ -240,6 +245,7 @@ const UnorderedList = styled.ul`
 `;
 
 const ListItem = styled.li`
+  position: relative;
   list-style: none;
   width: fit-content;
 
@@ -250,6 +256,17 @@ const ListItem = styled.li`
   }
 `;
 
+const LinkWrapper = styled.div``;
+
 const StyledSpan = styled.span`
   font-weight: 600;
+`;
+
+const AddedSpan = styled.span`
+  display: none;
+  position: absolute;
+  left: -60px;
+  cursor: default;
+  font-size: 0.8rem;
+  color: green;
 `;
