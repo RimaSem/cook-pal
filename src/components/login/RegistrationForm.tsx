@@ -49,6 +49,7 @@ const RegistrationForm: React.FC<FormProps> = ({
       await setDoc(doc(collectionRef, auth.currentUser?.uid), {
         userID: auth.currentUser?.uid,
         favorites: ["52903", "53030", "52815"],
+        groceryList: ["Milk", "Honey", "Bananas"],
       });
       setNotRegistered(false);
       setErrorMessage("");

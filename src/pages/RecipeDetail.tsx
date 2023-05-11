@@ -5,11 +5,13 @@ import { setErrorMessage } from "../state/error/errorSlice";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
-import { useEffect, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/shared/BackButton";
 import { StyledPageHeading } from "../styles/sharedStyles";
 import styled from "styled-components";
+import { auth, db } from "../firebase/firebaseConfig";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 const recipeData = {
   name: "",
@@ -69,11 +71,28 @@ const RecipeDetail: React.FC = () => {
       .catch((err) => dispatch(setErrorMessage(err.message)));
   }, []);
 
+  const addToGroceryList = async (e: SyntheticEvent) => {
+    const addedItem = (e.target as HTMLElement).textContent;
+    try {
+      if (auth.currentUser) {
+        const docToUpdate = doc(db, "users", auth.currentUser.uid);
+        const docData = (await getDoc(docToUpdate)).data();
+        if (!docData?.groceryList.includes(addedItem)) {
+          await updateDoc(docToUpdate, {
+            groceryList: [...docData?.groceryList, addedItem],
+          });
+        }
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const listItemsArr = () => {
     const arr = [];
     for (let i = 0; i < amounts.length; i++) {
       arr.push(
-        <ListItem key={i}>
+        <ListItem key={i} onClick={addToGroceryList}>
           <StyledSpan>{amounts[i] + " "}</StyledSpan>
           {ingredients[i]}
         </ListItem>
