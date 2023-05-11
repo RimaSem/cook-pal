@@ -89,6 +89,10 @@ const RecipeDetail: React.FC = () => {
       ) : (
         <>
           <DishName>{recipe.name}</DishName>
+          <Text>
+            Click on an ingredient to add it to your grocery list (for
+            registered users only).
+          </Text>
           <AreaLabel>{recipe.area}</AreaLabel>
           <CategoryLabel>{recipe.category}</CategoryLabel>
           <TopWrapper>
@@ -129,6 +133,11 @@ const DishName = styled(StyledPageHeading)`
   @media ${({ theme }) => theme.mQueries.secondaryQ} {
     font-size: 1.8rem;
   }
+`;
+
+const Text = styled.p`
+  margin: 0 0 3em 0;
+  text-align: center;
 `;
 
 const SectionName = styled.h2`
@@ -213,6 +222,13 @@ const UnorderedList = styled.ul`
 
 const ListItem = styled.li`
   list-style: none;
+  width: fit-content;
+
+  &:hover {
+    cursor: pointer;
+    color: ${({ theme }) => theme.colors.navBtn3};
+    text-decoration: underline;
+  }
 `;
 
 const StyledSpan = styled.span`
