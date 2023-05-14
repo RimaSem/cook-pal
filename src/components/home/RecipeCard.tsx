@@ -22,15 +22,6 @@ interface CardProps {
   };
 }
 
-interface CardImgProp {
-  img?: string;
-  daily?: boolean;
-}
-
-interface DailyCardProp {
-  daily?: boolean;
-}
-
 const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
@@ -96,6 +87,15 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
 };
 
 export default RecipeCard;
+
+interface CardImgProp {
+  img?: string;
+  daily?: boolean;
+}
+
+interface DailyCardProp {
+  daily?: boolean;
+}
 
 const CardContainer = styled.div<DailyCardProp>`
   position: relative;

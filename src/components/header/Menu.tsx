@@ -10,14 +10,6 @@ import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import styled from "styled-components";
 
-interface MenuProps {
-  menuState?: boolean;
-}
-
-interface AuthProps {
-  isLoggedIn?: boolean;
-}
-
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
   const { isOpened } = useSelector(getMenuStatus);
@@ -64,6 +56,14 @@ const Menu: React.FC = () => {
 };
 
 export default Menu;
+
+interface MenuProps {
+  menuState?: boolean;
+}
+
+interface AuthProps {
+  isLoggedIn?: boolean;
+}
 
 const StyledMenu = styled.div<MenuProps>`
   z-index: 3;
