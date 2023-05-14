@@ -12,6 +12,7 @@ import { db, auth } from "../../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 interface CardProps {
+  daily?: boolean;
   cardData?: {
     id?: string;
     name?: string;
@@ -23,9 +24,14 @@ interface CardProps {
 
 interface CardImgProp {
   img?: string;
+  daily?: boolean;
 }
 
-const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
+interface DailyCardProp {
+  daily?: boolean;
+}
+
+const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const [isFavorite, setIsFavorite] = useState(false);
   const dispatch = useAppDispatch();
 
@@ -72,9 +78,9 @@ const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
   };
 
   return (
-    <CardContainer>
+    <CardContainer daily={daily}>
       <Link to={`./${cardData?.id}`} aria-label="Link to recipe details">
-        <CardImg img={cardData?.img} />
+        <CardImg daily={daily} img={cardData?.img} />
       </Link>
       <DishArea>{cardData?.area}</DishArea>
       <DishName>{cardData?.name}</DishName>
@@ -91,15 +97,16 @@ const RecipeCard: React.FC<CardProps> = ({ cardData }) => {
 
 export default RecipeCard;
 
-const CardContainer = styled.div`
+const CardContainer = styled.div<DailyCardProp>`
   position: relative;
   display: flex;
   flex-direction: column;
   margin: 0.7em 0;
   box-shadow: var(--shadow-card);
   border-radius: 1em;
-  width: 19em;
-  height: 21em;
+  width: ${({ daily }) => (daily ? "38em" : "19em")};
+  max-width: 95%;
+  height: ${({ daily }) => (daily ? "34em" : "21em")};
   background-color: ${({ theme }) => theme.colors.white};
   font-family: var(--font-secondary);
 
@@ -120,8 +127,9 @@ const CardSaveIcon = styled.div`
 const CardImg = styled.div<CardImgProp>`
   margin: 0.5em auto 0 auto;
   border-radius: 1em;
-  width: 18em;
-  height: 12.5em;
+  width: ${({ daily }) => (daily ? "36em" : "18em")};
+  max-width: 95%;
+  height: ${({ daily }) => (daily ? "24em" : "12.5em")};
   background-image: url(${({ img }) => img});
   background-size: cover;
   background-repeat: no-repeat;

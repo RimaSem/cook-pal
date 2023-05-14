@@ -35,6 +35,7 @@ const DailySuggestion: React.FC = () => {
       .then((data) => {
         setSuggestion(
           <RecipeCard
+            daily
             key={data.meals[0].idMeal}
             cardData={{
               id: data.meals[0].idMeal,
@@ -94,7 +95,7 @@ const DailySuggestion: React.FC = () => {
   }, []);
 
   return (
-    <SuggestionsContainer>
+    <SuggestionContainer>
       <StyledHeading>Daily Suggestion</StyledHeading>
       <StyledParagraph>
         Not sure what recipe to try out next? Take a look at our daily
@@ -102,14 +103,18 @@ const DailySuggestion: React.FC = () => {
         <br />
         The daily recipe suggestion is updated every day.
       </StyledParagraph>
-      {errorMessage ? <ErrorMessage /> : <AllCards>{suggestion}</AllCards>}
-    </SuggestionsContainer>
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <CardWrapper>{suggestion}</CardWrapper>
+      )}
+    </SuggestionContainer>
   );
 };
 
 export default DailySuggestion;
 
-const SuggestionsContainer = styled(MainContainer)`
+const SuggestionContainer = styled(MainContainer)`
   flex-direction: column;
 `;
 const StyledHeading = styled(StyledPageHeading)``;
@@ -118,6 +123,4 @@ const StyledParagraph = styled.p`
   text-align: center;
 `;
 
-const AllCards = styled(CardContainer)``;
-
-const DailyRecipeCard = styled(RecipeCard)``;
+const CardWrapper = styled(CardContainer)``;
