@@ -4,7 +4,16 @@ import styled from "styled-components";
 
 export const handleFetchError = (res: { ok: boolean; status: number }) => {
   if (!res.ok) {
-    throw Error(res.status + ": Could not fetch the data for that resource");
+    if (res.status === 500) {
+      throw Error(
+        "Error " +
+          res.status +
+          ": Server is currently down. Please try again later!"
+      );
+    }
+    throw Error(
+      "Error " + res.status + ": Could not fetch data for that resource."
+    );
   }
 };
 

@@ -44,7 +44,7 @@ const Menu: React.FC = () => {
             All Recipes
           </StyledLink>
           <StyledLink to={RouteNames.DAILY} onClick={handleClick}>
-            Daily Suggestions
+            Daily Suggestion
           </StyledLink>
           <StyledLink to={RouteNames.FAVORITES} onClick={handleClick}>
             Your Favorites

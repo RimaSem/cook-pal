@@ -95,7 +95,7 @@ const RecipeDetail: React.FC = () => {
     for (let i = 0; i < amounts.length; i++) {
       arr.push(
         <ListItem key={i}>
-          <AddedSpan>Added</AddedSpan>
+          <AddedSpan>&#10003;</AddedSpan>
           <LinkWrapper onClick={addToGroceryList}>
             <StyledSpan>{amounts[i] + " "}</StyledSpan>
             {ingredients[i]}
@@ -265,8 +265,9 @@ const StyledSpan = styled.span`
 const AddedSpan = styled.span`
   display: none;
   position: absolute;
-  left: -60px;
+  left: -20px;
   cursor: default;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  font-weight: 700;
   color: green;
 `;

@@ -63,3 +63,14 @@ export const defaultRecipes = [
   "52893",
   "52894",
 ];
+
+export const getCurrentDate = () => {
+  const date = new Date();
+
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+
+  const currentDate = `${day}-${month}-${year}`;
+  return currentDate;
+};

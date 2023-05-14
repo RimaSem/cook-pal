@@ -55,6 +55,7 @@ const Search: React.FC<SearchProps> = ({
           );
           setFilteredRecipes(newArr);
           dispatch(setSearchWord(""));
+          localStorage.setItem("recipes", JSON.stringify(newArr));
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     }

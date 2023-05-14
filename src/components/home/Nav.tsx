@@ -20,7 +20,7 @@ const Nav: React.FC<NavProps> = () => {
         Browse Recipes
       </StyledLink>
       <StyledLink to={RouteNames.DAILY} btncolor={color3}>
-        Daily Suggestions
+        Daily Suggestion
       </StyledLink>
       <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
         Your Favorites

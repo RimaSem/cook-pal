@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import RecipeDetail from "./pages/RecipeDetail";
-import DailySuggestions from "./pages/DailySuggestions";
+import DailySuggestion from "./pages/DailySuggestion";
 import Favorites from "./pages/Favorites";
 import { theme } from "./styles/theme";
 import { ThemeProvider } from "styled-components";
@@ -28,7 +28,7 @@ const App: React.FC = () => (
               path={`${RouteNames.RECIPES}/:id`}
               element={<RecipeDetail />}
             />
-            <Route path={RouteNames.DAILY} element={<DailySuggestions />} />
+            <Route path={RouteNames.DAILY} element={<DailySuggestion />} />
             <Route
               path={`${RouteNames.DAILY}/:id`}
               element={<RecipeDetail />}
