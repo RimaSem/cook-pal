@@ -7,6 +7,7 @@ import {
 import { useState, useRef, SyntheticEvent } from "react";
 import { useNavigate } from "react-router";
 import GoogleIcon from "../../assets/img/btn_google.svg";
+import { AuthErrorCodes } from "../../types/AuthMessages";
 import styled from "styled-components";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { AuthMessages } from "../../types/AuthMessages";
@@ -39,13 +40,13 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
     } catch (err) {
       if (err instanceof FirebaseError) {
         if (
-          err.code === "auth/invalid-email" ||
-          err.code === "auth/user-not-found"
+          err.code === AuthErrorCodes.INVALID_EMAIL ||
+          err.code === AuthErrorCodes.USER_NOT_FOUND
         ) {
           setErrorMessage(AuthMessages.INCORRECT_EMAIL);
         } else if (
-          err.code === "auth/missing-password" ||
-          err.code === "auth/wrong-password"
+          err.code === AuthErrorCodes.MISSING_PASSWORD ||
+          err.code === AuthErrorCodes.WRONG_PASSWORD
         ) {
           setErrorMessage(AuthMessages.INCORRECT_PASSWORD);
         }
@@ -58,17 +59,16 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      console.log(result.user.uid);
       const docData = (await getDoc(doc(db, "users", result.user.uid))).data();
       if (!docData) {
         await setDoc(doc(db, "users", result.user.uid), {
           userID: result.user.uid,
-          favorites: ["52903", "53030", "52815"],
+          favorites: [],
         });
       }
       navigate(`${RouteNames.HOME}`);
     } catch (err) {
-      setErrorMessage("Could not sign in with Google.");
+      setErrorMessage(AuthMessages.GOOGLE_ERROR);
     }
   };
 

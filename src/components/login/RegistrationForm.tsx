@@ -5,7 +5,7 @@ import styled from "styled-components";
 import { auth, db } from "../../firebase/firebaseConfig";
 import { setUserLogin } from "../../state/auth/authSlice";
 import { useAppDispatch } from "../../state/hooks";
-import { AuthMessages } from "../../types/AuthMessages";
+import { AuthErrorCodes, AuthMessages } from "../../types/AuthMessages";
 import { emailRegx } from "../../utils/basicUtils";
 import { collection, doc, setDoc } from "firebase/firestore";
 
@@ -34,12 +34,12 @@ const RegistrationForm: React.FC<FormProps> = ({
 
     try {
       if (!registerEmail.match(emailRegx) || !registerEmail) {
-        setErrorMessage(AuthMessages.INCORRECT_EMAIL_FORMAT);
-        throw Error("Incorrect email format");
+        setErrorMessage(AuthMessages.INCORRECT_EMAIL_FORMAT_FOR_USER);
+        throw Error(AuthMessages.INCORRECT_EMAIL_FORMAT);
       }
       if (registerPassword !== registerPasswordConfirm) {
         setErrorMessage(AuthMessages.PASSWORDS_NOT_MATCH);
-        throw Error("Passwords do not match");
+        throw Error(AuthMessages.PASSWORDS_NOT_MATCH);
       }
       await createUserWithEmailAndPassword(
         auth,
@@ -48,8 +48,8 @@ const RegistrationForm: React.FC<FormProps> = ({
       );
       await setDoc(doc(collectionRef, auth.currentUser?.uid), {
         userID: auth.currentUser?.uid,
-        favorites: ["52903", "53030", "52815"],
-        groceryList: ["Milk", "Honey", "Bananas"],
+        favorites: [],
+        groceryList: [],
       });
       setNotRegistered(false);
       setErrorMessage("");
@@ -58,11 +58,11 @@ const RegistrationForm: React.FC<FormProps> = ({
       dispatch(setUserLogin(false));
     } catch (err) {
       if (err instanceof FirebaseError) {
-        if (err.code === "auth/email-already-in-use") {
+        if (err.code === AuthErrorCodes.EMAIL_ALREADY_EXISTS) {
           setErrorMessage(AuthMessages.EMAIL_EXISTS);
         } else if (
-          err.code === "auth/missing-password" ||
-          err.code === "auth/weak-password"
+          err.code === AuthErrorCodes.MISSING_PASSWORD ||
+          err.code === AuthErrorCodes.WEAK_PASSWORD
         ) {
           setErrorMessage(AuthMessages.PASSWORD_TOO_SHORT);
         }

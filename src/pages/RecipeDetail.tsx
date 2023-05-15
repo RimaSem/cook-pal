@@ -35,18 +35,18 @@ const RecipeDetail: React.FC = () => {
   });
 
   const getIngredients = (obj: any) => {
-    const amountArr = [];
-    const ingredientArr = [];
+    const amountArray = [];
+    const ingredientArray = [];
     for (const key in obj) {
       if (key.startsWith("strMeasure") && obj[key] && obj[key] !== " ") {
-        amountArr.push(obj[key]);
+        amountArray.push(obj[key]);
       }
       if (key.startsWith("strIngredient") && obj[key] && obj[key] !== " ") {
-        ingredientArr.push(obj[key]);
+        ingredientArray.push(obj[key]);
       }
     }
-    setAmounts(amountArr);
-    setIngredients(ingredientArr);
+    setAmounts(amountArray);
+    setIngredients(ingredientArray);
   };
 
   useEffect(() => {
@@ -87,24 +87,20 @@ const RecipeDetail: React.FC = () => {
         }
       }
     } catch (err) {
-      console.log(err);
+      dispatch(setErrorMessage((err as Error).message));
     }
   };
 
-  const listItemsArr = () => {
-    const arr = [];
-    for (let i = 0; i < amounts.length; i++) {
-      arr.push(
-        <ListItem key={i}>
-          <AddedSpan>&#10003;</AddedSpan>
-          <LinkWrapper onClick={addToGroceryList}>
-            <StyledSpan>{amounts[i] + " "}</StyledSpan>
-            {ingredients[i]}
-          </LinkWrapper>
-        </ListItem>
-      );
-    }
-    return arr;
+  const displayIngredients = () => {
+    return amounts.map((item, index) => (
+      <ListItem key={item}>
+        <AddedSpan>&#10003;</AddedSpan>
+        <LinkWrapper onClick={addToGroceryList}>
+          <StyledSpan>{item + " "}</StyledSpan>
+          {ingredients[index]}
+        </LinkWrapper>
+      </ListItem>
+    ));
   };
 
   return (
@@ -125,7 +121,7 @@ const RecipeDetail: React.FC = () => {
             <Ingredients>
               <SectionName>Ingredients</SectionName>
               <IngredientList>
-                <UnorderedList>{listItemsArr()}</UnorderedList>
+                <UnorderedList>{displayIngredients()}</UnorderedList>
               </IngredientList>
             </Ingredients>
           </TopWrapper>

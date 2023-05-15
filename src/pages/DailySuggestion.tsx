@@ -21,7 +21,7 @@ const DailySuggestion: React.FC = () => {
   const [suggestion, setSuggestion] = useState<JSX.Element>();
   const { errorMessage } = useSelector(getErrorMessage);
   const dispatch = useAppDispatch();
-  const docRef = doc(db, "dailySuggestions", "42");
+  const docRef = doc(db, "dailySuggestions", "documentNumber001");
 
   const displayRecipe = (recipeID: string) => {
     fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`, {
@@ -52,12 +52,12 @@ const DailySuggestion: React.FC = () => {
 
   const updateDatabase = async (recipe: string) => {
     try {
-      await setDoc(doc(db, "dailySuggestions", "42"), {
+      await setDoc(doc(db, "dailySuggestions", "documentNumber001"), {
         currentDate: getCurrentDate(),
         dailyRecipe: recipe,
       });
     } catch (err) {
-      console.log(err);
+      dispatch(setErrorMessage((err as Error).message));
     }
   };
 
@@ -87,7 +87,7 @@ const DailySuggestion: React.FC = () => {
           displayRecipe(docData?.dailyRecipe);
         }
       } catch (err) {
-        console.log(err);
+        dispatch(setErrorMessage((err as Error).message));
       }
     };
 

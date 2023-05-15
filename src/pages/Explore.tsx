@@ -58,17 +58,17 @@ const Explore: React.FC = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          const newArr: string[] | null = [];
+          const newArray: string[] | null = [];
           data.meals.forEach((obj: { idMeal: string }) =>
-            newArr.push(obj.idMeal)
+            newArray.push(obj.idMeal)
           );
-          setCategoryArray(newArr);
+          setCategoryArray(newArray);
           if (selectedArea !== "Area") {
             setFilteredRecipes(
-              newArr.filter((item) => areaArray?.includes(item))
+              newArray.filter((item) => areaArray?.includes(item))
             );
           } else {
-            setFilteredRecipes(newArr);
+            setFilteredRecipes(newArray);
           }
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
@@ -87,17 +87,17 @@ const Explore: React.FC = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-          const newArr: string[] = [];
+          const newArray: string[] = [];
           data.meals.forEach((obj: { idMeal: string }) =>
-            newArr.push(obj.idMeal)
+            newArray.push(obj.idMeal)
           );
-          setAreaArray(newArr);
+          setAreaArray(newArray);
           if (selectedCategory !== "Category") {
             setFilteredRecipes(
-              newArr.filter((item) => categoryArray?.includes(item))
+              newArray.filter((item) => categoryArray?.includes(item))
             );
           } else {
-            setFilteredRecipes(newArr);
+            setFilteredRecipes(newArray);
           }
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));

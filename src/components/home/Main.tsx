@@ -10,11 +10,11 @@ import styled from "styled-components";
 import { devices } from "../../styles/theme";
 
 export interface Recipe {
-  idMeal?: string;
-  strMeal?: string;
-  strCategory?: string;
-  strArea?: string;
-  strMealThumb?: string;
+  idMeal: string;
+  strMeal: string;
+  strCategory: string;
+  strArea: string;
+  strMealThumb: string;
 }
 
 const Main: React.FC = () => {

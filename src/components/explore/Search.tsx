@@ -48,13 +48,13 @@ const Search: React.FC<SearchProps> = ({
           setSelectedArea("Area");
           setCategoryArray([]);
           setAreaArray([]);
-          const newArr: string[] | null = [];
+          const newArray: string[] | null = [];
           data.meals.forEach((obj: { idMeal: string }) =>
-            newArr.push(obj.idMeal)
+            newArray.push(obj.idMeal)
           );
-          setFilteredRecipes(newArr);
+          setFilteredRecipes(newArray);
           dispatch(setSearchWord(""));
-          localStorage.setItem("recipes", JSON.stringify(newArr));
+          localStorage.setItem("recipes", JSON.stringify(newArray));
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     }

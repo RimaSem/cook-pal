@@ -11,20 +11,25 @@ import styled from "styled-components";
 import { db, auth } from "../../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { devices } from "../../styles/theme";
+import { setErrorMessage } from "../../state/error/errorSlice";
+import { useSelector } from "react-redux";
+import { getErrorMessage } from "../../state/error/errorSelectors";
+import ErrorMessage from "../shared/ErrorMessage";
 
 interface CardProps {
   daily?: boolean;
-  cardData?: {
-    id?: string;
-    name?: string;
-    category?: string;
-    area?: string;
-    img?: string;
+  cardData: {
+    id: string;
+    name: string;
+    category: string;
+    area: string;
+    img: string;
   };
 }
 
 const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { errorMessage } = useSelector(getErrorMessage);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -37,7 +42,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
             setIsFavorite(true);
           }
         } catch (err) {
-          console.log(err);
+          dispatch(setErrorMessage((err as Error).message));
         }
       };
 
@@ -45,7 +50,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
     }
   }, []);
 
-  const handleClick = async (id = "42") => {
+  const handleClick = async (id: string) => {
     if (auth.currentUser) {
       try {
         const docToUpdate = doc(db, "users", auth.currentUser.uid);
@@ -70,20 +75,26 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   };
 
   return (
-    <CardContainer daily={daily}>
-      <Link to={`./${cardData?.id}`} aria-label="Link to recipe details">
-        <CardImg daily={daily} img={cardData?.img} />
-      </Link>
-      <DishArea>{cardData?.area}</DishArea>
-      <DishName>{cardData?.name}</DishName>
-      <DishCategory>{cardData?.category}</DishCategory>
-      <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
-        <Icon
-          className="cardSaveIcon"
-          path={isFavorite ? mdiBookmark : mdiBookmarkOutline}
-        />
-      </CardSaveIcon>
-    </CardContainer>
+    <>
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <CardContainer daily={daily}>
+          <Link to={`./${cardData?.id}`} aria-label="Link to recipe details">
+            <CardImg daily={daily} img={cardData?.img} />
+          </Link>
+          <DishArea>{cardData?.area}</DishArea>
+          <DishName>{cardData?.name}</DishName>
+          <DishCategory>{cardData?.category}</DishCategory>
+          <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
+            <Icon
+              className="cardSaveIcon"
+              path={isFavorite ? mdiBookmark : mdiBookmarkOutline}
+            />
+          </CardSaveIcon>
+        </CardContainer>
+      )}
+    </>
   );
 };
 

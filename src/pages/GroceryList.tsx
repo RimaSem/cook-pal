@@ -3,12 +3,16 @@ import { StyledPageHeading, MainContainer } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { setErrorMessage } from "../state/error/errorSlice";
+import ErrorMessage from "../components/shared/ErrorMessage";
+import { useAppDispatch } from "../state/hooks";
 
 const GroceryList: React.FC = () => {
   const [groceryArray, setGroceryArray] = useState<string[]>([""]);
   const [groceryElements, setGroceryElements] = useState<JSX.Element[] | null>(
     null
   );
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getGroceriesFromDatabase = async () => {
@@ -19,7 +23,7 @@ const GroceryList: React.FC = () => {
           setGroceryArray(docData?.groceryList);
         }
       } catch (err) {
-        console.log(err);
+        dispatch(setErrorMessage((err as Error).message));
       }
     };
 
@@ -43,7 +47,7 @@ const GroceryList: React.FC = () => {
         });
       }
     } catch (err) {
-      console.log(err);
+      dispatch(setErrorMessage((err as Error).message));
     }
   };
 
@@ -61,7 +65,11 @@ const GroceryList: React.FC = () => {
   return (
     <GroceryContainer>
       <StyledPageHeading>Grocery List</StyledPageHeading>
-      <GroceryWrapper>{groceryElements}</GroceryWrapper>
+      {ErrorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <GroceryWrapper>{groceryElements}</GroceryWrapper>
+      )}
     </GroceryContainer>
   );
 };
