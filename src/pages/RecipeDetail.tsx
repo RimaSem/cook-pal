@@ -270,5 +270,5 @@ const AddedSpan = styled.span`
   cursor: default;
   font-size: 1rem;
   font-weight: 700;
-  color: green;
+  color: ${({ theme }) => theme.colors.green};
 `;

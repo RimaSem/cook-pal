@@ -129,7 +129,7 @@ export const StyledError = styled.p`
   padding: 0;
   min-height: 1.3125em;
   font-size: 0.85rem;
-  color: red;
+  color: ${({ theme }) => theme.colors.red};
   text-align: center;
 `;
 

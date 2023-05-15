@@ -97,7 +97,8 @@ const StyledLink = styled(Link)`
 
 const LinkWrapper = styled.div<AuthProps>`
   margin-top: 2em;
-  color: ${({ isLoggedIn }) => (isLoggedIn ? "red" : "green")};
+  color: ${({ isLoggedIn, theme }) =>
+    isLoggedIn ? theme.colors.red : theme.colors.green};
 `;
 
 const StyledAuthLink = styled(StyledLink)<AuthProps>`

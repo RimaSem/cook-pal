@@ -91,11 +91,11 @@ const DeleteItemBtn = styled.button`
   height: 1.5rem;
   background-color: ${({ theme }) => theme.colors.navBtn4};
   cursor: pointer;
-  color: white;
+  color: ${({ theme }) => theme.colors.white};
   font-family: inherit;
   font-weight: 300;
 
   &:hover {
-    background-color: red;
+    background-color: ${({ theme }) => theme.colors.red};
   }
 `;

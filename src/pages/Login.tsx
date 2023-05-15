@@ -75,7 +75,7 @@ const TextWrapper = styled.div`
 
 const StyledSpan = styled.span`
   cursor: pointer;
-  color: green;
+  color: ${({ theme }) => theme.colors.green};
 
   &:hover {
     text-decoration: underline;
