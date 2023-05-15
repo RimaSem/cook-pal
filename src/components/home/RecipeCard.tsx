@@ -13,7 +13,7 @@ import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { devices } from "../../styles/theme";
 import { setErrorMessage } from "../../state/error/errorSlice";
 import { useSelector } from "react-redux";
-import { getErrorMessage } from "../../state/error/errorSelectors";
+import { errorMessageSelector } from "../../state/error/errorSelectors";
 import ErrorMessage from "../shared/ErrorMessage";
 
 interface CardProps {
@@ -29,7 +29,7 @@ interface CardProps {
 
 const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

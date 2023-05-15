@@ -4,13 +4,13 @@ import {
   StyledPageHeading,
 } from "../styles/sharedStyles";
 import { useSelector } from "react-redux";
-import { getFavoriteRecipes } from "../state/favorites/favoritesSelectors";
+import { favoriteRecipesSelector } from "../state/favorites/favoritesSelectors";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "../state/hooks";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
-import { getErrorMessage } from "../state/error/errorSelectors";
+import { errorMessageSelector } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
 import RecipeCard from "../components/home/RecipeCard";
 import styled from "styled-components";
@@ -18,9 +18,9 @@ import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 
 const Favorites: React.FC = () => {
-  const { favRecipes } = useSelector(getFavoriteRecipes);
+  const { favRecipes } = useSelector(favoriteRecipesSelector);
   const [elementsArray, setElementsArray] = useState<JSX.Element[]>([]);
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   const displayRecipes = async () => {

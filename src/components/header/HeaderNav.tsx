@@ -3,21 +3,21 @@ import { mdiMenu, mdiWindowClose } from "@mdi/js";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../state/hooks";
-import { getMenuStatus } from "../../state/menu/menuSelectors";
+import { menuStatusSelector } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
 import { auth } from "../../firebase/firebaseConfig";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useEffect } from "react";
-import { userLoggedIn } from "../../state/auth/authSelectors";
+import { userLoginStatusSelector } from "../../state/auth/authSelectors";
 import { setUserLogin } from "../../state/auth/authSlice";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
 
 const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(getMenuStatus);
-  const { isLoggedIn } = useSelector(userLoggedIn);
+  const { isOpened } = useSelector(menuStatusSelector);
+  const { isLoggedIn } = useSelector(userLoginStatusSelector);
 
   const handleMenu = () => dispatch(toggleMenu());
 

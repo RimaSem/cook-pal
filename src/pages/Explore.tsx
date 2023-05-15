@@ -16,9 +16,9 @@ import ErrorMessage, {
 } from "../components/shared/ErrorMessage";
 import RecipeCard from "../components/home/RecipeCard";
 import { setErrorMessage } from "../state/error/errorSlice";
-import { getErrorMessage } from "../state/error/errorSelectors";
+import { errorMessageSelector } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
-import { getSearchWord } from "../state/search/searchSelectors";
+import { searchWordSelector } from "../state/search/searchSelectors";
 import { devices } from "../styles/theme";
 
 const Explore: React.FC = () => {
@@ -30,8 +30,8 @@ const Explore: React.FC = () => {
   const [selectedArea, setSelectedArea] = useState<string>("Area");
   const [categoryArray, setCategoryArray] = useState<string[] | undefined>();
   const [areaArray, setAreaArray] = useState<string[] | undefined>();
-  const { errorMessage } = useAppSelector(getErrorMessage);
-  const { searchWord } = useAppSelector(getSearchWord);
+  const { errorMessage } = useAppSelector(errorMessageSelector);
+  const { searchWord } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
 
   const categoryInputRef = useRef<HTMLSelectElement>(null);

@@ -9,7 +9,7 @@ import { useAppDispatch } from "../state/hooks";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
-import { getErrorMessage } from "../state/error/errorSelectors";
+import { errorMessageSelector } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
 import RecipeCard from "../components/home/RecipeCard";
 import styled from "styled-components";
@@ -19,7 +19,7 @@ import { getCurrentDate } from "../utils/basicUtils";
 
 const DailySuggestion: React.FC = () => {
   const [suggestion, setSuggestion] = useState<JSX.Element>();
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
   const docRef = doc(db, "dailySuggestions", "documentNumber001");
 

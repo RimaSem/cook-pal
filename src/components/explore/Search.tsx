@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { devices } from "../../styles/theme";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../state/hooks";
-import { getSearchWord } from "../../state/search/searchSelectors";
+import { searchWordSelector } from "../../state/search/searchSelectors";
 import { setSearchWord } from "../../state/search/searchSlice";
 import { setErrorMessage } from "../../state/error/errorSlice";
 
@@ -30,7 +30,7 @@ const Search: React.FC<SearchProps> = ({
   setFilteredRecipes,
 }) => {
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
-  const { searchWord } = useAppSelector(getSearchWord);
+  const { searchWord } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
 
   // Search for recipes by recipe name

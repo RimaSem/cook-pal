@@ -1,7 +1,7 @@
 import { createSelector } from "@reduxjs/toolkit";
 import { RootState } from "../store";
 
-export const userLoggedIn = createSelector(
+export const userLoginStatusSelector = createSelector(
   (state: RootState) => state,
   (state) => state.auth
 );

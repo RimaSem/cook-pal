@@ -4,7 +4,7 @@ import { useAppDispatch } from "../../state/hooks";
 import RecipeCard from "./RecipeCard";
 import ErrorMessage, { handleFetchError } from "../shared/ErrorMessage";
 import { useEffect, useState } from "react";
-import { getErrorMessage } from "../../state/error/errorSelectors";
+import { errorMessageSelector } from "../../state/error/errorSelectors";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
@@ -20,7 +20,7 @@ export interface Recipe {
 const Main: React.FC = () => {
   const [homepageRecipes, setHomepageRecipes] = useState<Recipe[]>([]);
   const [loadMore, setLoadMore] = useState(false);
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

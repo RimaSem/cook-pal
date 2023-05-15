@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { getErrorMessage } from "../../state/error/errorSelectors";
+import { errorMessageSelector } from "../../state/error/errorSelectors";
 import styled from "styled-components";
 
 export const handleFetchError = (res: { ok: boolean; status: number }) => {
@@ -18,7 +18,7 @@ export const handleFetchError = (res: { ok: boolean; status: number }) => {
 };
 
 const ErrorMessage: React.FC = () => {
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
 
   return <StyledErrorMessage>{errorMessage}</StyledErrorMessage>;
 };

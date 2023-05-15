@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../state/hooks";
-import { getErrorMessage } from "../state/error/errorSelectors";
+import { errorMessageSelector } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
 import ErrorMessage, {
   handleFetchError,
@@ -27,7 +27,7 @@ const RecipeDetail: React.FC = () => {
   const [amounts, setAmounts] = useState<string[]>([""]);
   const [ingredients, setIngredients] = useState<string[]>([""]);
   const { id } = useParams();
-  const { errorMessage } = useSelector(getErrorMessage);
+  const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   window.scrollTo({
