@@ -10,7 +10,7 @@ import {
   areaOptions,
   defaultRecipes,
 } from "../utils/basicUtils";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
@@ -32,6 +32,9 @@ const Explore: React.FC = () => {
   const { errorMessage } = useAppSelector(getErrorMessage);
   const { searchWord } = useAppSelector(getSearchWord);
   const dispatch = useAppDispatch();
+
+  const categoryInputRef = useRef<HTMLSelectElement>(null);
+  const areaInputRef = useRef<HTMLSelectElement>(null);
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -152,7 +155,7 @@ const Explore: React.FC = () => {
       <StyledPageHeading>Browse Recipes</StyledPageHeading>
       <Filters>
         <StyledSelect
-          className="category-select"
+          ref={categoryInputRef}
           name="category"
           defaultValue="Category"
           onChange={(e) => setSelectedCategory(e.target.value)}
@@ -161,7 +164,7 @@ const Explore: React.FC = () => {
           {categories}
         </StyledSelect>
         <StyledSelect
-          className="area-select"
+          ref={areaInputRef}
           name="area"
           onChange={(e) => setSelectedArea(e.target.value)}
         >
@@ -169,6 +172,8 @@ const Explore: React.FC = () => {
           {areas}
         </StyledSelect>
         <Search
+          categoryInputRef={categoryInputRef}
+          areaInputRef={areaInputRef}
           setShowRecipes={setShowRecipes}
           setSelectedCategory={setSelectedCategory}
           setSelectedArea={setSelectedArea}

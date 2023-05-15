@@ -6,6 +6,8 @@ import { setSearchWord } from "../../state/search/searchSlice";
 import { setErrorMessage } from "../../state/error/errorSlice";
 
 interface SearchProps {
+  categoryInputRef: React.RefObject<HTMLSelectElement>;
+  areaInputRef: React.RefObject<HTMLSelectElement>;
   setShowRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedArea: React.Dispatch<React.SetStateAction<string>>;
@@ -17,6 +19,8 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = ({
+  categoryInputRef,
+  areaInputRef,
   setShowRecipes,
   setSelectedCategory,
   setSelectedArea,
@@ -27,19 +31,13 @@ const Search: React.FC<SearchProps> = ({
   const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
   const { searchWord } = useAppSelector(getSearchWord);
   const dispatch = useAppDispatch();
-  const categorySelect = document.querySelector(
-    ".category-select"
-  ) as HTMLSelectElement;
-  const areaSelect = document.querySelector(
-    ".area-select"
-  ) as HTMLSelectElement;
 
   // Search for recipes by recipe name
   const handleSearch = (input: string = "") => {
     if ((searchInput && searchInput !== "") || searchWord !== "") {
-      if (categorySelect?.value && areaSelect?.value) {
-        categorySelect.value = "Category";
-        areaSelect.value = "Area";
+      if (categoryInputRef.current && areaInputRef.current) {
+        categoryInputRef.current.value = "Category";
+        areaInputRef.current.value = "Area";
       }
       setShowRecipes([]);
       fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)

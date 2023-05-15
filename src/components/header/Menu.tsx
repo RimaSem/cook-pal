@@ -69,8 +69,6 @@ const StyledMenu = styled.div<MenuProps>`
   z-index: 3;
   position: fixed;
   right: ${({ menuState }) => (menuState ? "0" : "-600px")};
-  display: flex;
-  flex-direction: column;
   transition: right 0.5s;
   width: 26.25em;
   height: 100vh;
