@@ -14,7 +14,9 @@ const Login: React.FC = () => {
 
   return (
     <LoginContainer>
-      <PageHeading>{notRegistered ? "Register" : "Log In"}</PageHeading>
+      <StyledPageHeading>
+        {notRegistered ? "Register" : "Log In"}
+      </StyledPageHeading>
       {notRegistered ? (
         <TextWrapper>
           Already have an account?{" "}
@@ -65,8 +67,6 @@ const LoginContainer = styled(MainContainer)`
   flex-direction: column;
   align-items: center;
 `;
-
-const PageHeading = styled(StyledPageHeading)``;
 
 const TextWrapper = styled.div`
   margin-bottom: 1em;

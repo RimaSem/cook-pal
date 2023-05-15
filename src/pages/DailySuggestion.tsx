@@ -96,7 +96,7 @@ const DailySuggestion: React.FC = () => {
 
   return (
     <SuggestionContainer>
-      <StyledHeading>Daily Suggestion</StyledHeading>
+      <StyledPageHeading>Daily Suggestion</StyledPageHeading>
       <StyledParagraph>
         Not sure what recipe to try out next? Take a look at our daily
         suggestion!
@@ -106,7 +106,7 @@ const DailySuggestion: React.FC = () => {
       {errorMessage ? (
         <ErrorMessage />
       ) : (
-        <CardWrapper>{suggestion}</CardWrapper>
+        <CardContainer>{suggestion}</CardContainer>
       )}
     </SuggestionContainer>
   );
@@ -117,10 +117,7 @@ export default DailySuggestion;
 const SuggestionContainer = styled(MainContainer)`
   flex-direction: column;
 `;
-const StyledHeading = styled(StyledPageHeading)``;
 
 const StyledParagraph = styled.p`
   text-align: center;
 `;
-
-const CardWrapper = styled(CardContainer)``;

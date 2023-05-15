@@ -183,9 +183,9 @@ const Explore: React.FC = () => {
           setFilteredRecipes={setFilteredRecipes}
         />
       </Filters>
-      <FilteredCards>
+      <CardContainer>
         {errorMessage ? <ErrorMessage /> : showRecipes}
-      </FilteredCards>
+      </CardContainer>
     </ExploreContainer>
   );
 };
@@ -228,5 +228,3 @@ const StyledSelect = styled.select`
 const StyledOption = styled.option`
   font-weight: 300;
 `;
-
-const FilteredCards = styled(CardContainer)``;

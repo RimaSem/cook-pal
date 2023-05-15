@@ -53,8 +53,8 @@ const Main: React.FC = () => {
   ));
 
   return (
-    <StyledMain>
-      <AllCards>
+    <MainContainer>
+      <CardContainer>
         {errorMessage ? (
           <ErrorMessage />
         ) : loadMore ? (
@@ -62,19 +62,15 @@ const Main: React.FC = () => {
         ) : (
           allRecipes.slice(0, 8)
         )}
-      </AllCards>
+      </CardContainer>
       {!errorMessage && !loadMore && (
         <LoadMoreBtn onClick={() => setLoadMore(true)}>Load More</LoadMoreBtn>
       )}
-    </StyledMain>
+    </MainContainer>
   );
 };
 
 export default Main;
-
-const StyledMain = styled(MainContainer)``;
-
-const AllCards = styled(CardContainer)``;
 
 const LoadMoreBtn = styled.button`
   transition: opacity 0.3s;

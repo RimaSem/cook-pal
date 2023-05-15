@@ -60,7 +60,7 @@ const GroceryList: React.FC = () => {
 
   return (
     <GroceryContainer>
-      <PageHeading>Grocery List</PageHeading>
+      <StyledPageHeading>Grocery List</StyledPageHeading>
       <GroceryWrapper>{groceryElements}</GroceryWrapper>
     </GroceryContainer>
   );
@@ -72,8 +72,6 @@ const GroceryContainer = styled(MainContainer)`
   flex-direction: column;
   align-items: center;
 `;
-
-const PageHeading = styled(StyledPageHeading)``;
 
 const GroceryWrapper = styled.div``;
 

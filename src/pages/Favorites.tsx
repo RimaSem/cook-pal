@@ -66,8 +66,12 @@ const Favorites: React.FC = () => {
 
   return (
     <FavoritesContainer>
-      <StyledHeading>Favorites</StyledHeading>
-      {errorMessage ? <ErrorMessage /> : <AllCards>{elementsArray}</AllCards>}
+      <StyledPageHeading>Favorites</StyledPageHeading>
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <CardContainer>{elementsArray}</CardContainer>
+      )}
     </FavoritesContainer>
   );
 };
@@ -77,7 +81,3 @@ export default Favorites;
 const FavoritesContainer = styled(MainContainer)`
   flex-direction: column;
 `;
-
-const StyledHeading = styled(StyledPageHeading)``;
-
-const AllCards = styled(CardContainer)``;
