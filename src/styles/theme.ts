@@ -55,3 +55,13 @@ export const theme: ThemeProps = {
     footerQ: "(max-width: 425px)",
   },
 };
+
+export const devices = {
+  mobileL: "(max-width: 425px)",
+  mobileXL: "(max-width: 500px)",
+  mobileXXL: "(max-width: 520px)",
+  tabletXXS: "(max-width: 580px)",
+  tabletXS: "(max-width: 650px)",
+  tabletS: "(max-width: 675px)",
+  tabletM: "(max-width: 865px)",
+};

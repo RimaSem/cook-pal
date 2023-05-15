@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { devices } from "../../styles/theme";
 import styled from "styled-components";
 import { useAppSelector, useAppDispatch } from "../../state/hooks";
 import { getSearchWord } from "../../state/search/searchSelectors";
@@ -82,12 +83,12 @@ const StyledSearch = styled.div`
   display: flex;
   width: 40%;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     margin: 1em auto 0 auto;
     width: 80%;
   }
 
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
+  @media ${devices.mobileXL} {
     width: 100%;
   }
 `;
@@ -123,7 +124,7 @@ const StyledButton = styled.button`
     opacity: 0.9;
   }
 
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
+  @media ${devices.mobileXL} {
     height: 3em;
     font-size: 0.7rem;
   }

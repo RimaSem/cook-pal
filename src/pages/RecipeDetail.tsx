@@ -12,6 +12,7 @@ import { StyledPageHeading } from "../styles/sharedStyles";
 import styled from "styled-components";
 import { auth, db } from "../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { devices } from "../styles/theme";
 
 const recipeData = {
   name: "",
@@ -147,14 +148,14 @@ const RecipeContainer = styled.div`
   padding: 0.5em 3em;
   color: ${({ theme }) => theme.colors.darker};
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     margin: 0;
     padding: 0;
   }
 `;
 
 const DishName = styled(StyledPageHeading)`
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     font-size: 1.8rem;
   }
 `;
@@ -175,7 +176,7 @@ const TopWrapper = styled.div`
   margin-bottom: 3em;
   line-height: 2rem;
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     margin: 0;
     min-width: 100%;
     flex-direction: column;
@@ -190,7 +191,7 @@ const Image = styled.img`
   object-fit: cover;
   object-position: center;
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     border-radius: 0;
     width: 100%;
     max-height: 21.875em;
@@ -205,7 +206,7 @@ const AreaLabel = styled.div`
   background-color: ${({ theme }) => theme.colors.navBtn2};
   font-weight: 500;
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     margin: 0 0.2em 0.2em 2em;
   }
 `;
@@ -213,7 +214,7 @@ const AreaLabel = styled.div`
 const CategoryLabel = styled(AreaLabel)`
   background-color: ${({ theme }) => theme.colors.navBtn3};
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     margin: 0 0 0.2em 0;
   }
 `;
@@ -221,7 +222,7 @@ const CategoryLabel = styled(AreaLabel)`
 const Instructions = styled.div`
   line-height: 2em;
 
-  @media ${({ theme }) => theme.mQueries.secondaryQ} {
+  @media ${devices.tabletXS} {
     margin: 0 1em;
     font-size: 0.9rem;
   }

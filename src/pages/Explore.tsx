@@ -19,6 +19,7 @@ import { setErrorMessage } from "../state/error/errorSlice";
 import { getErrorMessage } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { getSearchWord } from "../state/search/searchSelectors";
+import { devices } from "../styles/theme";
 
 const Explore: React.FC = () => {
   const [filteredRecipes, setFilteredRecipes] = useState<
@@ -219,7 +220,7 @@ const StyledSelect = styled.select`
     outline: none;
   }
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     margin: 0;
   }
 `;

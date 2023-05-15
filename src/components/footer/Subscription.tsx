@@ -1,3 +1,4 @@
+import { devices } from "../../styles/theme";
 import { FooterLogo } from "./Info";
 import styled from "styled-components";
 
@@ -44,7 +45,7 @@ const FooterInput = styled.input`
   font-family: inherit;
   letter-spacing: 0.02em;
 
-  @media ${({ theme }) => theme.mQueries.footerQ} {
+  @media ${devices.mobileL} {
     width: 70%;
   }
 `;

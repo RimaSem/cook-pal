@@ -6,6 +6,7 @@ import { setSearchWord } from "../../state/search/searchSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { RouteNames } from "../../types/RouteNames";
+import { devices } from "../../styles/theme";
 
 const SearchBar: React.FC = () => {
   const [typedWord, setTypedWord] = useState("");
@@ -42,7 +43,7 @@ const StyledSearchBar = styled.div`
   width: 100%;
   height: 2.625em;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     display: none;
   }
 `;

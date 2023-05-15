@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { devices } from "../../styles/theme";
 
 interface HeroProps {
   title?: string;
@@ -36,13 +37,13 @@ const StyledHero = styled.div<HeroProps>`
   background-repeat: no-repeat;
   background-position: center;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     margin: 0 auto;
     border-radius: 0;
     width: 100%;
   }
 
-  @media ${({ theme }) => theme.mQueries.heroLargerQ} {
+  @media ${devices.tabletXXS} {
     align-items: center;
     padding-left: 0;
     text-align: center;
@@ -55,7 +56,7 @@ const Label = styled.p`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.accentOrange};
 
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
+  @media ${devices.mobileXL} {
     font-size: 1.4rem;
   }
 `;
@@ -67,7 +68,7 @@ const Title = styled.h1`
   line-height: 127%;
   color: ${({ theme }) => theme.colors.lighter};
 
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
+  @media ${devices.mobileXL} {
     font-size: 1.8rem;
   }
 `;
@@ -78,7 +79,7 @@ const Author = styled.p`
   font-weight: 500;
   color: ${({ theme }) => theme.colors.lighter};
 
-  @media ${({ theme }) => theme.mQueries.heroSmallerQ} {
+  @media ${devices.mobileXL} {
     font-size: 1.1rem;
   }
 `;

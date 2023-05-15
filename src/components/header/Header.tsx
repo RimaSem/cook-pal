@@ -2,6 +2,7 @@ import Logo from "./Logo";
 import SearchBar from "./SearchBar";
 import HeaderNav from "./HeaderNav";
 import styled from "styled-components";
+import { devices } from "../../styles/theme";
 
 const Header: React.FC = () => (
   <StyledHeader>
@@ -27,7 +28,7 @@ const StyledHeader = styled.div`
   padding: 0 1em;
   background-color: ${({ theme }) => theme.colors.white};
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     height: 3.5em;
   }
 `;

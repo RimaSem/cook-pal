@@ -10,6 +10,7 @@ import {
 import styled from "styled-components";
 import { db, auth } from "../../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { devices } from "../../styles/theme";
 
 interface CardProps {
   daily?: boolean;
@@ -110,7 +111,7 @@ const CardContainer = styled.div<DailyCardProp>`
   background-color: ${({ theme }) => theme.colors.white};
   font-family: var(--font-secondary);
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     margin: 0;
   }
 `;

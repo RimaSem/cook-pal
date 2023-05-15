@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { userLoggedIn } from "../../state/auth/authSelectors";
 import { setUserLogin } from "../../state/auth/authSlice";
 import styled from "styled-components";
+import { devices } from "../../styles/theme";
 
 const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -59,7 +60,7 @@ const StyledNav = styled.nav`
   gap: 1.5em;
   width: 17em;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     gap: 0;
     width: fit-content;
   }
@@ -76,7 +77,7 @@ const StyledLink = styled(Link)`
     color: ${({ theme }) => theme.colors.accentGreen};
   }
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     display: none;
   }
 `;

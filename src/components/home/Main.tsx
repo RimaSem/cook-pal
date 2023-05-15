@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getErrorMessage } from "../../state/error/errorSelectors";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
+import { devices } from "../../styles/theme";
 
 export interface Recipe {
   idMeal?: string;
@@ -94,7 +95,7 @@ const LoadMoreBtn = styled.button`
     opacity: 0.85;
   }
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     margin-top: 0.3em;
   }
 `;

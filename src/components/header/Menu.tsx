@@ -1,3 +1,4 @@
+import { devices } from "../../styles/theme";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useAppDispatch } from "../../state/hooks";
@@ -74,7 +75,7 @@ const StyledMenu = styled.div<MenuProps>`
   height: 100vh;
   background-color: ${({ theme }) => theme.colors.white};
 
-  @media ${({ theme }) => theme.mQueries.menuQ} {
+  @media ${devices.mobileXXL} {
     width: 100%;
   }
 `;

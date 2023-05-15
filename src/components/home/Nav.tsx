@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { theme } from "../../styles/theme";
+import { devices, theme } from "../../styles/theme";
 import { RouteNames } from "../../types/RouteNames";
 import styled from "styled-components";
 
@@ -42,7 +42,7 @@ const NavContainer = styled.div`
   max-width: var(--width-max);
   width: 95%;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     display: none;
   }
 `;
@@ -64,7 +64,7 @@ const StyledLink = styled(Link)<NavProps>`
     opacity: 0.85;
   }
 
-  @media ${({ theme }) => theme.mQueries.navQ} {
+  @media ${devices.tabletS} {
     padding: 0.95em 0.3em;
   }
 `;
