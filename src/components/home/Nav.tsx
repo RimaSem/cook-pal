@@ -8,24 +8,19 @@ interface NavProps {
 }
 
 const Nav: React.FC<NavProps> = () => {
-  const color2 = theme.colors.navBtn2;
-  const color3 = theme.colors.navBtn3;
-  const color4 = theme.colors.navBtn4;
-  const color5 = theme.colors.navBtn5;
-
   return (
     <NavContainer>
       <StyledLink to="./">Home</StyledLink>
-      <StyledLink to={RouteNames.RECIPES} btncolor={color2}>
+      <StyledLink to={RouteNames.RECIPES} btncolor={theme.colors.navBtn2}>
         Browse Recipes
       </StyledLink>
-      <StyledLink to={RouteNames.DAILY} btncolor={color3}>
+      <StyledLink to={RouteNames.DAILY} btncolor={theme.colors.navBtn3}>
         Daily Suggestion
       </StyledLink>
-      <StyledLink to={RouteNames.FAVORITES} btncolor={color4}>
+      <StyledLink to={RouteNames.FAVORITES} btncolor={theme.colors.navBtn4}>
         Your Favorites
       </StyledLink>
-      <StyledLink to={RouteNames.GROCERIES} btncolor={color5}>
+      <StyledLink to={RouteNames.GROCERIES} btncolor={theme.colors.navBtn5}>
         Create Grocery List
       </StyledLink>
     </NavContainer>

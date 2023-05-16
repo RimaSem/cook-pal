@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
 import { errorMessageSelector } from "../../state/error/errorSelectors";
 import styled from "styled-components";
+import { StatusCodes } from "../../types/AuthMessages";
 
 export const handleFetchError = (res: { ok: boolean; status: number }) => {
   if (!res.ok) {
-    if (res.status === 500) {
+    if (res.status === StatusCodes.INTERNAL_SERVER_ERROR) {
       throw Error(
         "Error " +
           res.status +

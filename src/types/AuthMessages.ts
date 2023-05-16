@@ -17,3 +17,7 @@ export enum AuthErrorCodes {
   WRONG_PASSWORD = "auth/wrong-password",
   EMAIL_ALREADY_EXISTS = "auth/email-already-in-use",
 }
+
+export enum StatusCodes {
+  INTERNAL_SERVER_ERROR = 500,
+}
