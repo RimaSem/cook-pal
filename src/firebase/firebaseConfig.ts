@@ -2,15 +2,14 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// TODO: replace the following with environment variables
 export const firebaseConfig = {
-  apiKey: "AIzaSyBVLWrkCJsQ9W8zBLkvaB5zNZJBElHSfuQ",
-  authDomain: "cook-pal-5538b.firebaseapp.com",
-  projectId: "cook-pal-5538b",
-  storageBucket: "cook-pal-5538b.appspot.com",
-  messagingSenderId: "787882832310",
-  appId: "1:787882832310:web:48ff5f95c3955faf959117",
-  measurementId: "G-SGBGC6J5Z8",
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 };
 
 const app = initializeApp(firebaseConfig);
