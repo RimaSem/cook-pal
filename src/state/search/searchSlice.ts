@@ -12,7 +12,10 @@ export const searchSlice = createSlice({
   name: "search",
   initialState,
   reducers: {
-    setSearchWord: (state, action: PayloadAction<string>) => {
+    setSearchWord: (
+      state,
+      action: PayloadAction<SearchState["searchWord"]>
+    ) => {
       state.searchWord = action.payload;
     },
   },

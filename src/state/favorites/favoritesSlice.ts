@@ -12,7 +12,10 @@ export const favoritesSlice = createSlice({
   name: "favorites",
   initialState,
   reducers: {
-    updateFavorites: (state, action: PayloadAction<string[]>) => {
+    updateFavorites: (
+      state,
+      action: PayloadAction<FavoritesState["favRecipes"]>
+    ) => {
       state.favRecipes = action.payload;
     },
     addFavorite: (state, action: PayloadAction<string>) => {
