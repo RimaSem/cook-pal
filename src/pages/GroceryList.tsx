@@ -65,11 +65,12 @@ const GroceryList: React.FC = () => {
   return (
     <GroceryContainer>
       <StyledPageHeading>Grocery List</StyledPageHeading>
-      {ErrorMessage ? (
+      <GroceryWrapper>{groceryElements}</GroceryWrapper>
+      {/* {ErrorMessage ? (
         <ErrorMessage />
       ) : (
         <GroceryWrapper>{groceryElements}</GroceryWrapper>
-      )}
+      )} */}
     </GroceryContainer>
   );
 };

@@ -93,11 +93,10 @@ const RecipeDetail: React.FC = () => {
 
   const displayIngredients = () => {
     return amounts.map((item, index) => (
-      <ListItem key={item}>
+      <ListItem key={index}>
         <AddedSpan>&#10003;</AddedSpan>
         <LinkWrapper onClick={addToGroceryList}>
-          <StyledSpan>{item + " "}</StyledSpan>
-          {ingredients[index]}
+          {item + " " + ingredients[index]}
         </LinkWrapper>
       </ListItem>
     ));
@@ -254,10 +253,6 @@ const ListItem = styled.li`
 `;
 
 const LinkWrapper = styled.div``;
-
-const StyledSpan = styled.span`
-  font-weight: 600;
-`;
 
 const AddedSpan = styled.span`
   display: none;
