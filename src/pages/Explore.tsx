@@ -22,14 +22,12 @@ import { searchWordSelector } from "../state/search/searchSelectors";
 import { devices } from "../styles/theme";
 
 const Explore: React.FC = () => {
-  const [filteredRecipes, setFilteredRecipes] = useState<
-    string[] | undefined
-  >();
+  const [filteredRecipes, setFilteredRecipes] = useState<string[]>([]);
   const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("Category");
   const [selectedArea, setSelectedArea] = useState<string>("Area");
-  const [categoryArray, setCategoryArray] = useState<string[] | undefined>();
-  const [areaArray, setAreaArray] = useState<string[] | undefined>();
+  const [categoryArray, setCategoryArray] = useState<string[]>([]);
+  const [areaArray, setAreaArray] = useState<string[]>([]);
   const { errorMessage } = useAppSelector(errorMessageSelector);
   const { searchWord } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();

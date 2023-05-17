@@ -12,11 +12,9 @@ interface SearchProps {
   setShowRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedArea: React.Dispatch<React.SetStateAction<string>>;
-  setCategoryArray: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  setAreaArray: React.Dispatch<React.SetStateAction<string[] | undefined>>;
-  setFilteredRecipes: React.Dispatch<
-    React.SetStateAction<string[] | undefined>
-  >;
+  setCategoryArray: React.Dispatch<React.SetStateAction<string[]>>;
+  setAreaArray: React.Dispatch<React.SetStateAction<string[]>>;
+  setFilteredRecipes: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const Search: React.FC<SearchProps> = ({

@@ -1,26 +1,28 @@
 import { Link } from "react-router-dom";
-import { devices, theme } from "../../styles/theme";
+import { devices } from "../../styles/theme";
 import { RouteNames } from "../../types/RouteNames";
-import styled from "styled-components";
+import styled, { useTheme } from "styled-components";
 
 interface NavProps {
   btncolor?: string;
 }
 
 const Nav: React.FC<NavProps> = () => {
+  const { colors } = useTheme();
+
   return (
     <NavContainer>
       <StyledLink to="./">Home</StyledLink>
-      <StyledLink to={RouteNames.RECIPES} btncolor={theme.colors.navBtn2}>
+      <StyledLink to={RouteNames.RECIPES} btncolor={colors.navBtn2}>
         Browse Recipes
       </StyledLink>
-      <StyledLink to={RouteNames.DAILY} btncolor={theme.colors.navBtn3}>
+      <StyledLink to={RouteNames.DAILY} btncolor={colors.navBtn3}>
         Daily Suggestion
       </StyledLink>
-      <StyledLink to={RouteNames.FAVORITES} btncolor={theme.colors.navBtn4}>
+      <StyledLink to={RouteNames.FAVORITES} btncolor={colors.navBtn4}>
         Your Favorites
       </StyledLink>
-      <StyledLink to={RouteNames.GROCERIES} btncolor={theme.colors.navBtn5}>
+      <StyledLink to={RouteNames.GROCERIES} btncolor={colors.navBtn5}>
         Create Grocery List
       </StyledLink>
     </NavContainer>
