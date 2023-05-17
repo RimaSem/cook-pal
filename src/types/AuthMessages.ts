@@ -21,3 +21,8 @@ export enum AuthErrorCodes {
 export enum StatusCodes {
   INTERNAL_SERVER_ERROR = 500,
 }
+
+export enum FetchErrorMessages {
+  ERROR_500 = "Error 500: Server is currently down. Please try again later!",
+  FETCH_ERROR = "Could not fetch data for that resource.",
+}

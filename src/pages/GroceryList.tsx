@@ -5,20 +5,27 @@ import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { setErrorMessage } from "../state/error/errorSlice";
 import ErrorMessage from "../components/shared/ErrorMessage";
-import { useAppDispatch } from "../state/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { FirebaseCollections } from "../types/General";
+import { errorMessageSelector } from "../state/error/errorSelectors";
 
 const GroceryList: React.FC = () => {
   const [groceryArray, setGroceryArray] = useState<string[]>([""]);
   const [groceryElements, setGroceryElements] = useState<JSX.Element[] | null>(
     null
   );
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const getGroceriesFromDatabase = async () => {
       try {
         if (auth.currentUser) {
-          const docToUpdate = doc(db, "users", auth.currentUser.uid);
+          const docToUpdate = doc(
+            db,
+            FirebaseCollections.USER_COLLECTION,
+            auth.currentUser.uid
+          );
           const docData = (await getDoc(docToUpdate)).data();
           setGroceryArray(docData?.groceryList);
         }
@@ -39,7 +46,11 @@ const GroceryList: React.FC = () => {
 
     try {
       if (auth.currentUser) {
-        const docToUpdate = doc(db, "users", auth.currentUser.uid);
+        const docToUpdate = doc(
+          db,
+          FirebaseCollections.USER_COLLECTION,
+          auth.currentUser.uid
+        );
         await updateDoc(docToUpdate, {
           groceryList: groceryArray.filter(
             (item) => item !== removedItem?.slice(0, -6)
@@ -65,12 +76,11 @@ const GroceryList: React.FC = () => {
   return (
     <GroceryContainer>
       <StyledPageHeading>Grocery List</StyledPageHeading>
-      <GroceryWrapper>{groceryElements}</GroceryWrapper>
-      {/* {ErrorMessage ? (
+      {errorMessage ? (
         <ErrorMessage />
       ) : (
         <GroceryWrapper>{groceryElements}</GroceryWrapper>
-      )} */}
+      )}
     </GroceryContainer>
   );
 };

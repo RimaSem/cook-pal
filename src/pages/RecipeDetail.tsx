@@ -13,6 +13,9 @@ import styled from "styled-components";
 import { auth, db } from "../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { devices } from "../styles/theme";
+import { FetchURL } from "../types/RouteNames";
+import { FetchErrorMessages } from "../types/AuthMessages";
+import { FirebaseCollections } from "../types/General";
 
 const recipeData = {
   name: "",
@@ -50,7 +53,7 @@ const RecipeDetail: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`, {
+    fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + id}`, {
       method: "GET",
       mode: "cors",
     })
@@ -59,6 +62,9 @@ const RecipeDetail: React.FC = () => {
         return res.json();
       })
       .then((data) => {
+        if (!data.meals[0]) {
+          throw Error(FetchErrorMessages.FETCH_ERROR);
+        }
         setRecipe({
           name: data.meals[0].strMeal,
           area: data.meals[0].strArea,
@@ -76,7 +82,11 @@ const RecipeDetail: React.FC = () => {
     const addedItem = (e.target as HTMLElement).textContent;
     try {
       if (auth.currentUser) {
-        const docToUpdate = doc(db, "users", auth.currentUser.uid);
+        const docToUpdate = doc(
+          db,
+          FirebaseCollections.USER_COLLECTION,
+          auth.currentUser.uid
+        );
         const docData = (await getDoc(docToUpdate)).data();
         if (!docData?.groceryList.includes(addedItem)) {
           const markAsAdded = (e.target as HTMLElement).parentNode?.firstChild;

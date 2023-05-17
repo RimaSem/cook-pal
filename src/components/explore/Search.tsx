@@ -5,6 +5,8 @@ import { useAppSelector, useAppDispatch } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
 import { setSearchWord } from "../../state/search/searchSlice";
 import { setErrorMessage } from "../../state/error/errorSlice";
+import { FetchURL } from "../../types/RouteNames";
+import { LocalStorageItems, SelectElementOptions } from "../../types/General";
 
 interface SearchProps {
   categoryInputRef: React.RefObject<HTMLSelectElement>;
@@ -27,23 +29,24 @@ const Search: React.FC<SearchProps> = ({
   setAreaArray,
   setFilteredRecipes,
 }) => {
-  const [searchInput, setSearchInput] = useState<string | undefined>(undefined);
+  const [searchInput, setSearchInput] = useState<string | undefined>();
   const { searchWord } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
 
   // Search for recipes by recipe name
   const handleSearch = (input: string = "") => {
-    if ((searchInput && searchInput !== "") || searchWord !== "") {
+    if ((searchInput && searchInput.length > 0) || searchWord.length > 0) {
       if (categoryInputRef.current && areaInputRef.current) {
-        categoryInputRef.current.value = "Category";
-        areaInputRef.current.value = "Area";
+        categoryInputRef.current.value =
+          SelectElementOptions.DEFAULT_CATEGORY_OPTION;
+        areaInputRef.current.value = SelectElementOptions.DEFAULT_AREA_OPTION;
       }
       setShowRecipes([]);
-      fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${input}`)
+      fetch(`${FetchURL.SEARCH_BY_NAME_ENDPOINT + input}`)
         .then((res) => res.json())
         .then((data) => {
-          setSelectedCategory("Category");
-          setSelectedArea("Area");
+          setSelectedCategory(SelectElementOptions.DEFAULT_CATEGORY_OPTION);
+          setSelectedArea(SelectElementOptions.DEFAULT_AREA_OPTION);
           setCategoryArray([]);
           setAreaArray([]);
           const newArray: string[] | null = [];
@@ -52,7 +55,10 @@ const Search: React.FC<SearchProps> = ({
           );
           setFilteredRecipes(newArray);
           dispatch(setSearchWord(""));
-          localStorage.setItem("recipes", JSON.stringify(newArray));
+          localStorage.setItem(
+            LocalStorageItems.RECIPES,
+            JSON.stringify(newArray)
+          );
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     }
@@ -60,7 +66,7 @@ const Search: React.FC<SearchProps> = ({
 
   // Search for recipes via header search bar
   useEffect(() => {
-    if (searchWord !== "") {
+    if (searchWord.length > 0) {
       handleSearch(searchWord);
     }
   }, [searchWord]);

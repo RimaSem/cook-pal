@@ -8,6 +8,7 @@ import { errorMessageSelector } from "../../state/error/errorSelectors";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
+import { FetchURL } from "../../types/RouteNames";
 
 export interface Recipe {
   idMeal: string;
@@ -24,7 +25,7 @@ const Main: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=f", {
+    fetch(`${FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + "f"}`, {
       method: "GET",
       mode: "cors",
     })

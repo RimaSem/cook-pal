@@ -20,12 +20,19 @@ import { errorMessageSelector } from "../state/error/errorSelectors";
 import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { searchWordSelector } from "../state/search/searchSelectors";
 import { devices } from "../styles/theme";
+import { FetchURL } from "../types/RouteNames";
+import { SelectElementOptions } from "../types/General";
+import { FetchErrorMessages } from "../types/AuthMessages";
 
 const Explore: React.FC = () => {
   const [filteredRecipes, setFilteredRecipes] = useState<string[]>([]);
   const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>("Category");
-  const [selectedArea, setSelectedArea] = useState<string>("Area");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    SelectElementOptions.DEFAULT_CATEGORY_OPTION
+  );
+  const [selectedArea, setSelectedArea] = useState<string>(
+    SelectElementOptions.DEFAULT_AREA_OPTION
+  );
   const [categoryArray, setCategoryArray] = useState<string[]>([]);
   const [areaArray, setAreaArray] = useState<string[]>([]);
   const { errorMessage } = useAppSelector(errorMessageSelector);
@@ -50,10 +57,8 @@ const Explore: React.FC = () => {
   // Filter by category
   useEffect(() => {
     setShowRecipes([]);
-    if (selectedCategory !== "Category") {
-      fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?c=${selectedCategory}`
-      )
+    if (selectedCategory !== SelectElementOptions.DEFAULT_CATEGORY_OPTION) {
+      fetch(`${FetchURL.FILTER_BY_CATEGORY_ENDPOINT + selectedCategory}`)
         .then((res) => res.json())
         .then((data) => {
           const newArray: string[] | null = [];
@@ -61,7 +66,7 @@ const Explore: React.FC = () => {
             newArray.push(obj.idMeal)
           );
           setCategoryArray(newArray);
-          if (selectedArea !== "Area") {
+          if (selectedArea !== SelectElementOptions.DEFAULT_AREA_OPTION) {
             setFilteredRecipes(
               newArray.filter((item) => areaArray?.includes(item))
             );
@@ -79,10 +84,8 @@ const Explore: React.FC = () => {
   // Filter by area
   useEffect(() => {
     setShowRecipes([]);
-    if (selectedArea !== "Area") {
-      fetch(
-        `https://www.themealdb.com/api/json/v1/1/filter.php?a=${selectedArea}`
-      )
+    if (selectedArea !== SelectElementOptions.DEFAULT_AREA_OPTION) {
+      fetch(`${FetchURL.FILTER_BY_AREA_ENDPOINT + selectedArea}`)
         .then((res) => res.json())
         .then((data) => {
           const newArray: string[] = [];
@@ -90,7 +93,9 @@ const Explore: React.FC = () => {
             newArray.push(obj.idMeal)
           );
           setAreaArray(newArray);
-          if (selectedCategory !== "Category") {
+          if (
+            selectedCategory !== SelectElementOptions.DEFAULT_CATEGORY_OPTION
+          ) {
             setFilteredRecipes(
               newArray.filter((item) => categoryArray?.includes(item))
             );
@@ -109,18 +114,18 @@ const Explore: React.FC = () => {
   useEffect(() => {
     if (filteredRecipes) {
       filteredRecipes?.forEach((recipeID) => {
-        fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`,
-          {
-            method: "GET",
-            mode: "cors",
-          }
-        )
+        fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
+          method: "GET",
+          mode: "cors",
+        })
           .then((res) => {
             handleFetchError(res);
             return res.json();
           })
-          .then((data) =>
+          .then((data) => {
+            if (!data.meals[0]) {
+              throw Error(FetchErrorMessages.FETCH_ERROR);
+            }
             setShowRecipes((prev) => [
               ...prev,
               <RecipeCard
@@ -133,15 +138,15 @@ const Explore: React.FC = () => {
                   img: data.meals[0].strMealThumb,
                 }}
               />,
-            ])
-          )
+            ]);
+          })
           .catch((err) => dispatch(setErrorMessage(err.message)));
       });
     }
   }, [filteredRecipes]);
 
   useEffect(() => {
-    if (searchWord === "") {
+    if (searchWord.length === 0) {
       setFilteredRecipes(defaultRecipes);
     }
     window.scrollTo({

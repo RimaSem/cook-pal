@@ -15,6 +15,7 @@ import { setErrorMessage } from "../../state/error/errorSlice";
 import { useSelector } from "react-redux";
 import { errorMessageSelector } from "../../state/error/errorSelectors";
 import ErrorMessage from "../shared/ErrorMessage";
+import { FirebaseCollections } from "../../types/General";
 
 interface CardProps {
   daily?: boolean;
@@ -34,7 +35,11 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
 
   useEffect(() => {
     if (auth.currentUser) {
-      const docRef = doc(db, "users", auth.currentUser.uid);
+      const docRef = doc(
+        db,
+        FirebaseCollections.USER_COLLECTION,
+        auth.currentUser.uid
+      );
       const getFavorites = async () => {
         try {
           const docData = (await getDoc(docRef)).data();
@@ -53,7 +58,11 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const handleClick = async (id: string) => {
     if (auth.currentUser) {
       try {
-        const docToUpdate = doc(db, "users", auth.currentUser.uid);
+        const docToUpdate = doc(
+          db,
+          FirebaseCollections.USER_COLLECTION,
+          auth.currentUser.uid
+        );
         const docData = (await getDoc(docToUpdate)).data();
         if (!isFavorite) {
           setIsFavorite(true);
@@ -69,7 +78,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
           dispatch(removeFavorite(id));
         }
       } catch (err) {
-        console.log(err);
+        dispatch(setErrorMessage((err as Error).message));
       }
     }
   };
@@ -87,10 +96,7 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
           <DishName>{cardData?.name}</DishName>
           <DishCategory>{cardData?.category}</DishCategory>
           <CardSaveIcon onClick={() => handleClick(cardData?.id)}>
-            <Icon
-              className="cardSaveIcon"
-              path={isFavorite ? mdiBookmark : mdiBookmarkOutline}
-            />
+            <Icon path={isFavorite ? mdiBookmark : mdiBookmarkOutline} />
           </CardSaveIcon>
         </CardContainer>
       )}

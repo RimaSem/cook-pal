@@ -16,6 +16,9 @@ import RecipeCard from "../components/home/RecipeCard";
 import styled from "styled-components";
 import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
+import { FetchURL } from "../types/RouteNames";
+import { FirebaseCollections } from "../types/General";
+import { FetchErrorMessages } from "../types/AuthMessages";
 
 const Favorites: React.FC = () => {
   const { favRecipes } = useSelector(favoriteRecipesSelector);
@@ -26,21 +29,25 @@ const Favorites: React.FC = () => {
   const displayRecipes = async () => {
     if (auth.currentUser) {
       setElementsArray([]);
-      const docRef = doc(db, "users", auth.currentUser.uid);
+      const docRef = doc(
+        db,
+        FirebaseCollections.USER_COLLECTION,
+        auth.currentUser.uid
+      );
       const docData = (await getDoc(docRef)).data();
       docData?.favorites.forEach((recipeID: string) => {
-        fetch(
-          `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`,
-          {
-            method: "GET",
-            mode: "cors",
-          }
-        )
+        fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
+          method: "GET",
+          mode: "cors",
+        })
           .then((res) => {
             handleFetchError(res);
             return res.json();
           })
-          .then((data) =>
+          .then((data) => {
+            if (!data.meals[0]) {
+              throw Error(FetchErrorMessages.FETCH_ERROR);
+            }
             setElementsArray((prev) => [
               ...prev,
               <RecipeCard
@@ -53,8 +60,8 @@ const Favorites: React.FC = () => {
                   img: data.meals[0].strMealThumb,
                 }}
               />,
-            ])
-          )
+            ]);
+          })
           .catch((err) => dispatch(setErrorMessage(err.message)));
       });
     }

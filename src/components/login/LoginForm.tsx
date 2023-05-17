@@ -19,6 +19,7 @@ import {
   StyledError,
 } from "./RegistrationForm";
 import { getDoc, doc, setDoc } from "firebase/firestore";
+import { FirebaseCollections } from "../../types/General";
 
 interface FormProps {
   errorMessage: string;
@@ -59,12 +60,19 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
     try {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
-      const docData = (await getDoc(doc(db, "users", result.user.uid))).data();
+      const docData = (
+        await getDoc(
+          doc(db, FirebaseCollections.USER_COLLECTION, result.user.uid)
+        )
+      ).data();
       if (!docData) {
-        await setDoc(doc(db, "users", result.user.uid), {
-          userID: result.user.uid,
-          favorites: [],
-        });
+        await setDoc(
+          doc(db, FirebaseCollections.USER_COLLECTION, result.user.uid),
+          {
+            userID: result.user.uid,
+            favorites: [],
+          }
+        );
       }
       navigate(`${RouteNames.HOME}`);
     } catch (err) {

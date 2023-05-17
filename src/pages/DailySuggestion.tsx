@@ -16,15 +16,22 @@ import styled from "styled-components";
 import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getCurrentDate } from "../utils/basicUtils";
+import { FetchURL } from "../types/RouteNames";
+import { FirebaseCollections, FirebaseDocs } from "../types/General";
+import { FetchErrorMessages } from "../types/AuthMessages";
 
 const DailySuggestion: React.FC = () => {
   const [suggestion, setSuggestion] = useState<JSX.Element>();
   const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
-  const docRef = doc(db, "dailySuggestions", "documentNumber001");
+  const docRef = doc(
+    db,
+    FirebaseCollections.DAILY_RECIPES_COLLECTION,
+    FirebaseDocs.DEFAULT_DOC
+  );
 
   const displayRecipe = (recipeID: string) => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeID}`, {
+    fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
       method: "GET",
       mode: "cors",
     })
@@ -33,6 +40,9 @@ const DailySuggestion: React.FC = () => {
         return res.json();
       })
       .then((data) => {
+        if (!data.meals[0]) {
+          throw Error(FetchErrorMessages.FETCH_ERROR);
+        }
         setSuggestion(
           <RecipeCard
             daily
@@ -52,17 +62,24 @@ const DailySuggestion: React.FC = () => {
 
   const updateDatabase = async (recipe: string) => {
     try {
-      await setDoc(doc(db, "dailySuggestions", "documentNumber001"), {
-        currentDate: getCurrentDate(),
-        dailyRecipe: recipe,
-      });
+      await setDoc(
+        doc(
+          db,
+          FirebaseCollections.DAILY_RECIPES_COLLECTION,
+          FirebaseDocs.DEFAULT_DOC
+        ),
+        {
+          currentDate: getCurrentDate(),
+          dailyRecipe: recipe,
+        }
+      );
     } catch (err) {
       dispatch(setErrorMessage((err as Error).message));
     }
   };
 
   const fetchRandomRecipe = () => {
-    fetch(`https://www.themealdb.com/api/json/v1/1/random.php`, {
+    fetch(FetchURL.RANDOM_RECIPE_ENDPOINT, {
       method: "GET",
       mode: "cors",
     })
@@ -71,6 +88,9 @@ const DailySuggestion: React.FC = () => {
         return res.json();
       })
       .then((data) => {
+        if (!data.meals[0]) {
+          throw Error(FetchErrorMessages.FETCH_ERROR);
+        }
         displayRecipe(data.meals[0].idMeal);
         updateDatabase(data.meals[0].idMeal);
       })

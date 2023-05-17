@@ -8,6 +8,7 @@ import { useAppDispatch } from "../../state/hooks";
 import { AuthErrorCodes, AuthMessages } from "../../types/AuthMessages";
 import { emailRegx } from "../../utils/basicUtils";
 import { collection, doc, setDoc } from "firebase/firestore";
+import { FirebaseCollections } from "../../types/General";
 
 interface FormProps {
   errorMessage: string;
@@ -27,7 +28,7 @@ const RegistrationForm: React.FC<FormProps> = ({
   const [registerPasswordConfirm, setRegisterPasswordConfirm] = useState("");
   const formRef = useRef<HTMLFormElement>(null);
   const dispatch = useAppDispatch();
-  const collectionRef = collection(db, "users");
+  const collectionRef = collection(db, FirebaseCollections.USER_COLLECTION);
 
   const register = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
