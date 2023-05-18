@@ -1,36 +1,23 @@
 import { useEffect, useState } from "react";
 import { devices } from "../../styles/theme";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../state/hooks";
+import { useAppSelector } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
-import { SelectElementOptions } from "../../types/General";
+
 import useFilter from "../../hooks/useFilter";
-import { setSearchWord } from "../../state/search/searchSlice";
 
 interface SearchProps {
-  categoryInputRef: React.RefObject<HTMLSelectElement>;
-  areaInputRef: React.RefObject<HTMLSelectElement>;
   setDisplayRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
 }
 
-const Search: React.FC<SearchProps> = ({
-  categoryInputRef,
-  areaInputRef,
-  setDisplayRecipes,
-}) => {
-  const [searchInput, setSearchInput] = useState<string | undefined>();
+const Search: React.FC<SearchProps> = ({ setDisplayRecipes }) => {
+  const [searchInput, setSearchInput] = useState<string>("");
   const { searchWord } = useAppSelector(searchWordSelector);
   const { searchByName } = useFilter();
-  const dispatch = useAppDispatch();
 
-  const handleSearch = (input: string = "") => {
-    setDisplayRecipes([]);
-    if ((searchInput && searchInput.length > 0) || searchWord.length > 0) {
-      if (categoryInputRef.current && areaInputRef.current) {
-        categoryInputRef.current.value =
-          SelectElementOptions.DEFAULT_CATEGORY_OPTION;
-        areaInputRef.current.value = SelectElementOptions.DEFAULT_AREA_OPTION;
-      }
+  const handleSearch = (input: string) => {
+    if (input.length > 0) {
+      setDisplayRecipes([]);
       searchByName(input);
     }
   };
@@ -39,7 +26,6 @@ const Search: React.FC<SearchProps> = ({
   useEffect(() => {
     if (searchWord.length > 0) {
       handleSearch(searchWord);
-      dispatch(setSearchWord(""));
     }
   }, [searchWord]);
 

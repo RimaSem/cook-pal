@@ -6,7 +6,7 @@ import {
 import styled from "styled-components";
 import Search from "../components/explore/Search";
 import { categoryOptions, areaOptions } from "../utils/basicUtils";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ErrorMessage, {
   handleFetchError,
 } from "../components/shared/ErrorMessage";
@@ -28,9 +28,6 @@ const Explore: React.FC = () => {
   const { errorMessage } = useAppSelector(errorMessageSelector);
   const { searchResults } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
-
-  const categoryInputRef = useRef<HTMLSelectElement>(null);
-  const areaInputRef = useRef<HTMLSelectElement>(null);
 
   const categories = categoryOptions.map((category) => (
     <StyledOption key={category} value={category}>
@@ -80,27 +77,23 @@ const Explore: React.FC = () => {
       <StyledPageHeading>Browse Recipes</StyledPageHeading>
       <Filters>
         <StyledSelect
-          ref={categoryInputRef}
           name="category"
           defaultValue="Category"
-          onChange={(e) => filterByCategory(e.target.value)}
+          onChange={(e) => {
+            filterByCategory(e.target.value);
+          }}
         >
           <StyledOption value="Category">Category</StyledOption>
           {categories}
         </StyledSelect>
         <StyledSelect
-          ref={areaInputRef}
           name="area"
           onChange={(e) => filterByArea(e.target.value)}
         >
           <StyledOption value="Area">Area</StyledOption>
           {areas}
         </StyledSelect>
-        <Search
-          categoryInputRef={categoryInputRef}
-          areaInputRef={areaInputRef}
-          setDisplayRecipes={setDisplayRecipes}
-        />
+        <Search setDisplayRecipes={setDisplayRecipes} />
       </Filters>
       <CardContainer>
         {errorMessage ? <ErrorMessage /> : displayRecipes}

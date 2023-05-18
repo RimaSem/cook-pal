@@ -15,11 +15,14 @@ const useFilter = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(setSearchResults(mergeArrays(categoryData, areaData)));
+    if (searchData.length < 1) {
+      dispatch(setSearchResults(mergeArrays(categoryData, areaData)));
+    }
   }, [categoryData, areaData]);
 
   const filterByCategory = (selectedOption: string) => {
     setSearchData([]);
+    dispatch(setSearchWord(""));
     if (selectedOption !== SelectElementOptions.DEFAULT_CATEGORY_OPTION) {
       axios
         .get(FetchURL.FILTER_BY_CATEGORY_ENDPOINT + selectedOption)
