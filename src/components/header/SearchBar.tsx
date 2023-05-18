@@ -2,7 +2,10 @@ import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import styled from "styled-components";
 import { useAppDispatch } from "../../state/hooks";
-import { setSearchWord } from "../../state/search/searchSlice";
+import {
+  setSearchResults,
+  setSearchWord,
+} from "../../state/search/searchSlice";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { RouteNames } from "../../types/RouteNames";
@@ -15,8 +18,12 @@ const SearchBar: React.FC = () => {
 
   const handleClick = () => {
     if (typedWord !== "") {
+      dispatch(setSearchResults([]));
       dispatch(setSearchWord(typedWord));
       navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);
+      window.scrollTo({
+        top: 450,
+      });
     }
   };
 

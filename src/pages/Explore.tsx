@@ -20,10 +20,11 @@ import { FetchURL } from "../types/RouteNames";
 import { FetchErrorMessages } from "../types/AuthMessages";
 import useFilter from "../hooks/useFilter";
 import axios from "axios";
+import { setSearchWord } from "../state/search/searchSlice";
 
 const Explore: React.FC = () => {
   const { filterByCategory, filterByArea } = useFilter();
-  const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
+  const [displayRecipes, setDisplayRecipes] = useState<JSX.Element[]>([]);
   const { errorMessage } = useAppSelector(errorMessageSelector);
   const { searchResults } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
@@ -45,7 +46,7 @@ const Explore: React.FC = () => {
 
   // Display filtered recipes
   useEffect(() => {
-    setShowRecipes([]);
+    setDisplayRecipes([]);
     if (searchResults) {
       searchResults?.forEach((recipeID) => {
         axios
@@ -55,7 +56,7 @@ const Explore: React.FC = () => {
             if (!response.data.meals[0]) {
               throw Error(FetchErrorMessages.FETCH_ERROR);
             }
-            setShowRecipes((prev) => [
+            setDisplayRecipes((prev) => [
               ...prev,
               <RecipeCard
                 key={response.data.meals[0].idMeal}
@@ -72,7 +73,7 @@ const Explore: React.FC = () => {
           .catch((err) => dispatch(setErrorMessage(err.message)));
       });
     }
-  }, [searchResults]);
+  }, [searchResults, setSearchWord]);
 
   return (
     <ExploreContainer>
@@ -98,11 +99,11 @@ const Explore: React.FC = () => {
         <Search
           categoryInputRef={categoryInputRef}
           areaInputRef={areaInputRef}
-          setShowRecipes={setShowRecipes}
+          setDisplayRecipes={setDisplayRecipes}
         />
       </Filters>
       <CardContainer>
-        {errorMessage ? <ErrorMessage /> : showRecipes}
+        {errorMessage ? <ErrorMessage /> : displayRecipes}
       </CardContainer>
     </ExploreContainer>
   );

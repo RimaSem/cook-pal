@@ -19,6 +19,7 @@ import { getCurrentDate } from "../utils/basicUtils";
 import { FetchURL } from "../types/RouteNames";
 import { FirebaseCollections, FirebaseDocs } from "../types/General";
 import { FetchErrorMessages } from "../types/AuthMessages";
+import axios from "axios";
 
 const DailySuggestion: React.FC = () => {
   const [suggestion, setSuggestion] = useState<JSX.Element>();
@@ -31,28 +32,23 @@ const DailySuggestion: React.FC = () => {
   );
 
   const displayRecipe = (recipeID: string) => {
-    fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((res) => {
-        handleFetchError(res);
-        return res.json();
-      })
-      .then((data) => {
-        if (!data.meals[0]) {
+    axios
+      .get(FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID)
+      .then((response) => {
+        handleFetchError(response);
+        if (!response.data.meals[0]) {
           throw Error(FetchErrorMessages.FETCH_ERROR);
         }
         setSuggestion(
           <RecipeCard
             daily
-            key={data.meals[0].idMeal}
+            key={response.data.meals[0].idMeal}
             cardData={{
-              id: data.meals[0].idMeal,
-              name: data.meals[0].strMeal,
-              category: data.meals[0].strCategory,
-              area: data.meals[0].strArea,
-              img: data.meals[0].strMealThumb,
+              id: response.data.meals[0].idMeal,
+              name: response.data.meals[0].strMeal,
+              category: response.data.meals[0].strCategory,
+              area: response.data.meals[0].strArea,
+              img: response.data.meals[0].strMealThumb,
             }}
           />
         );
@@ -79,20 +75,15 @@ const DailySuggestion: React.FC = () => {
   };
 
   const fetchRandomRecipe = () => {
-    fetch(FetchURL.RANDOM_RECIPE_ENDPOINT, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((res) => {
-        handleFetchError(res);
-        return res.json();
-      })
-      .then((data) => {
-        if (!data.meals[0]) {
+    axios
+      .get(FetchURL.RANDOM_RECIPE_ENDPOINT)
+      .then((response) => {
+        handleFetchError(response);
+        if (!response.data.meals[0]) {
           throw Error(FetchErrorMessages.FETCH_ERROR);
         }
-        displayRecipe(data.meals[0].idMeal);
-        updateDatabase(data.meals[0].idMeal);
+        displayRecipe(response.data.meals[0].idMeal);
+        updateDatabase(response.data.meals[0].idMeal);
       })
       .catch((err) => dispatch(setErrorMessage(err.message)));
   };

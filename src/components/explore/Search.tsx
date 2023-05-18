@@ -10,13 +10,13 @@ import { setSearchWord } from "../../state/search/searchSlice";
 interface SearchProps {
   categoryInputRef: React.RefObject<HTMLSelectElement>;
   areaInputRef: React.RefObject<HTMLSelectElement>;
-  setShowRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
+  setDisplayRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
 }
 
 const Search: React.FC<SearchProps> = ({
   categoryInputRef,
   areaInputRef,
-  setShowRecipes,
+  setDisplayRecipes,
 }) => {
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const { searchWord } = useAppSelector(searchWordSelector);
@@ -24,7 +24,7 @@ const Search: React.FC<SearchProps> = ({
   const dispatch = useAppDispatch();
 
   const handleSearch = (input: string = "") => {
-    setShowRecipes([]);
+    setDisplayRecipes([]);
     if ((searchInput && searchInput.length > 0) || searchWord.length > 0) {
       if (categoryInputRef.current && areaInputRef.current) {
         categoryInputRef.current.value =

@@ -9,6 +9,7 @@ import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
 import { FetchURL } from "../../types/RouteNames";
+import axios from "axios";
 
 export interface Recipe {
   idMeal: string;
@@ -25,16 +26,11 @@ const Main: React.FC = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    fetch(`${FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + "f"}`, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((res) => {
-        handleFetchError(res);
-        return res.json();
-      })
-      .then((data) => {
-        setHomepageRecipes(data.meals);
+    axios
+      .get(FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + "f")
+      .then((response) => {
+        handleFetchError(response);
+        setHomepageRecipes(response.data.meals);
         dispatch(setErrorMessage(null));
       })
       .catch((err) => dispatch(setErrorMessage(err.message)));

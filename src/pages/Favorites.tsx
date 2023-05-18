@@ -19,6 +19,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { FetchURL } from "../types/RouteNames";
 import { FirebaseCollections } from "../types/General";
 import { FetchErrorMessages } from "../types/AuthMessages";
+import axios from "axios";
 
 const Favorites: React.FC = () => {
   const { favRecipes } = useSelector(favoriteRecipesSelector);
@@ -36,28 +37,23 @@ const Favorites: React.FC = () => {
       );
       const docData = (await getDoc(docRef)).data();
       docData?.favorites.forEach((recipeID: string) => {
-        fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
-          method: "GET",
-          mode: "cors",
-        })
-          .then((res) => {
-            handleFetchError(res);
-            return res.json();
-          })
-          .then((data) => {
-            if (!data.meals[0]) {
+        axios
+          .get(FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID)
+          .then((response) => {
+            handleFetchError(response);
+            if (!response.data.meals[0]) {
               throw Error(FetchErrorMessages.FETCH_ERROR);
             }
             setElementsArray((prev) => [
               ...prev,
               <RecipeCard
-                key={data.meals[0].idMeal}
+                key={response.data.meals[0].idMeal}
                 cardData={{
-                  id: data.meals[0].idMeal,
-                  name: data.meals[0].strMeal,
-                  category: data.meals[0].strCategory,
-                  area: data.meals[0].strArea,
-                  img: data.meals[0].strMealThumb,
+                  id: response.data.meals[0].idMeal,
+                  name: response.data.meals[0].strMeal,
+                  category: response.data.meals[0].strCategory,
+                  area: response.data.meals[0].strArea,
+                  img: response.data.meals[0].strMealThumb,
                 }}
               />,
             ]);

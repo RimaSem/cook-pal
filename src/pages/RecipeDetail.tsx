@@ -16,6 +16,7 @@ import { devices } from "../styles/theme";
 import { FetchURL } from "../types/RouteNames";
 import { FetchErrorMessages } from "../types/AuthMessages";
 import { FirebaseCollections } from "../types/General";
+import axios from "axios";
 
 const recipeData = {
   name: "",
@@ -53,26 +54,21 @@ const RecipeDetail: React.FC = () => {
   };
 
   useEffect(() => {
-    fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + id}`, {
-      method: "GET",
-      mode: "cors",
-    })
-      .then((res) => {
-        handleFetchError(res);
-        return res.json();
-      })
-      .then((data) => {
-        if (!data.meals[0]) {
+    axios
+      .get(FetchURL.SEARCH_BY_ID_ENDPOINT + id)
+      .then((response) => {
+        handleFetchError(response);
+        if (!response.data.meals[0]) {
           throw Error(FetchErrorMessages.FETCH_ERROR);
         }
         setRecipe({
-          name: data.meals[0].strMeal,
-          area: data.meals[0].strArea,
-          category: data.meals[0].strCategory,
-          image: data.meals[0].strMealThumb,
-          instructions: data.meals[0].strInstructions,
+          name: response.data.meals[0].strMeal,
+          area: response.data.meals[0].strArea,
+          category: response.data.meals[0].strCategory,
+          image: response.data.meals[0].strMealThumb,
+          instructions: response.data.meals[0].strInstructions,
         });
-        getIngredients(data.meals[0]);
+        getIngredients(response.data.meals[0]);
         dispatch(setErrorMessage(null));
       })
       .catch((err) => dispatch(setErrorMessage(err.message)));
