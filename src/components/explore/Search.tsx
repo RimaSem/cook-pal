@@ -3,9 +3,8 @@ import { devices } from "../../styles/theme";
 import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
-import { LocalStorageItems, SelectElementOptions } from "../../types/General";
+import { SelectElementOptions } from "../../types/General";
 import useFilter from "../../hooks/useFilter";
-import { FetchURL } from "../../types/RouteNames";
 import { setSearchWord } from "../../state/search/searchSlice";
 
 interface SearchProps {

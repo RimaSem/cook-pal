@@ -3,8 +3,8 @@ import { errorMessageSelector } from "../../state/error/errorSelectors";
 import styled from "styled-components";
 import { FetchErrorMessages, StatusCodes } from "../../types/AuthMessages";
 
-export const handleFetchError = (res: { ok: boolean; status: number }) => {
-  if (!res.ok) {
+export const handleFetchError = (res: { ok?: boolean; status: number }) => {
+  if (res.status >= 400) {
     if (res.status === StatusCodes.INTERNAL_SERVER_ERROR) {
       throw Error(FetchErrorMessages.ERROR_500);
     }

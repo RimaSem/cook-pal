@@ -4,9 +4,9 @@ import { SelectElementOptions } from "../types/General";
 import { FetchURL } from "../types/RouteNames";
 import { useAppDispatch } from "../state/hooks";
 import { setErrorMessage } from "../state/error/errorSlice";
-import { useAppSelector } from "../state/hooks";
 import { mergeArrays } from "../utils/basicUtils";
 import { setSearchResults, setSearchWord } from "../state/search/searchSlice";
+import { handleFetchError } from "../components/shared/ErrorMessage";
 
 const useFilter = () => {
   const [categoryData, setCategoryData] = useState<[]>([]);
@@ -14,25 +14,18 @@ const useFilter = () => {
   const [searchData, setSearchData] = useState<[]>([]);
   const dispatch = useAppDispatch();
 
-  //   useEffect(() => {
-  //     dispatch(updateRecipeArray(mergeArrays(categoryData, areaData)));
-  //   }, [categoryData, areaData]);
-
   useEffect(() => {
     dispatch(setSearchResults(mergeArrays(categoryData, areaData)));
   }, [categoryData, areaData]);
 
   const filterByCategory = (selectedOption: string) => {
     setSearchData([]);
-
     if (selectedOption !== SelectElementOptions.DEFAULT_CATEGORY_OPTION) {
       axios
         .get(FetchURL.FILTER_BY_CATEGORY_ENDPOINT + selectedOption)
         .then((response) => {
+          handleFetchError(response);
           if (response.data.meals) {
-            setCategoryData(
-              response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
-            );
             setCategoryData(
               response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
             );
@@ -51,6 +44,7 @@ const useFilter = () => {
       axios
         .get(FetchURL.FILTER_BY_AREA_ENDPOINT + selectedOption)
         .then((response) => {
+          handleFetchError(response);
           if (response.data.meals) {
             setAreaData(
               response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
@@ -67,6 +61,7 @@ const useFilter = () => {
     axios
       .get(FetchURL.SEARCH_BY_NAME_ENDPOINT + name)
       .then((response) => {
+        handleFetchError(response);
         if (response.data.meals) {
           dispatch(
             setSearchResults(
@@ -85,9 +80,6 @@ const useFilter = () => {
     filterByCategory,
     filterByArea,
     searchByName,
-    categoryData,
-    areaData,
-    searchData,
   };
 };
 
