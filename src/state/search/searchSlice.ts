@@ -1,11 +1,14 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { defaultRecipes } from "../../utils/basicUtils";
 
 interface SearchState {
   searchWord: string;
+  searchResults: string[];
 }
 
 const initialState: SearchState = {
   searchWord: "",
+  searchResults: defaultRecipes,
 };
 
 export const searchSlice = createSlice({
@@ -18,9 +21,15 @@ export const searchSlice = createSlice({
     ) => {
       state.searchWord = action.payload;
     },
+    setSearchResults: (
+      state,
+      action: PayloadAction<SearchState["searchResults"]>
+    ) => {
+      state.searchResults = action.payload;
+    },
   },
 });
 
-export const { setSearchWord } = searchSlice.actions;
+export const { setSearchWord, setSearchResults } = searchSlice.actions;
 
 export default searchSlice.reducer;

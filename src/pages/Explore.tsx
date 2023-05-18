@@ -9,6 +9,7 @@ import {
   categoryOptions,
   areaOptions,
   defaultRecipes,
+  mergeArrays,
 } from "../utils/basicUtils";
 import { useEffect, useRef, useState } from "react";
 import ErrorMessage, {
@@ -21,22 +22,15 @@ import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { searchWordSelector } from "../state/search/searchSelectors";
 import { devices } from "../styles/theme";
 import { FetchURL } from "../types/RouteNames";
-import { SelectElementOptions } from "../types/General";
 import { FetchErrorMessages } from "../types/AuthMessages";
+import useFilter from "../hooks/useFilter";
 
 const Explore: React.FC = () => {
-  const [filteredRecipes, setFilteredRecipes] = useState<string[]>([]);
+  const { filterByCategory, filterByArea, categoryData, areaData, searchData } =
+    useFilter();
   const [showRecipes, setShowRecipes] = useState<JSX.Element[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string>(
-    SelectElementOptions.DEFAULT_CATEGORY_OPTION
-  );
-  const [selectedArea, setSelectedArea] = useState<string>(
-    SelectElementOptions.DEFAULT_AREA_OPTION
-  );
-  const [categoryArray, setCategoryArray] = useState<string[]>([]);
-  const [areaArray, setAreaArray] = useState<string[]>([]);
   const { errorMessage } = useAppSelector(errorMessageSelector);
-  const { searchWord } = useAppSelector(searchWordSelector);
+  const { searchWord, searchResults } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
 
   const categoryInputRef = useRef<HTMLSelectElement>(null);
@@ -54,66 +48,16 @@ const Explore: React.FC = () => {
     </StyledOption>
   ));
 
-  // Filter by category
-  useEffect(() => {
-    setShowRecipes([]);
-    if (selectedCategory !== SelectElementOptions.DEFAULT_CATEGORY_OPTION) {
-      fetch(`${FetchURL.FILTER_BY_CATEGORY_ENDPOINT + selectedCategory}`)
-        .then((res) => res.json())
-        .then((data) => {
-          const newArray: string[] | null = [];
-          data.meals.forEach((obj: { idMeal: string }) =>
-            newArray.push(obj.idMeal)
-          );
-          setCategoryArray(newArray);
-          if (selectedArea !== SelectElementOptions.DEFAULT_AREA_OPTION) {
-            setFilteredRecipes(
-              newArray.filter((item) => areaArray?.includes(item))
-            );
-          } else {
-            setFilteredRecipes(newArray);
-          }
-        })
-        .catch((err) => dispatch(setErrorMessage(err.message)));
-    } else {
-      setCategoryArray([]);
-      setFilteredRecipes(areaArray);
-    }
-  }, [selectedCategory]);
-
-  // Filter by area
-  useEffect(() => {
-    setShowRecipes([]);
-    if (selectedArea !== SelectElementOptions.DEFAULT_AREA_OPTION) {
-      fetch(`${FetchURL.FILTER_BY_AREA_ENDPOINT + selectedArea}`)
-        .then((res) => res.json())
-        .then((data) => {
-          const newArray: string[] = [];
-          data.meals.forEach((obj: { idMeal: string }) =>
-            newArray.push(obj.idMeal)
-          );
-          setAreaArray(newArray);
-          if (
-            selectedCategory !== SelectElementOptions.DEFAULT_CATEGORY_OPTION
-          ) {
-            setFilteredRecipes(
-              newArray.filter((item) => categoryArray?.includes(item))
-            );
-          } else {
-            setFilteredRecipes(newArray);
-          }
-        })
-        .catch((err) => dispatch(setErrorMessage(err.message)));
-    } else {
-      setAreaArray([]);
-      setFilteredRecipes(categoryArray);
-    }
-  }, [selectedArea]);
-
   // Display filtered recipes
   useEffect(() => {
-    if (filteredRecipes) {
-      filteredRecipes?.forEach((recipeID) => {
+    setShowRecipes([]);
+    // const displayedArray =
+    //   searchWord.length > 0
+    //     ? searchResults
+    //     : mergeArrays(categoryData, areaData);
+    if (searchResults) {
+      console.log(searchResults);
+      searchResults?.forEach((recipeID) => {
         fetch(`${FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID}`, {
           method: "GET",
           mode: "cors",
@@ -143,16 +87,16 @@ const Explore: React.FC = () => {
           .catch((err) => dispatch(setErrorMessage(err.message)));
       });
     }
-  }, [filteredRecipes]);
+  }, [searchResults]);
 
-  useEffect(() => {
-    if (searchWord.length === 0) {
-      setFilteredRecipes(defaultRecipes);
-    }
-    window.scrollTo({
-      top: 450,
-    });
-  }, []);
+  // useEffect(() => {
+  //   if (searchWord.length === 0) {
+  //     setFilteredRecipes(defaultRecipes);
+  //   }
+  //   window.scrollTo({
+  //     top: 450,
+  //   });
+  // }, []);
 
   return (
     <ExploreContainer>
@@ -162,7 +106,7 @@ const Explore: React.FC = () => {
           ref={categoryInputRef}
           name="category"
           defaultValue="Category"
-          onChange={(e) => setSelectedCategory(e.target.value)}
+          onChange={(e) => filterByCategory(e.target.value)}
         >
           <StyledOption value="Category">Category</StyledOption>
           {categories}
@@ -170,7 +114,7 @@ const Explore: React.FC = () => {
         <StyledSelect
           ref={areaInputRef}
           name="area"
-          onChange={(e) => setSelectedArea(e.target.value)}
+          onChange={(e) => filterByArea(e.target.value)}
         >
           <StyledOption value="Area">Area</StyledOption>
           {areas}
@@ -179,11 +123,6 @@ const Explore: React.FC = () => {
           categoryInputRef={categoryInputRef}
           areaInputRef={areaInputRef}
           setShowRecipes={setShowRecipes}
-          setSelectedCategory={setSelectedCategory}
-          setSelectedArea={setSelectedArea}
-          setCategoryArray={setCategoryArray}
-          setAreaArray={setAreaArray}
-          setFilteredRecipes={setFilteredRecipes}
         />
       </Filters>
       <CardContainer>

@@ -74,3 +74,10 @@ export const getCurrentDate = () => {
   const currentDate = `${day}-${month}-${year}`;
   return currentDate;
 };
+
+export const mergeArrays = (array1: [], array2: []) => {
+  if (array1.length === 0) return array2;
+  if (array2.length === 0) return array1;
+  const mergedArray = array1.filter((recipe) => array2.includes(recipe));
+  return mergedArray;
+};

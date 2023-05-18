@@ -1,66 +1,38 @@
 import { useEffect, useState } from "react";
 import { devices } from "../../styles/theme";
 import styled from "styled-components";
-import { useAppSelector, useAppDispatch } from "../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
-import { setSearchWord } from "../../state/search/searchSlice";
-import { setErrorMessage } from "../../state/error/errorSlice";
-import { FetchURL } from "../../types/RouteNames";
 import { LocalStorageItems, SelectElementOptions } from "../../types/General";
+import useFilter from "../../hooks/useFilter";
+import { FetchURL } from "../../types/RouteNames";
+import { setSearchWord } from "../../state/search/searchSlice";
 
 interface SearchProps {
   categoryInputRef: React.RefObject<HTMLSelectElement>;
   areaInputRef: React.RefObject<HTMLSelectElement>;
   setShowRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
-  setSelectedArea: React.Dispatch<React.SetStateAction<string>>;
-  setCategoryArray: React.Dispatch<React.SetStateAction<string[]>>;
-  setAreaArray: React.Dispatch<React.SetStateAction<string[]>>;
-  setFilteredRecipes: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const Search: React.FC<SearchProps> = ({
   categoryInputRef,
   areaInputRef,
   setShowRecipes,
-  setSelectedCategory,
-  setSelectedArea,
-  setCategoryArray,
-  setAreaArray,
-  setFilteredRecipes,
 }) => {
   const [searchInput, setSearchInput] = useState<string | undefined>();
   const { searchWord } = useAppSelector(searchWordSelector);
+  const { searchByName } = useFilter();
   const dispatch = useAppDispatch();
 
-  // Search for recipes by recipe name
   const handleSearch = (input: string = "") => {
+    setShowRecipes([]);
     if ((searchInput && searchInput.length > 0) || searchWord.length > 0) {
       if (categoryInputRef.current && areaInputRef.current) {
         categoryInputRef.current.value =
           SelectElementOptions.DEFAULT_CATEGORY_OPTION;
         areaInputRef.current.value = SelectElementOptions.DEFAULT_AREA_OPTION;
       }
-      setShowRecipes([]);
-      fetch(`${FetchURL.SEARCH_BY_NAME_ENDPOINT + input}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setSelectedCategory(SelectElementOptions.DEFAULT_CATEGORY_OPTION);
-          setSelectedArea(SelectElementOptions.DEFAULT_AREA_OPTION);
-          setCategoryArray([]);
-          setAreaArray([]);
-          const newArray: string[] | null = [];
-          data.meals.forEach((obj: { idMeal: string }) =>
-            newArray.push(obj.idMeal)
-          );
-          setFilteredRecipes(newArray);
-          dispatch(setSearchWord(""));
-          localStorage.setItem(
-            LocalStorageItems.RECIPES,
-            JSON.stringify(newArray)
-          );
-        })
-        .catch((err) => dispatch(setErrorMessage(err.message)));
+      searchByName(input);
     }
   };
 
@@ -68,6 +40,7 @@ const Search: React.FC<SearchProps> = ({
   useEffect(() => {
     if (searchWord.length > 0) {
       handleSearch(searchWord);
+      dispatch(setSearchWord(""));
     }
   }, [searchWord]);
 
