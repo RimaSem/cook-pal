@@ -1,7 +1,7 @@
 import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import styled from "styled-components";
-import { useAppDispatch } from "../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import {
   setSearchResults,
   setSearchWord,
@@ -10,14 +10,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { RouteNames } from "../../types/RouteNames";
 import { devices } from "../../styles/theme";
+import { searchWordSelector } from "../../state/search/searchSelectors";
 
 const SearchBar: React.FC = () => {
   const [typedWord, setTypedWord] = useState("");
+  const { searchWord } = useAppSelector(searchWordSelector);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    if (typedWord !== "") {
+    if (typedWord !== "" && searchWord !== typedWord) {
       dispatch(setSearchResults([]));
       dispatch(setSearchWord(typedWord));
       navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);

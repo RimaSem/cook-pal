@@ -8,17 +8,28 @@ import { mergeArrays } from "../utils/basicUtils";
 import { setSearchResults, setSearchWord } from "../state/search/searchSlice";
 import { handleFetchError } from "../components/shared/ErrorMessage";
 
+interface FilterProps {
+  byCategory: string[];
+  byArea: string[];
+}
+
 const useFilter = () => {
-  const [categoryData, setCategoryData] = useState<[]>([]);
-  const [areaData, setAreaData] = useState<[]>([]);
+  const [filteredData, setFilteredData] = useState<FilterProps>({
+    byCategory: [],
+    byArea: [],
+  });
   const [searchData, setSearchData] = useState<[]>([]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (searchData.length < 1) {
-      dispatch(setSearchResults(mergeArrays(categoryData, areaData)));
+      dispatch(
+        setSearchResults(
+          mergeArrays(filteredData.byCategory, filteredData.byArea)
+        )
+      );
     }
-  }, [categoryData, areaData]);
+  }, [filteredData]);
 
   const filterByCategory = (selectedOption: string) => {
     setSearchData([]);
@@ -29,14 +40,17 @@ const useFilter = () => {
         .then((response) => {
           handleFetchError(response);
           if (response.data.meals) {
-            setCategoryData(
-              response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
-            );
+            setFilteredData({
+              ...filteredData,
+              byCategory: response.data.meals.map(
+                (meal: { idMeal: string }) => meal.idMeal
+              ),
+            });
           }
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     } else {
-      setCategoryData([]);
+      setFilteredData({ ...filteredData, byCategory: [] });
     }
   };
 
@@ -49,14 +63,17 @@ const useFilter = () => {
         .then((response) => {
           handleFetchError(response);
           if (response.data.meals) {
-            setAreaData(
-              response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
-            );
+            setFilteredData({
+              ...filteredData,
+              byArea: response.data.meals.map(
+                (meal: { idMeal: string }) => meal.idMeal
+              ),
+            });
           }
         })
         .catch((err) => dispatch(setErrorMessage(err.message)));
     } else {
-      setAreaData([]);
+      setFilteredData({ ...filteredData, byArea: [] });
     }
   };
 
