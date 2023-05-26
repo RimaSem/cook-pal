@@ -1,15 +1,13 @@
-import { useSelector } from "react-redux";
-import { setErrorMessage } from "../../state/error/errorSlice";
-import { useAppDispatch } from "../../state/hooks";
 import RecipeCard from "./RecipeCard";
-import ErrorMessage, { handleFetchError } from "../shared/ErrorMessage";
-import { useEffect, useState } from "react";
-import { errorMessageSelector } from "../../state/error/errorSelectors";
+import ErrorMessage from "../shared/ErrorMessage";
+import { useState } from "react";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
 import { FetchURL } from "../../types/RouteNames";
 import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../shared/Spinner";
 
 export interface Recipe {
   idMeal: string;
@@ -20,23 +18,23 @@ export interface Recipe {
 }
 
 const Main: React.FC = () => {
-  const [homepageRecipes, setHomepageRecipes] = useState<Recipe[]>([]);
   const [loadMore, setLoadMore] = useState(false);
-  const { errorMessage } = useSelector(errorMessageSelector);
-  const dispatch = useAppDispatch();
 
-  useEffect(() => {
-    axios
-      .get(FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + "f")
-      .then((response) => {
-        handleFetchError(response);
-        setHomepageRecipes(response.data.meals);
-        dispatch(setErrorMessage(null));
-      })
-      .catch((err) => dispatch(setErrorMessage(err.message)));
-  }, []);
+  const fetchRecipesByLetter = async (letter: string) => {
+    const response = await axios.get(
+      FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + letter
+    );
+    return response.data;
+  };
 
-  const allRecipes = homepageRecipes.map((recipe) => (
+  const { data, isLoading, isError, error, isSuccess } = useQuery({
+    queryKey: ["homepageRecipes"],
+    queryFn: () => fetchRecipesByLetter("f"),
+  });
+
+  if (isLoading) return <Spinner />;
+
+  const allRecipes = data?.meals.map((recipe: Recipe) => (
     <RecipeCard
       key={recipe.idMeal}
       cardData={{
@@ -52,15 +50,15 @@ const Main: React.FC = () => {
   return (
     <MainContainer>
       <CardContainer>
-        {errorMessage ? (
-          <ErrorMessage />
+        {isError ? (
+          <ErrorMessage>{(error as Error).message}</ErrorMessage>
         ) : loadMore ? (
           allRecipes
         ) : (
           allRecipes.slice(0, 8)
         )}
       </CardContainer>
-      {!errorMessage && !loadMore && (
+      {isSuccess && !loadMore && (
         <LoadMoreBtn onClick={() => setLoadMore(true)}>Load More</LoadMoreBtn>
       )}
     </MainContainer>
