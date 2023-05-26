@@ -4,7 +4,7 @@ import { FetchURL } from "../types/RouteNames";
 import { setErrorMessage } from "../state/error/errorSlice";
 import { useAppDispatch } from "../state/hooks";
 
-const fetchRecipeById = async (recipeId: string | undefined) => {
+export const fetchRecipeById = async (recipeId: string | undefined) => {
   const response = await axios.get(FetchURL.SEARCH_BY_ID_ENDPOINT + recipeId);
   return response.data;
 };
