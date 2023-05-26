@@ -3,6 +3,7 @@ import { auth } from "../firebase/firebaseConfig";
 import { ReactNode, useEffect, useState } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { RouteNames } from "../types/RouteNames";
+import Spinner from "./shared/Spinner";
 
 export interface AuthRouteProps {
   children?: ReactNode;
@@ -26,7 +27,7 @@ const AuthRoute: React.FC<AuthRouteProps> = (props) => {
     }
   });
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Spinner />;
 
   return <>{children}</>;
 };

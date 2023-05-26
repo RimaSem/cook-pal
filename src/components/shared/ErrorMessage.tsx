@@ -13,12 +13,16 @@ export const handleFetchError = (res: { ok?: boolean; status: number }) => {
 };
 
 interface ErrorMessageProps {
-  children: string;
+  children?: string;
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ children }) => {
-  // const { errorMessage } = useSelector(errorMessageSelector);
-  return <StyledErrorMessage>{children}</StyledErrorMessage>;
+  const { errorMessage } = useSelector(errorMessageSelector);
+  return (
+    <StyledErrorMessage>
+      {children ? children : errorMessage}
+    </StyledErrorMessage>
+  );
 };
 
 export default ErrorMessage;
