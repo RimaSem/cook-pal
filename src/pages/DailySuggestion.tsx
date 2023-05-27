@@ -3,12 +3,9 @@ import {
   MainContainer,
   StyledPageHeading,
 } from "../styles/sharedStyles";
-import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import { useAppDispatch } from "../state/hooks";
-import ErrorMessage, {
-  handleFetchError,
-} from "../components/shared/ErrorMessage";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import ErrorMessage from "../components/shared/ErrorMessage";
 import { errorMessageSelector } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
 import RecipeCard from "../components/home/RecipeCard";
@@ -16,14 +13,15 @@ import styled from "styled-components";
 import { db } from "../firebase/firebaseConfig";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { getCurrentDate } from "../utils/basicUtils";
-import { FetchURL } from "../types/RouteNames";
 import { FirebaseCollections, FirebaseDocs } from "../types/General";
+import Spinner from "../components/shared/Spinner";
+import { fetchRandomRecipe, fetchRecipeById } from "../utils/fetches";
 import { FetchErrorMessages } from "../types/AuthMessages";
-import axios from "axios";
+import { useQuery } from "@tanstack/react-query";
 
 const DailySuggestion: React.FC = () => {
-  const [dailyRecipe, setDailyRecipe] = useState<JSX.Element>();
-  const { errorMessage } = useSelector(errorMessageSelector);
+  const [recipeID, setRecipeID] = useState<string>("");
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
   const docRef = doc(
     db,
@@ -31,30 +29,23 @@ const DailySuggestion: React.FC = () => {
     FirebaseDocs.DEFAULT_DOC
   );
 
-  const displayRecipe = (recipeID: string) => {
-    axios
-      .get(FetchURL.SEARCH_BY_ID_ENDPOINT + recipeID)
-      .then((response) => {
-        handleFetchError(response);
-        if (!response.data.meals[0]) {
-          throw Error(FetchErrorMessages.FETCH_ERROR);
+  useEffect(() => {
+    const getDailyRecipeFromDB = async () => {
+      try {
+        const docData = (await getDoc(docRef)).data();
+        if (docData?.currentDate !== getCurrentDate()) {
+          const data = await fetchRandomRecipe();
+          setRecipeID(data?.meals[0]?.idMeal);
+          updateDatabase(data?.meals[0]?.idMeal);
+        } else {
+          setRecipeID(docData?.dailyRecipe);
         }
-        setDailyRecipe(
-          <RecipeCard
-            daily
-            key={response.data.meals[0].idMeal}
-            cardData={{
-              id: response.data.meals[0].idMeal,
-              name: response.data.meals[0].strMeal,
-              category: response.data.meals[0].strCategory,
-              area: response.data.meals[0].strArea,
-              img: response.data.meals[0].strMealThumb,
-            }}
-          />
-        );
-      })
-      .catch((err) => dispatch(setErrorMessage(err.message)));
-  };
+      } catch (err) {
+        dispatch(setErrorMessage((err as Error).message));
+      }
+    };
+    getDailyRecipeFromDB();
+  }, []);
 
   const updateDatabase = async (recipe: string) => {
     try {
@@ -74,36 +65,16 @@ const DailySuggestion: React.FC = () => {
     }
   };
 
-  const fetchRandomRecipe = () => {
-    axios
-      .get(FetchURL.RANDOM_RECIPE_ENDPOINT)
-      .then((response) => {
-        handleFetchError(response);
-        if (!response.data.meals[0]) {
-          throw Error(FetchErrorMessages.FETCH_ERROR);
-        }
-        displayRecipe(response.data.meals[0].idMeal);
-        updateDatabase(response.data.meals[0].idMeal);
-      })
-      .catch((err) => dispatch(setErrorMessage(err.message)));
-  };
+  const recipeData = useQuery({
+    queryKey: ["dailyRecipe"],
+    queryFn: () => fetchRecipeById(recipeID),
+    enabled: !!recipeID,
+  });
 
-  useEffect(() => {
-    const getDailyRecipeFromDB = async () => {
-      try {
-        const docData = (await getDoc(docRef)).data();
-        if (docData?.currentDate !== getCurrentDate()) {
-          fetchRandomRecipe();
-        } else {
-          displayRecipe(docData?.dailyRecipe);
-        }
-      } catch (err) {
-        dispatch(setErrorMessage((err as Error).message));
-      }
-    };
+  if (recipeData.isLoading) return <Spinner />;
 
-    getDailyRecipeFromDB();
-  }, []);
+  if (recipeData.isError)
+    return <ErrorMessage>{FetchErrorMessages.FETCH_ERROR}</ErrorMessage>;
 
   return (
     <SuggestionContainer>
@@ -117,7 +88,19 @@ const DailySuggestion: React.FC = () => {
       {errorMessage ? (
         <ErrorMessage />
       ) : (
-        <CardContainer>{dailyRecipe}</CardContainer>
+        <CardContainer>
+          <RecipeCard
+            daily
+            key={recipeData.data?.meals[0]?.idMeal}
+            cardData={{
+              id: recipeData.data?.meals[0]?.idMeal,
+              name: recipeData.data?.meals[0]?.strMeal,
+              category: recipeData.data?.meals[0]?.strCategory,
+              area: recipeData.data?.meals[0]?.strArea,
+              img: recipeData.data?.meals[0]?.strMealThumb,
+            }}
+          />
+        </CardContainer>
       )}
     </SuggestionContainer>
   );

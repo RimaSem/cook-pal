@@ -8,8 +8,11 @@ import Ingredients from "../components/recipeDetail/Ingredients";
 import { devices } from "../styles/theme";
 import { fetchRecipeById } from "../utils/fetches";
 import { useQuery } from "@tanstack/react-query";
+import { errorMessageSelector } from "../state/error/errorSelectors";
+import { useAppSelector } from "../state/hooks";
 
 const RecipeDetail: React.FC = () => {
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   const { id } = useParams();
 
   window.scrollTo({
@@ -27,21 +30,30 @@ const RecipeDetail: React.FC = () => {
 
   return (
     <RecipeContainer>
-      <DishName>{data?.meals[0].strMeal}</DishName>
-      <Text>
-        Click on an ingredient to add it to your grocery list (for registered
-        users only).
-      </Text>
-      <AreaLabel>{data?.meals[0].strArea}</AreaLabel>
-      <CategoryLabel>{data?.meals[0].strCategory}</CategoryLabel>
-      <TopWrapper>
-        <Image src={data?.meals[0].strMealThumb} alt="Recipe image" />
-        <Ingredients recipeData={data?.meals[0]} />
-      </TopWrapper>
-      <Instructions>
-        <SectionName>Instructions</SectionName>
-        <InstructionsText>{data?.meals[0].strInstructions}</InstructionsText>
-      </Instructions>
+      {errorMessage ? (
+        <ErrorMessage />
+      ) : (
+        <>
+          <DishName>{data?.meals[0]?.strMeal}</DishName>
+          <Text>
+            Click on an ingredient to add it to your grocery list (for
+            registered users only).
+          </Text>
+          <AreaLabel>{data?.meals[0]?.strArea}</AreaLabel>
+          <CategoryLabel>{data?.meals[0]?.strCategory}</CategoryLabel>
+          <TopWrapper>
+            <Image src={data?.meals[0]?.strMealThumb} alt="Recipe image" />
+            <Ingredients recipeData={data?.meals[0]} />
+          </TopWrapper>
+          <Instructions>
+            <SectionName>Instructions</SectionName>
+            <InstructionsText>
+              {data?.meals[0]?.strInstructions}
+            </InstructionsText>
+          </Instructions>
+        </>
+      )}
+
       <BackButton />
     </RecipeContainer>
   );

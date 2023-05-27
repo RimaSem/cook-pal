@@ -3,10 +3,10 @@ import {
   MainContainer,
   StyledPageHeading,
 } from "../styles/sharedStyles";
-import { useSelector } from "react-redux";
 import { favoriteRecipesSelector } from "../state/favorites/favoritesSelectors";
 import { useEffect } from "react";
 import { useAppDispatch } from "../state/hooks";
+import { useAppSelector } from "../state/hooks";
 import ErrorMessage from "../components/shared/ErrorMessage";
 import { errorMessageSelector } from "../state/error/errorSelectors";
 import { setErrorMessage } from "../state/error/errorSlice";
@@ -22,8 +22,8 @@ import { FetchErrorMessages } from "../types/AuthMessages";
 import { updateFavorites } from "../state/favorites/favoritesSlice";
 
 const Favorites: React.FC = () => {
-  const { favRecipes } = useSelector(favoriteRecipesSelector);
-  const { errorMessage } = useSelector(errorMessageSelector);
+  const { favRecipes } = useAppSelector(favoriteRecipesSelector);
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -48,7 +48,7 @@ const Favorites: React.FC = () => {
   const queries = useQueries({
     queries: favRecipes.map((item) => {
       return {
-        queryKey: ["recipes", item],
+        queryKey: ["recipe", item],
         queryFn: () => fetchRecipeById(item),
       };
     }),

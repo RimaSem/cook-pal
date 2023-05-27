@@ -12,3 +12,8 @@ export const fetchRecipesByLetter = async (letter: string) => {
   );
   return response.data;
 };
+
+export const fetchRandomRecipe = async () => {
+  const response = await axios.get(FetchURL.RANDOM_RECIPE_ENDPOINT);
+  return response.data;
+};
