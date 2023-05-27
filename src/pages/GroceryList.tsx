@@ -11,9 +11,7 @@ import { errorMessageSelector } from "../state/error/errorSelectors";
 
 const GroceryList: React.FC = () => {
   const [groceryArray, setGroceryArray] = useState<string[]>([""]);
-  const [groceryElements, setGroceryElements] = useState<JSX.Element[] | null>(
-    null
-  );
+  const [groceryElements, setGroceryElements] = useState<JSX.Element[]>([]);
   const { errorMessage } = useAppSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 

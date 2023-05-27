@@ -1,24 +1,25 @@
-import { useSelector } from "react-redux";
-import { errorMessageSelector } from "../state/error/errorSelectors";
 import ErrorMessage from "../components/shared/ErrorMessage";
 import { useParams } from "react-router-dom";
 import BackButton from "../components/shared/BackButton";
 import { StyledPageHeading } from "../styles/sharedStyles";
 import styled from "styled-components";
 import Spinner from "../components/shared/Spinner";
-import { useRecipeData } from "../hooks/useRecipeData";
 import Ingredients from "../components/recipeDetail/Ingredients";
 import { devices } from "../styles/theme";
+import { fetchRecipeById } from "../utils/fetches";
+import { useQuery } from "@tanstack/react-query";
 
 const RecipeDetail: React.FC = () => {
-  const { errorMessage } = useSelector(errorMessageSelector);
   const { id } = useParams();
 
   window.scrollTo({
     top: 450,
   });
 
-  const { data, isLoading, isError, error } = useRecipeData(id);
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["recipe", id],
+    queryFn: () => fetchRecipeById(id),
+  });
 
   if (isLoading) return <Spinner />;
 
@@ -26,30 +27,22 @@ const RecipeDetail: React.FC = () => {
 
   return (
     <RecipeContainer>
-      {errorMessage ? (
-        <ErrorMessage />
-      ) : (
-        <>
-          <DishName>{data?.meals[0].strMeal}</DishName>
-          <Text>
-            Click on an ingredient to add it to your grocery list (for
-            registered users only).
-          </Text>
-          <AreaLabel>{data?.meals[0].strArea}</AreaLabel>
-          <CategoryLabel>{data?.meals[0].strCategory}</CategoryLabel>
-          <TopWrapper>
-            <Image src={data?.meals[0].strMealThumb} alt="Recipe image" />
-            <Ingredients recipeData={data?.meals[0]} />
-          </TopWrapper>
-          <Instructions>
-            <SectionName>Instructions</SectionName>
-            <InstructionsText>
-              {data?.meals[0].strInstructions}
-            </InstructionsText>
-          </Instructions>
-          <BackButton />
-        </>
-      )}
+      <DishName>{data?.meals[0].strMeal}</DishName>
+      <Text>
+        Click on an ingredient to add it to your grocery list (for registered
+        users only).
+      </Text>
+      <AreaLabel>{data?.meals[0].strArea}</AreaLabel>
+      <CategoryLabel>{data?.meals[0].strCategory}</CategoryLabel>
+      <TopWrapper>
+        <Image src={data?.meals[0].strMealThumb} alt="Recipe image" />
+        <Ingredients recipeData={data?.meals[0]} />
+      </TopWrapper>
+      <Instructions>
+        <SectionName>Instructions</SectionName>
+        <InstructionsText>{data?.meals[0].strInstructions}</InstructionsText>
+      </Instructions>
+      <BackButton />
     </RecipeContainer>
   );
 };

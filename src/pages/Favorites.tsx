@@ -5,7 +5,7 @@ import {
 } from "../styles/sharedStyles";
 import { useSelector } from "react-redux";
 import { favoriteRecipesSelector } from "../state/favorites/favoritesSelectors";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAppDispatch } from "../state/hooks";
 import ErrorMessage from "../components/shared/ErrorMessage";
 import { errorMessageSelector } from "../state/error/errorSelectors";
@@ -15,13 +15,13 @@ import { db, auth } from "../firebase/firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import { FirebaseCollections } from "../types/General";
 import { useQueries } from "@tanstack/react-query";
-import { fetchRecipeById } from "../hooks/useRecipeData";
+import { fetchRecipeById } from "../utils/fetches";
 import RecipeCard from "../components/home/RecipeCard";
 import Spinner from "../components/shared/Spinner";
 import { FetchErrorMessages } from "../types/AuthMessages";
+import { updateFavorites } from "../state/favorites/favoritesSlice";
 
 const Favorites: React.FC = () => {
-  const [dataFromDB, setDataFromDB] = useState<any[]>([]);
   const { favRecipes } = useSelector(favoriteRecipesSelector);
   const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
@@ -36,17 +36,17 @@ const Favorites: React.FC = () => {
             auth.currentUser.uid
           );
           const docData = (await getDoc(docRef)).data();
-          setDataFromDB(docData?.favorites);
+          dispatch(updateFavorites(docData?.favorites));
         }
       } catch (err) {
         dispatch(setErrorMessage((err as Error).message));
       }
     };
     getData();
-  }, [favRecipes]);
+  }, []);
 
   const queries = useQueries({
-    queries: (dataFromDB ?? []).map((item) => {
+    queries: favRecipes.map((item) => {
       return {
         queryKey: ["recipes", item],
         queryFn: () => fetchRecipeById(item),

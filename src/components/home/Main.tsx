@@ -4,8 +4,7 @@ import { useState } from "react";
 import { MainContainer, CardContainer } from "../../styles/sharedStyles";
 import styled from "styled-components";
 import { devices } from "../../styles/theme";
-import { FetchURL } from "../../types/RouteNames";
-import axios from "axios";
+import { fetchRecipesByLetter } from "../../utils/fetches";
 import { useQuery } from "@tanstack/react-query";
 import Spinner from "../shared/Spinner";
 
@@ -19,13 +18,6 @@ export interface Recipe {
 
 const Main: React.FC = () => {
   const [loadMore, setLoadMore] = useState(false);
-
-  const fetchRecipesByLetter = async (letter: string) => {
-    const response = await axios.get(
-      FetchURL.SEARCH_BY_FIRST_LETTER_ENDPOINT + letter
-    );
-    return response.data;
-  };
 
   const { data, isLoading, isError, error, isSuccess } = useQuery({
     queryKey: ["homepageRecipes"],

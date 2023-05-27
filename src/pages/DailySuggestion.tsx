@@ -22,7 +22,7 @@ import { FetchErrorMessages } from "../types/AuthMessages";
 import axios from "axios";
 
 const DailySuggestion: React.FC = () => {
-  const [suggestion, setSuggestion] = useState<JSX.Element>();
+  const [dailyRecipe, setDailyRecipe] = useState<JSX.Element>();
   const { errorMessage } = useSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
   const docRef = doc(
@@ -39,7 +39,7 @@ const DailySuggestion: React.FC = () => {
         if (!response.data.meals[0]) {
           throw Error(FetchErrorMessages.FETCH_ERROR);
         }
-        setSuggestion(
+        setDailyRecipe(
           <RecipeCard
             daily
             key={response.data.meals[0].idMeal}
@@ -117,7 +117,7 @@ const DailySuggestion: React.FC = () => {
       {errorMessage ? (
         <ErrorMessage />
       ) : (
-        <CardContainer>{suggestion}</CardContainer>
+        <CardContainer>{dailyRecipe}</CardContainer>
       )}
     </SuggestionContainer>
   );

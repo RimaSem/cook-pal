@@ -50,7 +50,6 @@ const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
           dispatch(setErrorMessage((err as Error).message));
         }
       };
-
       getFavorites();
     }
   }, []);
