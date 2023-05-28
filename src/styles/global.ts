@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
         margin: 0;
         min-width: 100%;
         min-height: 100vh;
-        font-family: var(--font-primary);
+        font-family: ${({ theme }) => theme.fontFamilies.primary};
 
         #root {
             min-width: 100%;
