@@ -5,18 +5,13 @@ import { useAppSelector } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
 import useFilter from "../../hooks/useFilter";
 
-interface SearchProps {
-  setDisplayRecipes: React.Dispatch<React.SetStateAction<JSX.Element[]>>;
-}
-
-const Search: React.FC<SearchProps> = ({ setDisplayRecipes }) => {
+const Search: React.FC = () => {
   const [searchInput, setSearchInput] = useState<string>("");
   const { searchWord } = useAppSelector(searchWordSelector);
   const { searchByName } = useFilter();
 
   const handleSearch = (input: string) => {
     if (input.length > 0) {
-      setDisplayRecipes([]);
       searchByName(input);
     }
   };

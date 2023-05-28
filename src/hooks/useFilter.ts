@@ -18,11 +18,10 @@ const useFilter = () => {
     byCategory: [],
     byArea: [],
   });
-  const [searchData, setSearchData] = useState<[]>([]);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (searchData.length < 1) {
+    if (filteredData.byCategory.length > 0 || filteredData.byArea.length > 0) {
       dispatch(
         setSearchResults(
           mergeArrays(filteredData.byCategory, filteredData.byArea)
@@ -32,7 +31,6 @@ const useFilter = () => {
   }, [filteredData]);
 
   const filterByCategory = (selectedOption: string) => {
-    setSearchData([]);
     dispatch(setSearchWord(""));
     if (selectedOption !== SelectElementOptions.DEFAULT_CATEGORY_OPTION) {
       axios
@@ -55,7 +53,6 @@ const useFilter = () => {
   };
 
   const filterByArea = (selectedOption: string) => {
-    setSearchData([]);
     dispatch(setSearchWord(""));
     if (selectedOption !== SelectElementOptions.DEFAULT_AREA_OPTION) {
       axios
@@ -87,9 +84,6 @@ const useFilter = () => {
             setSearchResults(
               response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
             )
-          );
-          setSearchData(
-            response.data.meals.map((meal: { idMeal: string }) => meal.idMeal)
           );
         }
       })
