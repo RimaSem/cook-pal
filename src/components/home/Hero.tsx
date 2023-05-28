@@ -23,7 +23,7 @@ const StyledHero = styled.div<HeroProps>`
   justify-content: center;
   margin: 3.125em 0 2.5em 0;
   border-radius: 1.875em;
-  max-width: var(--width-max);
+  max-width: ${({ theme }) => theme.sizes.widthMax};
   width: 95%;
   height: 22.2em;
   padding-left: 5em;

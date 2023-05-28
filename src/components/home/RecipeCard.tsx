@@ -119,13 +119,13 @@ const CardContainer = styled.div<DailyCardProp>`
   display: flex;
   flex-direction: column;
   margin: 0.7em 0;
-  box-shadow: var(--shadow-card);
+  box-shadow: ${({ theme }) => theme.shadows.card};
   border-radius: 1em;
   width: ${({ daily }) => (daily ? "38em" : "19em")};
   max-width: 95%;
   height: ${({ daily }) => (daily ? "34em" : "21em")};
   background-color: ${({ theme }) => theme.colors.white};
-  font-family: var(--font-secondary);
+  font-family: ${({ theme }) => theme.fontFamilies.secondary};
 
   @media ${devices.tabletM} {
     margin: 0;

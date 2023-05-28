@@ -1,20 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
 const GlobalStyle = createGlobalStyle`
-    :root {
-        /**** FONTS ****/
-        --font-primary: "Poppins", sans-serif;
-        --font-secondary: "Inter", sans-serif;
-        --font-size-large: 2.2rem;
-
-        /**** SHADOWS ****/
-        --shadow-card: 0px 0px 1px rgba(12, 26, 75, 0.24),
-    0px 3px 8px -1px rgba(50, 50, 71, 0.05);
-
-        /**** WIDTH / HEIGHT ****/
-        --width-max: 79em;
-    }
-
     * {
         box-sizing: border-box;
     }

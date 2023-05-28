@@ -3,7 +3,6 @@ import { devices } from "../../styles/theme";
 import styled from "styled-components";
 import { useAppSelector } from "../../state/hooks";
 import { searchWordSelector } from "../../state/search/searchSelectors";
-
 import useFilter from "../../hooks/useFilter";
 
 interface SearchProps {

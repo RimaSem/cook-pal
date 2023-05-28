@@ -70,7 +70,7 @@ const LoadMoreBtn = styled.button`
   background-color: ${({ theme }) => theme.colors.accentGreen};
   cursor: pointer;
   font-size: 1.125em;
-  font-family: var(--font-primary);
+  font-family: ${({ theme }) => theme.fontFamilies.primary};
   font-weight: 500;
   color: ${({ theme }) => theme.colors.white};
 

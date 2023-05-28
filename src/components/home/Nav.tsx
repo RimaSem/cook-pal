@@ -36,7 +36,7 @@ const NavContainer = styled.div`
   justify-content: space-between;
   gap: 1.25em;
   margin: 0 auto;
-  max-width: var(--width-max);
+  max-width: ${({ theme }) => theme.sizes.widthMax};
   width: 95%;
 
   @media ${devices.tabletM} {

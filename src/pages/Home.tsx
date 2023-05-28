@@ -17,6 +17,6 @@ const HomeWrapper = styled.div`
   margin: 0 auto;
   max-width: 106.25em;
   min-height: inherit;
-  font-family: var(--font-primary);
+  font-family: ${({ theme }) => theme.fontFamilies.primary};
   color: ${({ theme }) => theme.colors.darker};
 `;

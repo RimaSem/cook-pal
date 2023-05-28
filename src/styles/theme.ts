@@ -1,23 +1,4 @@
-interface ThemeProps {
-  colors: {
-    white: string;
-    inputLight: string;
-    accentGreen: string;
-    accentOrange: string;
-    darker: string;
-    lighter: string;
-    grey: string;
-    red: string;
-    green: string;
-    navBtn1: string;
-    navBtn2: string;
-    navBtn3: string;
-    navBtn4: string;
-    navBtn5: string;
-    footerLink: string;
-    googleBtn: string;
-  };
-}
+import { ThemeProps } from "./themeProps";
 
 export const theme: ThemeProps = {
   colors: {
@@ -37,6 +18,26 @@ export const theme: ThemeProps = {
     navBtn5: "#84BD00",
     footerLink: "rgba(0, 0, 0, 0.6)",
     googleBtn: "#3d78d1",
+  },
+
+  fontFamilies: {
+    primary: "'Poppins', sans-serif",
+    secondary: "'Inter', sans-serif",
+  },
+
+  fontSizes: {
+    large: "2.2rem",
+  },
+
+  shadows: {
+    card:
+      "0px 0px 1px rgba(12, 26, 75, 0.24)" +
+      ", " +
+      "0px 3px 8px -1px rgba(50, 50, 71, 0.05)",
+  },
+
+  sizes: {
+    widthMax: "79em",
   },
 };
 
