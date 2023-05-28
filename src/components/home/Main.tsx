@@ -26,7 +26,7 @@ const Main: React.FC = () => {
 
   if (isLoading) return <Spinner />;
 
-  const allRecipes = data?.meals.map((recipe: Recipe) => (
+  const allRecipes = data?.map((recipe: Recipe) => (
     <RecipeCard
       key={recipe.idMeal}
       cardData={{

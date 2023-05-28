@@ -34,22 +34,20 @@ const RecipeDetail: React.FC = () => {
         <ErrorMessage />
       ) : (
         <>
-          <DishName>{data?.meals[0]?.strMeal}</DishName>
+          <DishName>{data?.strMeal}</DishName>
           <Text>
             Click on an ingredient to add it to your grocery list (for
             registered users only).
           </Text>
-          <AreaLabel>{data?.meals[0]?.strArea}</AreaLabel>
-          <CategoryLabel>{data?.meals[0]?.strCategory}</CategoryLabel>
+          <AreaLabel>{data?.strArea}</AreaLabel>
+          <CategoryLabel>{data?.strCategory}</CategoryLabel>
           <TopWrapper>
-            <Image src={data?.meals[0]?.strMealThumb} alt="Recipe image" />
-            <Ingredients recipeData={data?.meals[0]} />
+            <Image src={data?.strMealThumb} alt="Recipe image" />
+            <Ingredients recipeData={data} />
           </TopWrapper>
           <Instructions>
             <SectionName>Instructions</SectionName>
-            <InstructionsText>
-              {data?.meals[0]?.strInstructions}
-            </InstructionsText>
+            <InstructionsText>{data?.strInstructions}</InstructionsText>
           </Instructions>
         </>
       )}

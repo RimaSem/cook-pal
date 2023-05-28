@@ -45,13 +45,13 @@ const Explore: React.FC = () => {
           ) : (
             queries?.map((query) => (
               <RecipeCard
-                key={query.data?.meals[0]?.idMeal}
+                key={query.data?.idMeal}
                 cardData={{
-                  id: query.data?.meals[0]?.idMeal,
-                  name: query.data?.meals[0]?.strMeal,
-                  category: query.data?.meals[0]?.strCategory,
-                  area: query.data?.meals[0]?.strArea,
-                  img: query.data?.meals[0]?.strMealThumb,
+                  id: query.data?.idMeal,
+                  name: query.data?.strMeal,
+                  category: query.data?.strCategory,
+                  area: query.data?.strArea,
+                  img: query.data?.strMealThumb,
                 }}
               />
             ))

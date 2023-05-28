@@ -35,8 +35,8 @@ const DailySuggestion: React.FC = () => {
         const docData = (await getDoc(docRef)).data();
         if (docData?.currentDate !== getCurrentDate()) {
           const data = await fetchRandomRecipe();
-          setRecipeID(data?.meals[0]?.idMeal);
-          updateDatabase(data?.meals[0]?.idMeal);
+          setRecipeID(data?.idMeal);
+          updateDatabase(data?.idMeal);
         } else {
           setRecipeID(docData?.dailyRecipe);
         }
@@ -91,13 +91,13 @@ const DailySuggestion: React.FC = () => {
         <CardContainer>
           <RecipeCard
             daily
-            key={recipeData.data?.meals[0]?.idMeal}
+            key={recipeData.data?.idMeal}
             cardData={{
-              id: recipeData.data?.meals[0]?.idMeal,
-              name: recipeData.data?.meals[0]?.strMeal,
-              category: recipeData.data?.meals[0]?.strCategory,
-              area: recipeData.data?.meals[0]?.strArea,
-              img: recipeData.data?.meals[0]?.strMealThumb,
+              id: recipeData.data?.idMeal,
+              name: recipeData.data?.strMeal,
+              category: recipeData.data?.strCategory,
+              area: recipeData.data?.strArea,
+              img: recipeData.data?.strMealThumb,
             }}
           />
         </CardContainer>
