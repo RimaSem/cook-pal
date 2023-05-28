@@ -33,7 +33,7 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
   const navigate = useNavigate();
   const formRef = useRef<HTMLFormElement>(null);
 
-  const login = async (e: SyntheticEvent) => {
+  const handleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
@@ -55,7 +55,7 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
     }
   };
 
-  const handleGoogle = async (e: SyntheticEvent) => {
+  const handleGoogleLogin = async (e: SyntheticEvent) => {
     e.preventDefault();
     try {
       const provider = new GoogleAuthProvider();
@@ -95,8 +95,8 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
         onChange={(e) => setLoginPassword(e.target.value)}
       />
       <StyledError>{errorMessage}</StyledError>
-      <StyledButton onClick={login}>Sign in</StyledButton>
-      <StyledGoogleButton onClick={handleGoogle}>
+      <StyledButton onClick={handleLogin}>Sign in</StyledButton>
+      <StyledGoogleButton onClick={handleGoogleLogin}>
         <GoogleImg src={GoogleIcon} />
         Sign in with Google
       </StyledGoogleButton>

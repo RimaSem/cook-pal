@@ -1,7 +1,6 @@
 import { devices } from "../../styles/theme";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { menuStatusSelector } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
@@ -13,8 +12,8 @@ import styled from "styled-components";
 
 const Menu: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(menuStatusSelector);
-  const { isLoggedIn } = useSelector(userLoginStatusSelector);
+  const { isOpened } = useAppSelector(menuStatusSelector);
+  const { isLoggedIn } = useAppSelector(userLoginStatusSelector);
 
   const handleClick = () => dispatch(toggleMenu());
 

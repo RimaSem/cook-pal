@@ -1,8 +1,7 @@
 import { Icon } from "@mdi/react";
 import { mdiMenu, mdiWindowClose } from "@mdi/js";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useAppDispatch } from "../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import { menuStatusSelector } from "../../state/menu/menuSelectors";
 import { toggleMenu } from "../../state/menu/menuSlice";
 import { RouteNames } from "../../types/RouteNames";
@@ -16,8 +15,8 @@ import { devices } from "../../styles/theme";
 
 const HeaderNav: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(menuStatusSelector);
-  const { isLoggedIn } = useSelector(userLoginStatusSelector);
+  const { isOpened } = useAppSelector(menuStatusSelector);
+  const { isLoggedIn } = useAppSelector(userLoginStatusSelector);
 
   const handleMenu = () => dispatch(toggleMenu());
 

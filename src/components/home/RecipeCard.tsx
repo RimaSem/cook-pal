@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Icon } from "@mdi/react";
 import { mdiBookmarkOutline, mdiBookmark } from "@mdi/js";
 import { Link } from "react-router-dom";
-import { useAppDispatch } from "../../state/hooks";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
 import {
   addFavorite,
   removeFavorite,
@@ -12,7 +12,6 @@ import { db, auth } from "../../firebase/firebaseConfig";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { devices } from "../../styles/theme";
 import { setErrorMessage } from "../../state/error/errorSlice";
-import { useSelector } from "react-redux";
 import { errorMessageSelector } from "../../state/error/errorSelectors";
 import ErrorMessage from "../shared/ErrorMessage";
 import { FirebaseCollections } from "../../types/General";
@@ -30,7 +29,7 @@ interface CardProps {
 
 const RecipeCard: React.FC<CardProps> = ({ cardData, daily }) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { errorMessage } = useSelector(errorMessageSelector);
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

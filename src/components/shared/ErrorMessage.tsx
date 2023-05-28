@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { errorMessageSelector } from "../../state/error/errorSelectors";
 import styled from "styled-components";
 import { FetchErrorMessages, StatusCodes } from "../../types/AuthMessages";
+import { useAppSelector } from "../../state/hooks";
 
 export const handleFetchError = (res: { ok?: boolean; status: number }) => {
   if (res.status >= 400) {
@@ -17,7 +18,7 @@ interface ErrorMessageProps {
 }
 
 const ErrorMessage: React.FC<ErrorMessageProps> = ({ children }) => {
-  const { errorMessage } = useSelector(errorMessageSelector);
+  const { errorMessage } = useAppSelector(errorMessageSelector);
   return (
     <StyledErrorMessage>
       {children ? children : errorMessage}

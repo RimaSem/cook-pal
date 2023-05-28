@@ -6,7 +6,7 @@ import CarouselSlider from "./slider/CarouselSlider";
 import Nav from "./home/Nav";
 import Footer from "./footer/Footer";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../state/hooks";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
 import { menuStatusSelector } from "../state/menu/menuSelectors";
 import { toggleMenu } from "../state/menu/menuSlice";
 import { EmblaOptionsType } from "embla-carousel-react";
@@ -15,7 +15,7 @@ import styled from "styled-components";
 const Layout: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(menuStatusSelector);
+  const { isOpened } = useAppSelector(menuStatusSelector);
 
   const OPTIONS: EmblaOptionsType = {};
   const SLIDE_COUNT = 5;
