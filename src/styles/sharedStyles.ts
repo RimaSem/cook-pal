@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const StyledPageHeading = styled.h1`
   margin: 1.5em 0;
-  font-size: var(--font-size-large);
+  font-size: ${({ theme }) => theme.fontSizes.large};
   color: ${({ theme }) => theme.colors.darker};
   text-align: center;
 `;
@@ -13,7 +13,7 @@ export const MainContainer = styled.main`
   justify-content: center;
   gap: 0.9em;
   margin: 3.125em auto;
-  max-width: var(--width-max);
+  max-width: ${({ theme }) => theme.sizes.widthMax};
   width: 95%;
 `;
 
