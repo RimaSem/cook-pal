@@ -1,14 +1,34 @@
 # Cook-Pal
 
-WIP - this file will be updated when the project is finished.
-The general idea is to build a recipe web app with various functionalities, including user authentication.
+A recipe fetching app with user authentication, created mainly for the purpose of learning new things and practicing writing cleaner code with the guidance of my mentor [Ieva Kaleginiene](https://github.com/kaleginiene) who has kindly reviewed my pull requests.
 
-## Overview
-- I found a free [Figma design](https://www.figma.com/community/file/1218104730269490175) to use for my project, however I will still customize it a bit to better suit my envisioned final result. Maybe replace/remove certain links, simplify the footer, etc;
-- Users will have to register/log in to be able to access additional sections of the website, i.e. "custom meal plan", "grocery list", perhaps a favorite recipes section, etc. Unregistered users will still be able to browse and search for recipes, but will not have access to the said sections;
-- Recipe data will be pulled from TheMealAPI. Perhaps I will switch to another API later on, will have to test things out and see if I like it;
-- I will be learning styled components, redux and firebase as I go along with the project (learning by building things approach);
+I have chosen a free [Figma design](https://www.figma.com/community/file/1218104730269490175) for the visualization of the project, however I had to modify it based on the limits of the API used in the app.
 
+## Technologies used:
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![React Query](https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+![Redux](https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white)
+![Firebase](https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white)
+![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
 
-![cook-pal-design1](https://user-images.githubusercontent.com/98835134/232806267-6b69c85a-1763-4767-aeb4-01774c268cdf.jpg)
-![cook-pal-design2](https://user-images.githubusercontent.com/98835134/232806289-b4d0a532-a97a-4144-aa8a-8f1b09601ad5.jpg)
+## Features:
+- Filter recipes by category and area;
+- Search for recipes by name or partial name;
+- One random recipe suggestion is generated every day;
+- User login/registration functionality which allows logged in users to access the favorites and grocery list pages;
+- Grocery lists and saved recipes of each user are stored in Firebase;
+- All recipe data is fetched from [TheMealDB API](https://www.themealdb.com/api.php).
+
+## What I learned during this project:
+- Firebase (authentication, Firestore database);
+- Redux Toolkit for state management;
+- Styled components, as well as better overall organization of CSS;
+- This was my first project where I used Axios instead of Fetch;
+- Enums to avoid using hardcoded values;
+- And the most important thing – to appreciate code reviews!
+
+![cook_pal_home](https://github.com/RimaSem/cook-pal/assets/98835134/3dc01740-8111-4411-9432-c12589b6bbcb)
+
