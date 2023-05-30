@@ -35,7 +35,9 @@ const GroceryList: React.FC = () => {
     getGroceriesFromDatabase();
   }, []);
 
-  const removeItem = async (e: SyntheticEvent) => {
+  const removeItem = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
     const removedItem = (e.target as HTMLElement).parentNode?.textContent;
 
     setGroceryArray((prev) =>

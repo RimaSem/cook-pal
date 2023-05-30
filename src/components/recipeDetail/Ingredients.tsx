@@ -28,7 +28,9 @@ const Ingredients: React.FC<IngredientProps> = ({ recipeData }) => {
     setIngredients(ingredientArray);
   };
 
-  const addToGroceryList = async (e: SyntheticEvent) => {
+  const addToGroceryList = async (
+    e: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
     const addedItem = (e.target as HTMLElement).textContent;
     try {
       if (auth.currentUser) {
