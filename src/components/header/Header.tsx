@@ -17,11 +17,12 @@ export default Header;
 const StyledHeader = styled.div`
   z-index: 4;
   position: sticky;
-  left: 0;
   top: 0;
+  left: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
   max-width: 100em;
   width: 100%;
   height: 5em;
