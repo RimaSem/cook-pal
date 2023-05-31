@@ -7,10 +7,6 @@ I have chosen a free [Figma design](https://www.figma.com/community/file/1218104
 ## Demo
 :point_right: [Live Demo](https://rimasem.github.io/cook-pal/)
 
-You can use the following login details, if you wish to test out the app without registering an account.<br/>
-Email: guest<span></span>@mail.com<br/>
-Password: testing123
-
 ## Technologies used:
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
