@@ -37,7 +37,7 @@ const SectionName = styled.p`
   font-weight: 600;
 `;
 
-const FooterLink = styled.a`
+const FooterLink = styled.div`
   display: block;
   margin-top: 1.5em;
   color: ${({ theme }) => theme.colors.footerLink};

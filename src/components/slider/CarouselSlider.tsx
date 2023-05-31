@@ -15,11 +15,8 @@ type PropType = {
   options?: EmblaOptionsType;
 };
 
-const CarouselSlider: React.FC<PropType> = (props) => {
-  // const [emblaRef] = useEmblaCarousel({ loop: false }, [Autoplay()]);
-
-  const { slides, options } = props;
-  const [emblaRef, emblaApi] = useEmblaCarousel(options);
+const CarouselSlider: React.FC<PropType> = () => {
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: false }, [Autoplay()]);
   const [prevBtnEnabled, setPrevBtnEnabled] = useState(false);
   const [nextBtnEnabled, setNextBtnEnabled] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
