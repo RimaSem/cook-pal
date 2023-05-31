@@ -80,6 +80,7 @@ const LoginForm: React.FC<FormProps> = ({ errorMessage, setErrorMessage }) => {
       }
       navigate(`${RouteNames.HOME}`);
     } catch (err) {
+      console.log(err);
       setErrorMessage(AuthMessages.GOOGLE_ERROR);
     }
   };
