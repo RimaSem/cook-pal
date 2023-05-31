@@ -5,7 +5,7 @@ A recipe fetching app with user authentication, created mainly for the purpose o
 I have chosen a free [Figma design](https://www.figma.com/community/file/1218104730269490175) for the visualization of the project, however I had to modify it based on the limits of the API used in the app.
 
 ## Demo
-:point_right: [Live Demo](https://rimasem.github.io/plant-shop/)
+:point_right: [Live Demo](https://rimasem.github.io/cook-pal/)
 
 You can use the following login details, if you wish to test out the app without registering an account.<br/>
 Email: guest<span></span>@mail.com<br/>
