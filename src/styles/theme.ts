@@ -1,30 +1,4 @@
-interface ThemeProps {
-  colors: {
-    white: string;
-    inputLight: string;
-    accentGreen: string;
-    accentOrange: string;
-    darker: string;
-    lighter: string;
-    grey: string;
-    navBtn1: string;
-    navBtn2: string;
-    navBtn3: string;
-    navBtn4: string;
-    navBtn5: string;
-    footerLink: string;
-  };
-
-  mQueries: {
-    primaryQ: string;
-    secondaryQ: string;
-    heroLargerQ: string;
-    heroSmallerQ: string;
-    menuQ: string;
-    navQ: string;
-    footerQ: string;
-  };
-}
+import { ThemeProps } from "./themeProps";
 
 export const theme: ThemeProps = {
   colors: {
@@ -35,21 +9,44 @@ export const theme: ThemeProps = {
     darker: "#253D4E",
     lighter: "#e2e2e2",
     grey: "#A1A1A1",
+    red: "red",
+    green: "green",
     navBtn1: "#f6784c",
     navBtn2: "#C4D600",
     navBtn3: "#EAAA00",
     navBtn4: "#ED8B00",
     navBtn5: "#84BD00",
     footerLink: "rgba(0, 0, 0, 0.6)",
+    googleBtn: "#3d78d1",
   },
 
-  mQueries: {
-    primaryQ: "(max-width: 54em)",
-    secondaryQ: "(max-width: 40.625em)",
-    heroLargerQ: "(max-width: 36.25em)",
-    heroSmallerQ: "(max-width: 31.25em)",
-    menuQ: "(max-width: 32.5em)",
-    navQ: "(max-width: 42.18em)",
-    footerQ: "(max-width: 26.56em)",
+  fontFamilies: {
+    primary: "'Poppins', sans-serif",
+    secondary: "'Inter', sans-serif",
   },
+
+  fontSizes: {
+    large: "2.2rem",
+  },
+
+  shadows: {
+    card:
+      "0px 0px 1px rgba(12, 26, 75, 0.24)" +
+      ", " +
+      "0px 3px 8px -1px rgba(50, 50, 71, 0.05)",
+  },
+
+  sizes: {
+    widthMax: "79em",
+  },
+};
+
+export const devices = {
+  mobileL: "(max-width: 425px)",
+  mobileXL: "(max-width: 500px)",
+  mobileXXL: "(max-width: 520px)",
+  tabletXXS: "(max-width: 580px)",
+  tabletXS: "(max-width: 650px)",
+  tabletS: "(max-width: 675px)",
+  tabletM: "(max-width: 865px)",
 };

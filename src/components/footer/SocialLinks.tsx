@@ -1,27 +1,6 @@
-import Icon from "@mdi/react";
+import { Icon } from "@mdi/react";
 import { mdiEmail, mdiGithub, mdiLinkedin, mdiFacebook } from "@mdi/js";
 import styled from "styled-components";
-
-const StyledSocialLinks = styled.div`
-  display: flex;
-  gap: 1.56em;
-  margin: 1.875em auto;
-`;
-
-const IconWrapper = styled.a`
-  cursor: pointer;
-  text-decoration: none;
-
-  .social-links-icon {
-    transition: color 0.3s;
-    width: 1.875em;
-    color: ${({ theme }) => theme.colors.darker};
-
-    &:hover {
-      color: ${({ theme }) => theme.colors.accentGreen};
-    }
-  }
-`;
 
 const SocialLinks: React.FC = () => (
   <StyledSocialLinks>
@@ -53,3 +32,24 @@ const SocialLinks: React.FC = () => (
 );
 
 export default SocialLinks;
+
+const StyledSocialLinks = styled.div`
+  display: flex;
+  gap: 1.56em;
+  margin: 1.875em auto;
+`;
+
+const IconWrapper = styled.a`
+  cursor: pointer;
+  text-decoration: none;
+
+  .social-links-icon {
+    transition: color 0.3s;
+    width: 1.875em;
+    color: ${({ theme }) => theme.colors.darker};
+
+    &:hover {
+      color: ${({ theme }) => theme.colors.accentGreen};
+    }
+  }
+`;

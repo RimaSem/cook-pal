@@ -1,7 +1,18 @@
-import Logo from "./header/Logo";
-import SearchBar from "./header/SearchBar";
-import HeaderNav from "./header/HeaderNav";
+import Logo from "./Logo";
+import SearchBar from "./SearchBar";
+import HeaderNav from "./HeaderNav";
 import styled from "styled-components";
+import { devices } from "../../styles/theme";
+
+const Header: React.FC = () => (
+  <StyledHeader>
+    <Logo />
+    <SearchBar />
+    <HeaderNav />
+  </StyledHeader>
+);
+
+export default Header;
 
 const StyledHeader = styled.div`
   z-index: 4;
@@ -17,17 +28,7 @@ const StyledHeader = styled.div`
   padding: 0 1em;
   background-color: ${({ theme }) => theme.colors.white};
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     height: 3.5em;
   }
 `;
-
-const Header: React.FC = () => (
-  <StyledHeader>
-    <Logo />
-    <SearchBar />
-    <HeaderNav />
-  </StyledHeader>
-);
-
-export default Header;
