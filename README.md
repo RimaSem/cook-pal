@@ -4,6 +4,13 @@ A recipe fetching app with user authentication, created mainly for the purpose o
 
 I have chosen a free [Figma design](https://www.figma.com/community/file/1218104730269490175) for the visualization of the project, however I had to modify it based on the limits of the API used in the app.
 
+## Demo
+:point_right: [Live Demo](https://rimasem.github.io/cook-pal/)
+
+You can use the following login details, if you wish to test out the app without registering an account.<br/>
+Email: guest<span></span>@mail.com<br/>
+Password: testing123
+
 ## Technologies used:
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -30,5 +37,6 @@ I have chosen a free [Figma design](https://www.figma.com/community/file/1218104
 - Enums to avoid using hardcoded values;
 - And the most important thing – to appreciate code reviews!
 
-![cook_pal_home](https://github.com/RimaSem/cook-pal/assets/98835134/3dc01740-8111-4411-9432-c12589b6bbcb)
+![cook_pal_home](https://github.com/RimaSem/cook-pal/assets/98835134/1b7c4585-da2f-4735-8f11-8fdad5fe6393)
+
 
