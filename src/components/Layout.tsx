@@ -1,42 +1,21 @@
 import { useRef } from "react";
 import { Outlet } from "react-router-dom";
-import Menu from "./Menu";
-import Header from "./Header";
+import Menu from "./header/Menu";
+import Header from "./header/Header";
 import CarouselSlider from "./slider/CarouselSlider";
-import Nav from "./Nav";
-import Footer from "./Footer";
+import Nav from "./home/Nav";
+import Footer from "./footer/Footer";
 import { useSelector } from "react-redux";
-import { useAppDispatch } from "../state/hooks";
-import { getMenuStatus } from "../state/menu/menuSelectors";
+import { useAppDispatch, useAppSelector } from "../state/hooks";
+import { menuStatusSelector } from "../state/menu/menuSelectors";
 import { toggleMenu } from "../state/menu/menuSlice";
 import { EmblaOptionsType } from "embla-carousel-react";
 import styled from "styled-components";
 
-const Overlay = styled.div`
-  z-index: 2;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background-color: ${({ theme }) => theme.colors.footerLink};
-`;
-
-const StyledLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 100vh;
-`;
-
-const MainSection = styled.section`
-  flex: 1;
-`;
-
 const Layout: React.FC = () => {
   const overlayRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
-  const { isOpened } = useSelector(getMenuStatus);
+  const { isOpened } = useAppSelector(menuStatusSelector);
 
   const OPTIONS: EmblaOptionsType = {};
   const SLIDE_COUNT = 5;
@@ -62,3 +41,24 @@ const Layout: React.FC = () => {
 };
 
 export default Layout;
+
+const Overlay = styled.div`
+  z-index: 2;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: ${({ theme }) => theme.colors.footerLink};
+`;
+
+const StyledLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 100vh;
+`;
+
+const MainSection = styled.section`
+  flex: 1;
+`;

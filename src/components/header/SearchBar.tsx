@@ -1,6 +1,49 @@
 import { Icon } from "@mdi/react";
 import { mdiMagnify } from "@mdi/js";
 import styled from "styled-components";
+import { useAppDispatch, useAppSelector } from "../../state/hooks";
+import {
+  setSearchResults,
+  setSearchWord,
+} from "../../state/search/searchSlice";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { RouteNames } from "../../types/RouteNames";
+import { devices } from "../../styles/theme";
+import { searchWordSelector } from "../../state/search/searchSelectors";
+
+const SearchBar: React.FC = () => {
+  const [typedWord, setTypedWord] = useState("");
+  const { searchWord } = useAppSelector(searchWordSelector);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (typedWord !== "" && searchWord !== typedWord) {
+      dispatch(setSearchResults([]));
+      dispatch(setSearchWord(typedWord));
+      navigate(`${RouteNames.HOME + RouteNames.RECIPES}`);
+      window.scrollTo({
+        top: 450,
+      });
+    }
+  };
+
+  return (
+    <StyledSearchBar>
+      <StyledInput
+        name="search-bar"
+        placeholder="Search for recipes..."
+        onChange={(e) => setTypedWord(e.target.value)}
+      />
+      <StyledIcon onClick={handleClick}>
+        <Icon className="search-bar-icon" path={mdiMagnify} />
+      </StyledIcon>
+    </StyledSearchBar>
+  );
+};
+
+export default SearchBar;
 
 const StyledSearchBar = styled.div`
   display: flex;
@@ -9,7 +52,7 @@ const StyledSearchBar = styled.div`
   width: 100%;
   height: 2.625em;
 
-  @media ${({ theme }) => theme.mQueries.primaryQ} {
+  @media ${devices.tabletM} {
     display: none;
   }
 `;
@@ -44,14 +87,3 @@ const StyledIcon = styled.div`
     color: ${({ theme }) => theme.colors.white};
   }
 `;
-
-const SearchBar: React.FC = () => (
-  <StyledSearchBar>
-    <StyledInput name="search-bar" placeholder="Search for recipes..." />
-    <StyledIcon>
-      <Icon className="search-bar-icon" path={mdiMagnify} />
-    </StyledIcon>
-  </StyledSearchBar>
-);
-
-export default SearchBar;

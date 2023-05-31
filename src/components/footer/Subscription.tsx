@@ -1,5 +1,22 @@
+import { devices } from "../../styles/theme";
 import { FooterLogo } from "./Info";
 import styled from "styled-components";
+
+const Subscription: React.FC = () => (
+  <SubscriptionWrapper>
+    <FooterLogo>Cook-Pal</FooterLogo>
+    <SubscriptionText>
+      Ut risus mattis interdum faucibus facilisi. Facilisi purus accumsan
+      aliquam.
+    </SubscriptionText>
+    <InputWrapper>
+      <FooterInput placeholder="Your Email" />
+      <FooterButton type="button">Subscribe</FooterButton>
+    </InputWrapper>
+  </SubscriptionWrapper>
+);
+
+export default Subscription;
 
 const SubscriptionWrapper = styled.div``;
 
@@ -22,13 +39,13 @@ const FooterInput = styled.input`
   border-radius: 0.25em;
   outline: none;
   width: 18.125em;
-  height: 2.75rem;
+  height: 2.75em;
   padding: 0 1em;
   font-size: 1rem;
   font-family: inherit;
   letter-spacing: 0.02em;
 
-  @media ${({ theme }) => theme.mQueries.footerQ} {
+  @media ${devices.mobileL} {
     width: 70%;
   }
 `;
@@ -43,19 +60,3 @@ const FooterButton = styled.button`
   font-family: inherit;
   color: ${({ theme }) => theme.colors.lighter};
 `;
-
-const Subscription: React.FC = () => (
-  <SubscriptionWrapper>
-    <FooterLogo>Cook-Pal</FooterLogo>
-    <SubscriptionText>
-      Ut risus mattis interdum faucibus facilisi. Facilisi purus accumsan
-      aliquam.
-    </SubscriptionText>
-    <InputWrapper>
-      <FooterInput placeholder="Your Email" />
-      <FooterButton type="button">Subscribe</FooterButton>
-    </InputWrapper>
-  </SubscriptionWrapper>
-);
-
-export default Subscription;

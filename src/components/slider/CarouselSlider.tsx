@@ -3,12 +3,12 @@ import { useState, useEffect, useCallback } from "react";
 import useEmblaCarousel, { EmblaOptionsType } from "embla-carousel-react";
 import { DotButton, PrevButton, NextButton } from "./CarouselArrowsDotsButtons";
 import Autoplay from "embla-carousel-autoplay";
-import Hero from "../Hero";
-import Slide1 from "../../img/hero-sample-img.webp";
-import Slide2 from "../../img/hero-chicken-wings.webp";
-import Slide3 from "../../img/hero-salad.webp";
-import Slide4 from "../../img/hero-seafood-delicacy.webp";
-import Slide5 from "../../img/hero-fried-chicken.webp";
+import Hero from "../home/Hero";
+import Slide1 from "../../assets/img/hero-sample-img.webp";
+import Slide2 from "../../assets/img/hero-chicken-wings.webp";
+import Slide3 from "../../assets/img/hero-salad.webp";
+import Slide4 from "../../assets/img/hero-seafood-delicacy.webp";
+import Slide5 from "../../assets/img/hero-fried-chicken.webp";
 
 type PropType = {
   slides: number[];
@@ -96,8 +96,16 @@ const CarouselSlider: React.FC<PropType> = (props) => {
           </div>
         </div>
         <div className="button_container">
-          <PrevButton onClick={scrollPrev} enabled={prevBtnEnabled} />
-          <NextButton onClick={scrollNext} enabled={nextBtnEnabled} />
+          <PrevButton
+            onClick={scrollPrev}
+            enabled={prevBtnEnabled}
+            aria-label="Back button"
+          />
+          <NextButton
+            onClick={scrollNext}
+            enabled={nextBtnEnabled}
+            aria-label="Forward button"
+          />
         </div>
         <div className="embla__dots">
           {scrollSnaps.map((_, index) => (
@@ -105,6 +113,7 @@ const CarouselSlider: React.FC<PropType> = (props) => {
               key={index}
               selected={index === selectedIndex}
               onClick={() => scrollTo(index)}
+              aria-label="Dot button"
             />
           ))}
         </div>
